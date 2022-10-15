@@ -6,6 +6,7 @@ import pt.tecnico.uilib.forms.Form;
 import pt.tecnico.uilib.menus.Command;
 import pt.tecnico.uilib.menus.CommandException;
 import prr.core.exception.ImportFileException;
+import prr.app.main.Message;
 //Add more imports if needed
 
 /**
@@ -14,7 +15,7 @@ import prr.core.exception.ImportFileException;
 class DoOpenFile extends Command<NetworkManager> {
   DoOpenFile(NetworkManager receiver) {
     super(Label.OPEN_FILE, receiver);
-    addStringField("filename","Introduza nome do Ficheiro: " );
+    addStringField("filename",Message.openFile() );
     //FIXME add command fields
   }
 

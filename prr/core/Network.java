@@ -5,6 +5,7 @@ import java.io.IOException;
 import prr.core.exception.UnrecognizedEntryException;
 import prr.core.Parser;
 import prr.core.Terminal;
+import prr.core.Client;
 import java.util.Map;
 
 
@@ -55,7 +56,10 @@ public class Network implements Serializable {
     Terminal friend2 = _terminals.get(friend);
     friend1.treatFriends(friend2);
     //FIXME é preciso mudar umas cenas
+  }
 
+  public Map getClients () {
+    return _clients;
   }
 
  
