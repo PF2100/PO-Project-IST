@@ -47,7 +47,7 @@ enum TerminalMode {
 
   public double getPayments() {return _payments;}
 
-  // public ArrayList getFriends() {return _friends;}; qual é o tipo do return?
+  public Map<String,Terminal> getFriends() {return _friends;}
 
   public Client getOwner() {return _owner;}
 
@@ -111,6 +111,14 @@ enum TerminalMode {
     else {
       return false;
     }
+  }
+  public String toString() {
+    String message = "BASIC" + _id + "|" + _owner.getKey() + "|" + _mode + "|" + _payments + "|" + _debt;
+
+    for (String terminalID : _friends.keySet()) {
+      message = message + "|" + terminalID;
+    }
+    return message;
   }
 
     /**
