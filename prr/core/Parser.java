@@ -43,7 +43,7 @@ public class Parser {
       case "CLIENT" -> parseClient(components, line);
       case "BASIC", "FANCY" -> parseTerminal(components, line);
       case "FRIENDS" -> parseFriends(components, line);
-      default -> throw new UnrecognizedEntryException("Line with wong type: " + components[0]);
+      default -> throw new UnrecognizedEntryException("Line with wrong type: " + components[0]);
     }
   }
 
@@ -61,7 +61,7 @@ public class Parser {
       _network.registerClient(components[1], components[2], taxNumber);
     } catch (NumberFormatException nfe) {
       throw new UnrecognizedEntryException("Invalid number in line " + line, nfe);
-    } catch (Exception e) {
+    } catch (Exception e) { // Trocar exception
       throw new UnrecognizedEntryException("Invalid specification in line: " + line, e);
     }
   }
@@ -81,7 +81,7 @@ public class Parser {
            throw new UnrecognizedEntryException("Invalid specification in line: " + line);
         } 
       }
-    } catch (SomeOtherException e) {
+    } catch (Exception e) { // Trocar exception
       throw new UnrecognizedEntryException("Invalid specification: " + line, e);
     }
   }
@@ -97,7 +97,7 @@ public class Parser {
       
       for (String friend : friends)
         _network.addFriend(terminal, friend);
-    } catch (OtherException e) {
+    } catch (Exception e) { //trocar exeption
       throw new UnrecognizedEntryException("Some message error in line:  " + line, e);
     }
   }

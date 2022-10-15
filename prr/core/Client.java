@@ -24,8 +24,9 @@ public class Client implements Serializable {
     private boolean _receiveNotifications;
     // Plano tarifario se implementar
     private Map<String,Terminal> _terminals;
- 
-    public Client(String name, String key , int taxNumber) {
+
+
+    public Client(String name, String key, int taxNumber) {
         _key = key;
         _name = name;
         _taxNumber = taxNumber;
@@ -42,7 +43,7 @@ public class Client implements Serializable {
         return _name;
     }
 
-    public String getTaxNumber() {
+    public int getTaxNumber() {
         return _taxNumber;
     }
 
@@ -54,7 +55,7 @@ public class Client implements Serializable {
         _receiveNotifications = false;
     }
 
-    public List<Terminal> getTerminals () {  //Returns a list of all the client's terminals using the HashMap _terminals
+    public List<Terminal> getTerminals () {                //Returns a list of all the client's terminals using the HashMap _terminals
         List <Terminal> terminals = new ArrayList<>();
         for ( String terminalID : _terminals.keySet()) {
             terminals.add(_terminals.get(terminalID));
@@ -66,24 +67,28 @@ public class Client implements Serializable {
         _level = ClientLevel.valueOf(clientLevel);
     }
 
+
     public String toString() {
-        return 
+        return "CLIENT|"+ _key +"|"+_name+"|" +_taxNumber + "|" + _level +"|" + _terminals.size() + "|" + getPayments()
+                + "|" + getDebts();
 
     }
 
-    //calculateDebt()
-    //calculatePayments()
+    public double getDebts() {  //Iterates through the hashMap of terminals to obtain all of their debt values
+        double debt = 0;
+        for ( String terminalID : _terminals.keySet()) {     
+            Terminal terminal = _terminals.get(terminalID);
+            debt += terminal.getDebt();
+        }
+        return debt;
+    }
 
-
-
-
-    
-
-    
-
-    
-
-
-
-    
+    public double getPayments() { //Iterates through the hashMap of terminals to obtain all of their payment values
+        double payments = 0;
+        for ( String terminalID : _terminals.keySet()) {
+            Terminal terminal = _terminals.get(terminalID);
+            payments += terminal.getPayments();
+        }
+        return payments;
+    } 
 }
