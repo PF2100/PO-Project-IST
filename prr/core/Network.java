@@ -16,6 +16,7 @@ import java.util.Map;
 public class Network implements Serializable {
 
   private Map<String,Client> _clients;
+  private Map<String,Terminal> _terminals;
 
   /** Serial number for serialization. */
   private static final long serialVersionUID = 202208091753L;
@@ -40,16 +41,23 @@ public class Network implements Serializable {
   }
 
   public void registerClient(String id , String nome , int taxNumber) {
-    //Adicionar novas cenas
+    
   }
 
-  /* 
+ 
   public Terminal registerTerminal(String terminalID , String ClientID , String mode) {
-    Terminal t = new Terminal(terminalID,_clients.get(ClientID) ) ;
-      
+    Terminal t = new Terminal(terminalID,_clients.get(ClientID),mode ) ;
     return t;
   }
-  */
+
+  public void addFriend(String terminal,String friend ) {
+    Terminal friend1= _terminals.get(terminal);
+    Terminal friend2 = _terminals.get(friend);
+    friend1.treatFriends(friend2);
+    //FIXME é preciso mudar umas cenas
+
+  }
+
  
 
 }

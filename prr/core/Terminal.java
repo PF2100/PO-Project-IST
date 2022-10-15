@@ -103,7 +103,7 @@ enum TerminalMode {
     }
   }
 
-  public boolean turnnOff() {
+  public boolean turnOff() { 
     if (_mode == TerminalMode.ON || _mode == TerminalMode.SILENCE) {
       _mode = TerminalMode.OFF;
       return true;
@@ -132,5 +132,14 @@ enum TerminalMode {
   public boolean canStartCommunication() {
     // FIXME add implementation code
     return true; // Tava a dar erro
+  }
+
+  public void addFriend(Terminal friend) {
+    _friends.put(friend.getId(), friend);
+  }
+
+  public void treatFriends(Terminal friend) {
+    this.addFriend(friend);
+    friend.addFriend(this);
   }
 }
