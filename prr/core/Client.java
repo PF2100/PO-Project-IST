@@ -78,7 +78,7 @@ public class Client implements Serializable {
         double debt = 0;
         for ( String terminalID : _terminals.keySet()) {     
             Terminal terminal = _terminals.get(terminalID);
-            //debt += terminal.getDebt();
+            debt += terminal.getDebt();
         }
         return debt;
     }
@@ -87,7 +87,7 @@ public class Client implements Serializable {
         double payments = 0;
         for ( String terminalID : _terminals.keySet()) {
             Terminal terminal = _terminals.get(terminalID);
-            //payments += terminal.getPayment();
+            payments += terminal.getPayments();
         }
         return payments;
     } 
