@@ -13,13 +13,10 @@ class DoOpenMenuTerminalConsole extends Command<Network> {
 
   DoOpenMenuTerminalConsole(Network receiver) {
     super(Label.OPEN_MENU_TERMINAL, receiver);
-    //FIXME add command fields
   }
 
   @Override
   protected final void execute() throws CommandException {
-    //FIXME implement command
-    // create an instance of prr.app.terminal.Menu with the
-    // selected Terminal and open it
+    //(new prr.app.terminals.Menu(_receiver).open());
   }
 }

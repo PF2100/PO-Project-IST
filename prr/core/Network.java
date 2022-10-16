@@ -46,14 +46,22 @@ public class Network implements Serializable {
   }
 
   public void registerClient(String id , String nome , int taxNumber) throws DuplicateClientKeyException { //É preciso adicionar a duplicateKeyexception
-    Client client = new Client(id, nome, taxNumber);
-    _clients.put(id, client);
+    
+    if ( _clients.get(id) != null) {
+      throw new DuplicateClientKeyException(id);
+    }
+    else {
+      Client client = new Client(id, nome, taxNumber);
+      _clients.put(id, client);
+    }
   }
 
  
   public Terminal registerTerminal(String terminalID , String ClientID , String mode) {
-    Terminal t = new Terminal(terminalID,_clients.get(ClientID),mode ) ;
-    return t;
+    Terminal terminal = new Terminal(terminalID,_clients.get(ClientID),mode ) ;
+    Client client = _clients.get(ClientID);
+    client.addTerminal(terminal); //Faz sentido ter aqui o addTerminal? ou fazer isso no do Register
+    return terminal;
   }
 
   public void addFriend(String terminal,String friend ) {
@@ -65,6 +73,10 @@ public class Network implements Serializable {
 
   public Map getClients () throws NullPointerException{
     return _clients;
+  }
+
+  public Map getTerminals () throws NullPointerException{
+    return _terminals;
   }
 
  

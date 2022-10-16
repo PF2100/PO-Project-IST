@@ -28,7 +28,7 @@ class DoRegisterClient extends Command<Network> {
     _receiver.registerClient(key, name, taxID);
     }catch(DuplicateClientKeyException dcke) {
       throw new DuplicateClientKeyException(key);
+
     }
-    //FIXME implement command
   }
 }
