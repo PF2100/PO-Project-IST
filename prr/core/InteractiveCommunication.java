@@ -1,11 +1,10 @@
 package prr.core;
 
 public abstract class InteractiveCommunication extends Communication {
-
     private int _duration;
 
-    public InteractiveCommunication(int duration) {
-        super();
+    public InteractiveCommunication(Terminal from, Terminal to, int duration) {
+        super(from, to);
         _duration = duration;
     }
 
