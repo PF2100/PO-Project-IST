@@ -55,6 +55,10 @@ public class Client implements Serializable {
         _receiveNotifications = false;
     }
 
+    public void addTerminal(Terminal terminal) {
+        _terminals.put(terminal.getId(),terminal);
+    }
+
     public List<Terminal> getTerminals () {                //Returns a list of all the client's terminals using the HashMap _terminals
         List <Terminal> terminals = new ArrayList<>();
         for ( String terminalID : _terminals.keySet()) {

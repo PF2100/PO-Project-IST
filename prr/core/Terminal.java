@@ -21,7 +21,7 @@ public class Terminal implements Serializable /* FIXME maybe addd more interface
     @Serial
     private static final long serialVersionUID = 202208091753L;
     private final String _id;
-    private TerminalMode _mode;
+    private TerminalMode _mode; //É assim que funciona?
     private double _debt;
     private double _payments;
     private Map<String, Terminal> _friends;
@@ -29,12 +29,12 @@ public class Terminal implements Serializable /* FIXME maybe addd more interface
     //Colocar Comunicacoes
 
 
-    public Terminal(String terminalID, Client owner, String Mode) {
+    public Terminal(String terminalID, Client owner) {
         _id = terminalID;
-        _mode = TerminalMode.valueOf(Mode);
         _debt = 0;
         _payments = 0;
         _owner = owner;
+        _mode = TerminalMode.valueOf("ON");
     }
 
 // FIXME define attributes
@@ -88,7 +88,8 @@ public class Terminal implements Serializable /* FIXME maybe addd more interface
         this.setOnIdle();
     }
 
-    public boolean setOnIdle() {
+    public boolean setOnIdle() { // É suposto dar true
+
         if (_mode == TerminalMode.ON) {
             return false;
         } else {
