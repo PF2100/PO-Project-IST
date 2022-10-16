@@ -3,6 +3,8 @@ package prr.app.client;
 import prr.core.Network;
 import pt.tecnico.uilib.menus.Command;
 import pt.tecnico.uilib.menus.CommandException;
+import prr.core.Client;
+import java.util.Map;
 //FIXME add more imports if needed
 
 /**
@@ -16,6 +18,15 @@ class DoShowAllClients extends Command<Network> {
   
   @Override
   protected final void execute() throws CommandException {
-    //FIXME implement command
+    try{
+      Map<String,Client> clients = _receiver.getClients();
+      for (String clientID : clients.keySet()){
+        String client = (clients.get(clientID)).toString();
+        _display.addLine(client);
+      }
+      _display.display();
+    }catch(NullPointerException npe) {
+      throw new NullPointerException();
+    }
   }
 }

@@ -21,8 +21,12 @@ class DoShowClient extends Command<Network> {
   
   @Override
   protected final void execute() throws CommandException {
-    Map <String,Client> clients = _receiver.getClients();       //Colocar exceção de verificar se existe o Map está nulo ou não
-    Client client = clients.get(stringField("clientKey"));
-    _display.popup(client.toString());    
+    try{
+    Map <String,Client> clients = _receiver.getClients();      //Colocar exceção de verificar se existe o Map está nulo ou não
+    Client client = clients.get(stringField("clientKey")); 
+    _display.popup(client.toString()); 
+    }catch ( NullPointerException npe) {
+      throw new NullPointerException();
+    }
   }
 }

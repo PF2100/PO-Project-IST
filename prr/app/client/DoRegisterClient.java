@@ -4,7 +4,8 @@ import prr.core.Network;
 import prr.app.exception.DuplicateClientKeyException;
 import pt.tecnico.uilib.menus.Command;
 import pt.tecnico.uilib.menus.CommandException;
-//FIXME add more imports if needed
+import prr.app.client.Message;
+
 
 /**
  * Register new client.
@@ -13,11 +14,21 @@ class DoRegisterClient extends Command<Network> {
 
   DoRegisterClient(Network receiver) {
     super(Label.REGISTER_CLIENT, receiver);
-    //FIXME add command fields
+    addStringField("chave",Message.key());
+    addStringField("name",Message.name());
+    addIntegerField("taxID",Message.taxId());
   }
   
   @Override
-  protected final void execute() throws CommandException {
+  protected final void execute() throws CommandException { //É preciso lançar a duplicateKeyException
+    String name = stringField("name");
+    String key = stringField("chave");
+    Integer taxID = integerField("taxID"); 
+    try {
+    _receiver.registerClient(key, name, taxID);
+    }catch(DuplicateClientKeyException dcke) {
+      throw new DuplicateClientKeyException(key);
+    }
     //FIXME implement command
   }
 }

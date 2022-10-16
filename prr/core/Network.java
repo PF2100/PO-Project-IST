@@ -5,7 +5,11 @@ import java.io.IOException;
 import prr.core.exception.UnrecognizedEntryException;
 import prr.core.Parser;
 import prr.core.Terminal;
+import prr.app.exception.DuplicateClientKeyException;
 import prr.core.Client;
+import prr.app.exception.DuplicateClientKeyException;
+
+import java.util.HashMap;
 import java.util.Map;
 
 
@@ -16,8 +20,8 @@ import java.util.Map;
  */
 public class Network implements Serializable {
 
-  private Map<String,Client> _clients;
-  private Map<String,Terminal> _terminals;
+  private Map<String,Client> _clients = new HashMap<>();
+  private Map<String,Terminal> _terminals = new HashMap<>();
 
   /** Serial number for serialization. */
   private static final long serialVersionUID = 202208091753L;
@@ -41,8 +45,9 @@ public class Network implements Serializable {
     _parser.parseFile(filename);
   }
 
-  public void registerClient(String id , String nome , int taxNumber) {
-    
+  public void registerClient(String id , String nome , int taxNumber) throws DuplicateClientKeyException { //É preciso adicionar a duplicateKeyexception
+    Client client = new Client(id, nome, taxNumber);
+    _clients.put(id, client);
   }
 
  
@@ -58,7 +63,7 @@ public class Network implements Serializable {
     //FIXME é preciso mudar umas cenas
   }
 
-  public Map getClients () {
+  public Map getClients () throws NullPointerException{
     return _clients;
   }
 
