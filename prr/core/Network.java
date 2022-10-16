@@ -57,11 +57,17 @@ public class Network implements Serializable {
   }
 
  
-  public Terminal registerTerminal(String terminalID , String ClientID , String mode) {
-    Terminal terminal = new Terminal(terminalID,_clients.get(ClientID),mode ) ;
-    Client client = _clients.get(ClientID);
+  public Terminal registerTerminal(String type,String terminalID , String clientID ) {
+    Terminal terminal;
+    Client client = _clients.get(clientID); //Throw de nao existir client;
+    if ( type == "BASIC") {
+      terminal = new Terminal(terminalID,client);
+    }
+    else{
+      terminal = new FancyTerminal(terminalID,client);
+    }
     client.addTerminal(terminal); //Faz sentido ter aqui o addTerminal? ou fazer isso no do Register
-    return terminal;
+      return terminal;
   }
 
   public void addFriend(String terminal,String friend ) {
@@ -78,8 +84,5 @@ public class Network implements Serializable {
   public Map getTerminals () throws NullPointerException{
     return _terminals;
   }
-
- 
-
 }
 

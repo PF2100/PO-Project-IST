@@ -28,6 +28,6 @@ class DoRegisterTerminal extends Command<Network> {
     String key = stringField("key");
     String type = stringField("type");
     String clientID = stringField("clientID");  
-    Terminal terminal = _receiver.registerTerminal(key,type,clientID);
+    Terminal terminal = _receiver.registerTerminal(type,key,clientID);
   }
 }
