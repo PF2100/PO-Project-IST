@@ -60,13 +60,14 @@ public class Network implements Serializable {
   public Terminal registerTerminal(String type,String terminalID , String clientID ) {
     Terminal terminal;
     Client client = _clients.get(clientID); //Throw de nao existir client;
-    if ( type == "BASIC") {
+    if ( type.equals("BASIC")) {
       terminal = new Terminal(terminalID,client);
     }
     else{
       terminal = new FancyTerminal(terminalID,client);
     }
     client.addTerminal(terminal); //Faz sentido ter aqui o addTerminal? ou fazer isso no do Register
+    _terminals.put(terminalID, terminal);
       return terminal;
   }
 
