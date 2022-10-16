@@ -11,6 +11,7 @@ public class DuplicateClientKeyException extends CommandException {
 	/** @param key the duplicated key */
 	public DuplicateClientKeyException(String key) {
 		super(Message.duplicateClientKey(key));
+		
 	}
 
 }

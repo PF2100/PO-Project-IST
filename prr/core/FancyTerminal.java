@@ -2,8 +2,8 @@ package prr.core;
 
 public class FancyTerminal extends Terminal {
 
-    public FancyTerminal(String terminalID, Client owner, String Mode) {
-        super(terminalID, owner, Mode);
+    public FancyTerminal(String terminalID, Client owner) {
+        super(terminalID, owner);
     }
 
     public void makeVideoCall(Terminal to) {
