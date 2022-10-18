@@ -6,6 +6,9 @@ import pt.tecnico.uilib.menus.Command;
 import pt.tecnico.uilib.menus.CommandException;
 import prr.app.client.Message;
 
+import prr.core.exception.KeyAlreadyExistsException;
+
+
 
 /**
  * Register new client.
@@ -26,9 +29,8 @@ class DoRegisterClient extends Command<Network> {
     Integer taxID = integerField("taxID"); 
     try {
     _receiver.registerClient(key, name, taxID);
-    }catch(DuplicateClientKeyException dcke) {
+    }catch(KeyAlreadyExistsException kaee) {
       throw new DuplicateClientKeyException(key);
-
     }
   }
 }

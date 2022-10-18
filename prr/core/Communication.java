@@ -1,20 +1,34 @@
 package prr.core;
 
-public abstract class Communication {
+import java.io.Serializable;
+
+public abstract class Communication implements Serializable {
+    private static final long serialVersionUID = 202208091753L;
     private int _id;
     private boolean _isPaid;
     private double _cost;
     private boolean _isOngoing;
+    private static int _nComms;
 
-    public Communication() {
-        _id = 0; // falta corrigir
+    private Terminal _from;
+
+    private Terminal _to;
+
+    public Communication(Terminal from, Terminal to) {
+        _id = _nComms;
+        _from = from;
+        _to = to;
+        _nComms += 1;
         _isPaid = false;
-
     }
 
     public int getId() {
         return _id;
     }
+
+    public Terminal getFrom() {return _from;}
+
+    public Terminal getTo() {return _to;}
 
     public boolean isPaid() {
         return _isPaid;
@@ -28,10 +42,7 @@ public abstract class Communication {
         return _cost;
     }
 
-    public String toString() {
-        // falta implementar
-        return "oi";
-    }
+    public abstract String toString();
 
     protected abstract double computeCost ();
     // falta colocar o tarif plan como argumento ?

@@ -1,12 +1,18 @@
 package prr.core;
 
 import java.io.Serializable;
+import java.security.InvalidKeyException;
 import java.io.IOException;
+
 import prr.core.exception.UnrecognizedEntryException;
+import prr.core.exception.KeyAlreadyExistsException;
+import prr.core.exception.InvalidKeyNumberException;
+
 import prr.core.Parser;
 import prr.core.Terminal;
-import prr.app.exception.DuplicateClientKeyException;
 import prr.core.Client;
+import prr.core.exception.*;
+
 import prr.app.exception.DuplicateClientKeyException;
 
 import java.util.HashMap;
@@ -45,10 +51,10 @@ public class Network implements Serializable {
     _parser.parseFile(filename);
   }
 
-  public void registerClient(String id , String nome , int taxNumber) throws DuplicateClientKeyException { //É preciso adicionar a duplicateKeyexception
+  public void registerClient(String id , String nome , int taxNumber) throws KeyAlreadyExistsException { //É preciso adicionar a duplicateKeyexception
     
-    if ( _clients.get(id) != null) {
-      throw new DuplicateClientKeyException(id);
+    if (_clients.containsKey(id)) {
+      throw new KeyAlreadyExistsException();
     }
     else {
       Client client = new Client(id, nome, taxNumber);
@@ -57,32 +63,43 @@ public class Network implements Serializable {
   }
 
  
-  public Terminal registerTerminal(String type,String terminalID , String clientID ) {
+  public Terminal registerTerminal(String type,String terminalID , String clientID ) throws KeyAlreadyExistsException, UnknownClientException, InvalidKeyNumberException {
     Terminal terminal;
-    Client client = _clients.get(clientID); //Throw de nao existir client;
-    if ( type == "BASIC") {
-      terminal = new Terminal(terminalID,client);
+    Client client = getClient(clientID); //Throws UnknownClientException;
+    if (_terminals.containsKey(terminalID)) {
+      throw new KeyAlreadyExistsException();
+    }
+    if ( type.equals("BASIC")) {
+      terminal = new Terminal(terminalID,client); //Throws  InvalidKeyNumberException and NumberFormatException
     }
     else{
-      terminal = new FancyTerminal(terminalID,client);
+      terminal = new FancyTerminal(terminalID,client); //Throws  InvalidKeyNumberException and NumberFormatException
     }
-    client.addTerminal(terminal); //Faz sentido ter aqui o addTerminal? ou fazer isso no do Register
+    client.addTerminal(terminal);
+    _terminals.put(terminalID, terminal);
       return terminal;
   }
 
   public void addFriend(String terminal,String friend ) {
     Terminal friend1= _terminals.get(terminal);
     Terminal friend2 = _terminals.get(friend);
-    friend1.treatFriends(friend2);
+    friend1.addFriend(friend2);        //Colocar excecao do cliente n existir
     //FIXME é preciso mudar umas cenas
   }
 
-  public Map getClients () throws NullPointerException{
+  public Map<String,Client> getClients () { // aplicar clonable
     return _clients;
   }
 
-  public Map getTerminals () throws NullPointerException{
+  public Map<String,Terminal> getTerminals() { // aplicar clonable{
     return _terminals;
+  }
+
+  public Client getClient(String id) throws UnknownClientException {
+    if (!(_clients.containsKey(id))) {
+      throw new UnknownClientException();
+    }
+    return _clients.get(id);
   }
 }
 

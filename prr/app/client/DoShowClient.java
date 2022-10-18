@@ -4,7 +4,10 @@ import prr.app.exception.UnknownClientKeyException;
 import pt.tecnico.uilib.menus.Command;
 import pt.tecnico.uilib.menus.CommandException;
 import prr.app.client.Message;
-import prr.core.*;
+
+import prr.core.exception.UnknownClientException;
+import prr.core.Client;
+import prr.core.Network;
 import java.util.*;
 
 //FIXME add more imports if needed
@@ -21,12 +24,12 @@ class DoShowClient extends Command<Network> {
   
   @Override
   protected final void execute() throws CommandException {
+    String key = stringField("clientKey");
     try{
-    Map <String,Client> clients = _receiver.getClients();      //Colocar exceção de verificar se existe o Map está nulo ou não
-    Client client = clients.get(stringField("clientKey")); 
+    Client client = _receiver.getClient(key);      //Colocar exceção de verificar se existe o Map está nulo ou não
     _display.popup(client.toString()); 
-    }catch ( NullPointerException npe) {
-      throw new NullPointerException();
+    }catch ( UnknownClientException uce) {
+      throw new UnknownClientKeyException(key);
     }
   }
 }
