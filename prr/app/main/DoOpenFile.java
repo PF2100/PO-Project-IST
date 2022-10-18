@@ -6,6 +6,7 @@ import pt.tecnico.uilib.forms.Form;
 import pt.tecnico.uilib.menus.Command;
 import pt.tecnico.uilib.menus.CommandException;
 import prr.core.exception.ImportFileException;
+import prr.core.exception.UnavailableFileException;
 import prr.app.main.Message;
 //Add more imports if needed
 
@@ -21,12 +22,12 @@ class DoOpenFile extends Command<NetworkManager> {
 
   @Override
   protected final void execute()  throws CommandException {
-    String filename= stringField("filename");
+    String filename = stringField("filename");
     try {
-      _receiver.importFile(filename);
+      _receiver.load(filename);
     }
-    catch(ImportFileException ife) {
-      throw new  FileOpenFailedException(ife);
+    catch(UnavailableFileException ufe) {
+      throw new FileOpenFailedException(ufe);
     }
 
   }
