@@ -3,6 +3,9 @@ package prr.core;
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.Map;
+import java.util.regex.Pattern;
+
+import prr.core.exception.*;
 
 // FIXME add more import if needed (cannot import from pt.tecnico or prr.app)
 
@@ -21,7 +24,7 @@ public class Terminal implements Serializable /* FIXME maybe addd more interface
     @Serial
     private static final long serialVersionUID = 202208091753L;
     private final String _id;
-    private TerminalMode _mode; //É assim que funciona?
+    private TerminalMode _mode; 
     private double _debt;
     private double _payments;
     private Map<String, Terminal> _friends;
@@ -29,12 +32,15 @@ public class Terminal implements Serializable /* FIXME maybe addd more interface
     //Colocar Comunicacoes
 
 
-    public Terminal(String terminalID, Client owner) {
+    public Terminal(String terminalID, Client owner) throws NumberFormatException,InvalidKeyNumberException {
+        if(!(Pattern.matches("[0-9]{6}", terminalID))) {
+            throw new InvalidKeyNumberException(); 
+        }
         _id = terminalID;
         _debt = 0;
         _payments = 0;
         _owner = owner;
-        _mode = TerminalMode.valueOf("ON");
+        _mode = TerminalMode.ON;
     }
 
 // FIXME define attributes
@@ -159,10 +165,5 @@ public class Terminal implements Serializable /* FIXME maybe addd more interface
 
     public void addFriend(Terminal friend) {
         _friends.put(friend.getId(), friend);
-    }
-
-    public void treatFriends(Terminal friend) {
-        this.addFriend(friend);
-        friend.addFriend(this);
     }
 }
