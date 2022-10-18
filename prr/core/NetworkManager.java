@@ -1,12 +1,19 @@
 package prr.core;
 
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.BufferedInputStream;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 
 import prr.core.exception.ImportFileException;
 import prr.core.exception.MissingFileAssociationException;
 import prr.core.exception.UnavailableFileException;
 import prr.core.exception.UnrecognizedEntryException;
+
+import java.io.OutputStream;
 
 //FIXME add more import if needed (cannot import from pt.tecnico or prr.app)
 
@@ -17,10 +24,12 @@ public class NetworkManager {
 
   /** The network itself. */
   private Network _network = new Network();
-  //FIXME  addmore fields if needed
+  private String _file = "";
+
   
   public Network getNetwork() {
     return _network;
+    
   }
   
   /**
@@ -30,7 +39,12 @@ public class NetworkManager {
    *         an error while processing this file.
    */
   public void load(String filename) throws UnavailableFileException {
-    //FIXME implement serialization method
+    try (ObjectInputStream input = new ObjectInputStream(new FileInputStream(filename))) {
+      _network = (Network) input.readObject();
+      _file = filename;
+    }catch ( ClassNotFoundException | IOException e ) {
+      throw new UnavailableFileException(filename);
+    }
   }
   
   /**
@@ -41,7 +55,12 @@ public class NetworkManager {
    * @throws IOException if there is some error while serializing the state of the network to disk.
    */
   public void save() throws FileNotFoundException, MissingFileAssociationException, IOException {
-    //FIXME implement serialization method
+    if(_file.isBlank() || _file == null ) {
+      throw new MissingFileAssociationException();
+    }
+    try(ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(_file))) {
+      oos.writeObject(_network);
+    }
   }
   
   /**
@@ -54,7 +73,8 @@ public class NetworkManager {
    * @throws IOException if there is some error while serializing the state of the network to disk.
    */
   public void saveAs(String filename) throws FileNotFoundException, MissingFileAssociationException, IOException {
-    //FIXME implement serialization method
+    _file = filename;
+    save();
   }
   
   /**
