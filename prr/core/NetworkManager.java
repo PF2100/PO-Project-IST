@@ -8,6 +8,11 @@ import prr.core.exception.MissingFileAssociationException;
 import prr.core.exception.UnavailableFileException;
 import prr.core.exception.UnrecognizedEntryException;
 
+import java.io.ObjectOutputStream;
+
+
+
+
 //FIXME add more import if needed (cannot import from pt.tecnico or prr.app)
 
 /**
@@ -17,7 +22,8 @@ public class NetworkManager {
 
   /** The network itself. */
   private Network _network = new Network();
-  //FIXME  addmore fields if needed
+  private String _filename = "";
+  
   
   public Network getNetwork() {
     return _network;
@@ -41,7 +47,7 @@ public class NetworkManager {
    * @throws IOException if there is some error while serializing the state of the network to disk.
    */
   public void save() throws FileNotFoundException, MissingFileAssociationException, IOException {
-    //FIXME implement serialization method
+    
   }
   
   /**

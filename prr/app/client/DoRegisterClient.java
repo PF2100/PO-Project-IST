@@ -23,7 +23,7 @@ class DoRegisterClient extends Command<Network> {
   }
   
   @Override
-  protected final void execute() throws CommandException { //É preciso lançar a duplicateKeyException
+  protected final void execute() throws CommandException { 
     String name = stringField("name");
     String key = stringField("chave");
     Integer taxID = integerField("taxID"); 

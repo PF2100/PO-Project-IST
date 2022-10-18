@@ -73,8 +73,14 @@ public class Client implements Serializable {
 
 
     public String toString() {
-        return "CLIENT|"+ _key +"|"+_name+"|" +_taxNumber + "|" + _level +"|" + _terminals.size() + "|" + getPayments()
-                + "|" + getDebts();
+        String status ;
+        if( _receiveNotifications) {
+            status = "YES";
+        }
+        else {status = "NO";}
+
+        return "CLIENT|"+ _name +"|"+_key+"|" +_taxNumber + "|" + _level +"|" + status + "|" + _terminals.size() + "|" + Math.round(getPayments())
+                + "|" + Math.round(getDebts());
 
     }
 
