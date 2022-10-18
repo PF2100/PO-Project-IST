@@ -51,7 +51,7 @@ public class Network implements Serializable {
     _parser.parseFile(filename);
   }
 
-  public void registerClient(String id , String nome , int taxNumber) throws KeyAlreadyExistsException { //É preciso adicionar a duplicateKeyexception
+  public void registerClient(String id, String nome, int taxNumber) throws KeyAlreadyExistsException { //É preciso adicionar a duplicateKeyexception
     
     if (_clients.containsKey(id)) {
       throw new KeyAlreadyExistsException();
