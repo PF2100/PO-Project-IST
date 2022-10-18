@@ -19,8 +19,8 @@ public class FancyTerminal extends Terminal {
 
     @Override
     public String toString() {
-        String message = "FANCY" +"|"+ super.getId() + "|" + super.getOwner().getKey() + "|" + super.getMode()
-                + "|" + super.getPayments() + "|" + super.getDebt();
+        String message = "FANCY" +"|"+ getId() + "|" + getOwner().getKey() + "|" + getMode()
+                + "|" + Math.round(getPayments()) + "|" + Math.round(getDebt());
         /* 
         for (String terminalID : super.getFriends().keySet()) {
             message = message + "|" + terminalID;

@@ -132,7 +132,8 @@ public class Terminal implements Serializable /* FIXME maybe addd more interface
     }
 
     public String toString() {
-        String message = "BASIC" +"|"+ _id + "|" + _owner.getKey() + "|" + _mode + "|" + _payments + "|" + _debt;
+        String message = "BASIC" +"|"+ _id + "|" + _owner.getKey() + "|" + _mode + "|" + Math.round(_payments)
+                + "|" + Math.round(_debt);
 
         /* 
         for (String terminalID : _friends.keySet()) {
