@@ -15,7 +15,7 @@ enum ClientLevel {
 
 public class Client implements Serializable {
 
-    private static final long serialVersionUID = 202210141616L;
+    private static final long serialVersionUID = 202208091753L;
 
     private String _key; // Client's unique key
     private String _name;
@@ -60,7 +60,7 @@ public class Client implements Serializable {
     }
 
     public List<Terminal> getTerminals () {                //Returns a list of all the client's terminals using the HashMap _terminals
-        List <Terminal> terminals = new ArrayList<>();
+        List <Terminal> terminals = new ArrayList<>();     
         for ( String terminalID : _terminals.keySet()) {
             terminals.add(_terminals.get(terminalID));
         }

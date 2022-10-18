@@ -68,7 +68,7 @@ public class Parser {
 
   // parse a line with format terminal-type|idTerminal|idClient|state
    
-  private void parseTerminal(String[] components, String line) throws UnrecognizedEntryException {
+  private void parseTerminal(String[] components, String line) throws UnrecognizedEntryException{
     checkComponentsLength(components, 4, line);
 
     try {

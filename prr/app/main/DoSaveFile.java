@@ -16,6 +16,10 @@ class DoSaveFile extends Command<NetworkManager> {
   
   @Override
   protected final void execute() {
+    Form f = new Form();
+    f.addStringField(null, null);
+    f.parse();
     //FIXME implement command and create a local Form
+    //String res = Form.requestString(mensagem)
   }
 }
