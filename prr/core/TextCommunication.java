@@ -1,6 +1,9 @@
 package prr.core;
 
-public class TextCommunication extends Communication {
+import java.io.Serializable;
+
+public class TextCommunication extends Communication implements Serializable {
+    private static final long serialVersionUID = 202208091753L;
     private String _message;
 
     public TextCommunication(Terminal from, Terminal to, String message) {
