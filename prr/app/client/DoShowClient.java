@@ -26,8 +26,7 @@ class DoShowClient extends Command<Network> {
   protected final void execute() throws CommandException {
     String key = stringField("clientKey");
     try{
-    Client client = _receiver.getClient(key);      //Colocar exceção de verificar se existe o Map está nulo ou não
-    _display.popup(client.toString()); 
+      _display.popup(_receiver.showClient(key));
     }catch ( UnknownClientException uce) {
       throw new UnknownClientKeyException(key);
     }

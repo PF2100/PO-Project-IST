@@ -7,6 +7,8 @@ import pt.tecnico.uilib.menus.Command;
 import pt.tecnico.uilib.menus.CommandException;
 import prr.app.terminals.Message;
 import java.util.Map;
+import prr.app.exception.*;
+import prr.core.exception.*;
 
 //FIXME add mode import if needed
 
@@ -23,8 +25,12 @@ class DoOpenMenuTerminalConsole extends Command<Network> {
   @Override
   protected final void execute() throws CommandException { //Adicionar exceção denão existir este terminal
     String terminalNumber = stringField("terminal");
-    Map<String,Terminal> terminals = _receiver.getTerminals();
-    Terminal terminal = terminals.get(terminalNumber);
-    (new prr.app.terminal.Menu(_receiver,terminal)).open();
+    try {
+      Terminal terminal = _receiver.getTerminal(terminalNumber);
+      (new prr.app.terminal.Menu(_receiver,terminal)).open();
+    }catch(UnknownClientException uce ) {
+      throw new UnknownTerminalKeyException(terminalNumber);
+    }
+    
   }
 }

@@ -26,7 +26,7 @@ public class Client implements Serializable {
     private Map<String,Terminal> _terminals;
 
 
-    public Client(String name, String key, int taxNumber) {
+    public Client(String key, String name, int taxNumber) {
         _key = key;
         _name = name;
         _taxNumber = taxNumber;
@@ -101,4 +101,6 @@ public class Client implements Serializable {
         }
         return payments;
     } 
+
+    
 }

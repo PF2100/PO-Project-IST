@@ -5,6 +5,9 @@ import pt.tecnico.uilib.menus.Command;
 import pt.tecnico.uilib.menus.CommandException;
 import prr.core.Client;
 import java.util.Map;
+import java.util.*;
+
+import prr.core.exception.UnknownClientException;
 //FIXME add more imports if needed
 
 /**
@@ -18,15 +21,10 @@ class DoShowAllClients extends Command<Network> {
   
   @Override
   protected final void execute() throws CommandException {
-    try{
-      Map<String,Client> clients = _receiver.getClients();
-      for (String clientID : clients.keySet()){
-        String client = (clients.get(clientID)).toString();
-        _display.addLine(client);
+      List<String> clients = _receiver.showClients();
+      for (String clientString : clients ){
+        _display.addLine(clientString);
       }
       _display.display();
-    }catch(NullPointerException npe) {
-      throw new NullPointerException();
-    }
   }
 }

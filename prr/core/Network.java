@@ -17,6 +17,10 @@ import prr.app.exception.DuplicateClientKeyException;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Collections;
+import java.util.Comparator;
 
 
 // FIXME add more import if needed (cannot import from pt.tecnico or prr.app)
@@ -101,5 +105,54 @@ public class Network implements Serializable {
     }
     return _clients.get(id);
   }
+
+  public String showClient(String clientID)  throws UnknownClientException {
+    if (!(_clients.containsKey(clientID))) {
+      throw new UnknownClientException();
+    }
+    return _clients.get(clientID).toString();
+  }
+
+  public Terminal getTerminal(String terminalID) throws UnknownClientException {
+    if(!(_terminals.containsKey(terminalID))) {
+      throw new UnknownClientException();
+    }
+    return _terminals.get(terminalID);
+  }
+
+  public List<String> showClients()  {
+    List<String> clientsToString = new ArrayList<>();
+    List<String> clientIDS = new ArrayList<>(_clients.keySet());
+    Collections.sort(clientIDS,new IdComparator());
+
+    for ( String elemento : clientIDS) {
+      clientsToString.add(_clients.get(elemento).toString());
+    }
+    return clientsToString;
+  }
+
+  public String Terminal(String terminalID)  throws UnknownClientException {
+    if (!(_terminals.containsKey(terminalID))) {
+      throw new UnknownClientException();
+    }
+    return _terminals.get(terminalID).toString();
+  }
+
+  public List<String> showTerminals()  {
+    List<String> terminalsToString = new ArrayList<>();
+    List<String> terminalIDS = new ArrayList<>(_terminals.keySet());
+    Collections.sort(terminalIDS,new IdComparator());
+
+    for ( String elemento : terminalIDS) {
+      terminalsToString.add(_terminals.get(elemento).toString());
+    }
+    return terminalsToString;
+  }
 }
+
+  class IdComparator implements Comparator<String> {
+    public int compare(String id1, String id2) {
+      return id1.compareToIgnoreCase(id2);
+    }
+  }
 

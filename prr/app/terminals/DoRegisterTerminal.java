@@ -24,7 +24,7 @@ class DoRegisterTerminal extends Command<Network> {
   DoRegisterTerminal(Network receiver) {
     super(Label.REGISTER_TERMINAL, receiver);
     addStringField("key", Message.terminalKey());
-    addOptionField("type","Introduza Tipo do Terminal: ","FANCY","BASIC");
+    addOptionField("type", Message.terminalType(),"FANCY","BASIC");
     addStringField("clientID",Message.clientKey());
 
   }
@@ -43,7 +43,7 @@ class DoRegisterTerminal extends Command<Network> {
       throw new InvalidTerminalKeyException(key);
     }
     catch(KeyAlreadyExistsException kaee) {
-      throw new DuplicateClientKeyException(key);
+      throw new DuplicateTerminalKeyException(key);
     }
   }
 }
