@@ -11,7 +11,7 @@ import prr.core.exception.*;
 
 enum TerminalMode {
     BUSY,
-    ON,
+    IDLE,
     SILENCE,
     OFF
 }
@@ -40,7 +40,7 @@ public class Terminal implements Serializable /* FIXME maybe addd more interface
         _debt = 0;
         _payments = 0;
         _owner = owner;
-        _mode = TerminalMode.ON;
+        _mode = TerminalMode.IDLE;
     }
 
 // FIXME define attributes
@@ -96,16 +96,16 @@ public class Terminal implements Serializable /* FIXME maybe addd more interface
 
     public boolean setOnIdle() { // É suposto dar true
 
-        if (_mode == TerminalMode.ON) {
+        if (_mode == TerminalMode.IDLE) {
             return false;
         } else {
-            _mode = TerminalMode.ON;
+            _mode = TerminalMode.IDLE;
             return true;
         }
     }
 
     public boolean setBusy() {
-        if (_mode == TerminalMode.ON || _mode == TerminalMode.SILENCE) {
+        if (_mode == TerminalMode.IDLE || _mode == TerminalMode.SILENCE) {
             _mode = TerminalMode.BUSY;
             return true;
         } else {
@@ -114,7 +114,7 @@ public class Terminal implements Serializable /* FIXME maybe addd more interface
     }
 
     public boolean setOnSilent() {
-        if (_mode == TerminalMode.ON || _mode == TerminalMode.BUSY) {
+        if (_mode == TerminalMode.IDLE || _mode == TerminalMode.BUSY) {
             _mode = TerminalMode.SILENCE;
             return true;
         } else {
@@ -123,7 +123,7 @@ public class Terminal implements Serializable /* FIXME maybe addd more interface
     }
 
     public boolean turnOff() {
-        if (_mode == TerminalMode.ON || _mode == TerminalMode.SILENCE) {
+        if (_mode == TerminalMode.IDLE || _mode == TerminalMode.SILENCE) {
             _mode = TerminalMode.OFF;
             return true;
         } else {

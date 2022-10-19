@@ -7,6 +7,7 @@ import prr.core.Network;
 import prr.core.Terminal;
 import pt.tecnico.uilib.menus.Command;
 import pt.tecnico.uilib.menus.CommandException;
+import java.util.*;
 
 //FIXME add more imports if needed
 
@@ -21,9 +22,9 @@ class DoShowAllTerminals extends Command<Network> {
 
   @Override
   protected final void execute() throws CommandException {
-    Map<String,Terminal> terminals = _receiver.getTerminals();
-    for(String terminalID: terminals.keySet()) {
-      _display.addLine(terminals.get(terminalID));
+    List<String> terminals = _receiver.showTerminals();
+    for (String terminalString : terminals ){
+      _display.addLine(terminalString);
     }
     _display.display();
   }
