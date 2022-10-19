@@ -29,6 +29,9 @@ public class Terminal implements Serializable /* FIXME maybe addd more interface
     private double _payments;
     private Map<String, Terminal> _friends;
     private Client _owner;
+    private Map<String,Communication> _madeCommunications;
+    private Map<String,Communication> _receivedCommunications;
+    private InteractiveCommunication _ongoingCommunication;
     //Colocar Comunicacoes
 
 
@@ -150,8 +153,11 @@ public class Terminal implements Serializable /* FIXME maybe addd more interface
      * it was the originator of this communication.
      **/
     public boolean canEndCurrentCommunication() {
-        // FIXME add implementation code
-        return true; // Tava a dar erro
+        if ( _mode == TerminalMode.BUSY && _ongoingCommunication != null && (_ongoingCommunication.getFrom()).getId().equals(_id))
+            return true; 
+        else{
+            return false;
+        }
     }
 
     /**
@@ -160,8 +166,11 @@ public class Terminal implements Serializable /* FIXME maybe addd more interface
      * @return true if this terminal is neither off neither busy, false otherwise.
      **/
     public boolean canStartCommunication() {
-        // FIXME add implementation code
-        return true; // Tava a dar erro
+        if( _mode != TerminalMode.OFF && _mode != TerminalMode.BUSY) {
+            return true;
+        }
+        return false;
+        
     }
 
     public void addFriend(Terminal friend) {
