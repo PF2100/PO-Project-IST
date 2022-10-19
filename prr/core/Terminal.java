@@ -2,9 +2,10 @@ package prr.core;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Map;
+import java.util.Set;
 import java.util.regex.Pattern;
-
 import prr.core.exception.*;
 
 // FIXME add more import if needed (cannot import from pt.tecnico or prr.app)
@@ -64,6 +65,21 @@ public class Terminal implements Serializable /* FIXME maybe addd more interface
 
     public double getPayments() {
         return _payments;
+    }
+
+    public ArrayList<String> getMadeCommunications() {
+        if (_madeCommunications == null) {
+            return null;
+        }
+
+        return new ArrayList<>(_madeCommunications.keySet());
+    }
+
+    public ArrayList<String> getReceivedCommunications() {
+        if (_receivedCommunications == null) {
+            return null;
+        }
+        return new ArrayList<>(_receivedCommunications.keySet());
     }
 
     public Map<String, Terminal> getFriends() {

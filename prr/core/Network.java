@@ -1,5 +1,6 @@
 package prr.core;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.security.InvalidKeyException;
 import java.io.IOException;
@@ -34,6 +35,7 @@ public class Network implements Serializable {
   private Map<String,Terminal> _terminals = new HashMap<>();
 
   /** Serial number for serialization. */
+  @Serial
   private static final long serialVersionUID = 202208091753L;
   
   // FIXME define attributes
@@ -146,6 +148,19 @@ public class Network implements Serializable {
     for ( String elemento : terminalIDS) {
       terminalsToString.add(_terminals.get(elemento).toString());
     }
+    return terminalsToString;
+  }
+
+  public List<String> showUnusedTerminals()  {
+    List<String> terminalsToString = new ArrayList<>();
+    List<String> terminalIDS = new ArrayList<>(_terminals.keySet());
+    Collections.sort(terminalIDS,new IdComparator());
+
+    for (String elemento : terminalIDS) {
+     if (_terminals.get(elemento).getMadeCommunications() == null &&
+             _terminals.get(elemento).getReceivedCommunications() == null) {
+       terminalsToString.add(_terminals.get(elemento).toString());
+     }}
     return terminalsToString;
   }
 }
