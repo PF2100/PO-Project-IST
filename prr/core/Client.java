@@ -21,8 +21,7 @@ public class Client implements Serializable {
     private String _name;
     private int _taxNumber;
     private ClientLevel _level; // Client's Tariff Level
-    private boolean _receiveNotifications;
-    // Plano tarifario se implementar
+    private boolean _receiveNotifications; //Client notification settings
     private Map<String,Terminal> _terminals;
 
 
@@ -35,72 +34,53 @@ public class Client implements Serializable {
         _terminals = new HashMap<>();
     }
 
-    public String getKey() {
-        return _key;
-    }
+    public String getKey() {return _key;}
 
-    public String getName() {
-        return _name;
-    }
+    public String getName() {return _name;}
 
-    public int getTaxNumber() {
-        return _taxNumber;
-    }
+    public int getTaxNumber() {return _taxNumber;}
 
-    public void turnNotificationsOn() {
-        _receiveNotifications = true;
-    }
+    public void turnNotificationsOn() {_receiveNotifications = true;}
 
-    public void turnNotificationsOff() {
-        _receiveNotifications = false;
-    }
+    public void turnNotificationsOff() {_receiveNotifications = false;}
 
-    public void addTerminal(Terminal terminal) {
-        _terminals.put(terminal.getId(),terminal);
-    }
+    public void addTerminal(Terminal terminal) {_terminals.put(terminal.getId(),terminal);}
 
-    public List<Terminal> getTerminals () {                //Returns a list of all the client's terminals using the HashMap _terminals
-        List <Terminal> terminals = new ArrayList<>();     
-        for ( String terminalID : _terminals.keySet()) {
-            terminals.add(_terminals.get(terminalID));
-        }
+
+
+    //Returns a list of all the client's terminals 
+    public List<String> getTerminals () { 
+        List <String> terminals = new ArrayList<>(_terminals.keySet());     
         return terminals;
     }
 
-    public void alterClientLevel(String clientLevel) {     //Alters the clientLevel using a String
-        _level = ClientLevel.valueOf(clientLevel);
-    }
+    //Alters the clientLevel to the Input
+    public void alterClientLevel(String clientLevel) {_level = ClientLevel.valueOf(clientLevel);}
 
 
     public String toString() {
-        String notifications;
-        if (_receiveNotifications) {
-            notifications = "YES";
-        }
-        else {notifications = "NO";}
+        String notifications = "YES";
+        if ( !_receiveNotifications) {notifications = "NO";} // if the client does not have the notification on the string is "NO"
 
         return "CLIENT|"+ _key +"|"+_name+"|" +_taxNumber + "|" + _level +"|" + notifications +"|"
                 + _terminals.size() + "|" + Math.round(getPayments()) + "|" + Math.round(getDebts());
-
     }
 
-    public double getDebts() {  //Iterates through the hashMap of terminals to obtain all of their debt values
+    //Iterates through the terminals to obtain all of their debt values
+    public double getDebts() {  
         double debt = 0;
-        for ( String terminalID : _terminals.keySet()) {     
-            Terminal terminal = _terminals.get(terminalID);
+        for ( Terminal terminal : _terminals.values()) {     
             debt += terminal.getDebt();
         }
         return debt;
     }
 
-    public double getPayments() { //Iterates through the hashMap of terminals to obtain all of their payment values
+    //Iterates through the terminals to obtain all of their payment values
+    public double getPayments() { 
         double payments = 0;
-        for ( String terminalID : _terminals.keySet()) {
-            Terminal terminal = _terminals.get(terminalID);
+        for ( Terminal terminal : _terminals.values()) {
             payments += terminal.getPayments();
         }
         return payments;
     } 
-
-    
 }

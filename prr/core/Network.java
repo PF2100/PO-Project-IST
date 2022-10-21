@@ -38,16 +38,12 @@ public class Network implements Serializable {
   @Serial
   private static final long serialVersionUID = 202208091753L;
   
-  // FIXME define attributes
-  // FIXME define contructor(s)
-  // FIXME define methods
-  
   /**
    * Read text input file and create corresponding domain entities.
    * 
    * @param filename name of the text input file
    * @throws UnrecognizedEntryException if some entry is not correct
-   * @throws IOException if there is an IO erro while processing the text file
+   * @throws IOException if there is an IO error while processing the text file
    */
   
   
@@ -57,24 +53,37 @@ public class Network implements Serializable {
     _parser.parseFile(filename);
   }
 
-  public void registerClient(String id, String nome, int taxNumber) throws KeyAlreadyExistsException { //É preciso adicionar a duplicateKeyexception
+  
+  /** 
+   * @param key  client's key
+   * @param nome Client's name
+   * @throws KeyAlreadyExistsExceptionif If already exists a client with the inputed key, then throws the exception
+   */
+  public void registerClient(String key, String nome, int taxNumber) throws KeyAlreadyExistsException {
     
-    if (_clients.containsKey(id)) {
-      throw new KeyAlreadyExistsException();
-    }
+    if (_clients.containsKey(key)) {throw new KeyAlreadyExistsException();}
     else {
-      Client client = new Client(id, nome, taxNumber);
-      _clients.put(id, client);
+      Client client = new Client(key, nome, taxNumber);
+      _clients.put(key, client);
     }
   }
 
  
-  public Terminal registerTerminal(String type,String terminalID , String clientID ) throws KeyAlreadyExistsException, UnknownClientException, InvalidKeyNumberException {
+  
+  /** 
+   * @param type Terminal type (FANCY or BASIC)
+   * @param terminalkey Terminal's key
+   * @param clientKey Client's key associated with the terminal
+   * @return Terminal
+   * @throws KeyAlreadyExistsException if the terminal key already exists then throws the exception
+   * @throws UnknownClientException   if the client associated with the terminal doesn't exist, throws the exception
+   * @throws InvalidKeyNumberException if the terminal key is invalid , throws the exception
+   */
+
+  public Terminal registerTerminal(String type,String terminalID , String clientKey ) throws KeyAlreadyExistsException, UnknownClientException, InvalidKeyNumberException {
     Terminal terminal;
-    Client client = getClient(clientID); //Throws UnknownClientException;
-    if (_terminals.containsKey(terminalID)) {
-      throw new KeyAlreadyExistsException();
-    }
+    Client client = getClient(clientKey); //Throws UnknownClientException;
+    if (_terminals.containsKey(terminalID)) {throw new KeyAlreadyExistsException();}
     if ( type.equals("BASIC")) {
       terminal = new Terminal(terminalID,client); //Throws  InvalidKeyNumberException and NumberFormatException
     }
@@ -86,35 +95,61 @@ public class Network implements Serializable {
       return terminal;
   }
 
+  
+  /** 
+   * @param terminal Terminal who will befriend another Terminal
+   * @param friend Terminal who will be the friend
+   */
   public void addFriend(String terminal,String friend ) {
     Terminal friend1= _terminals.get(terminal);
     Terminal friend2 = _terminals.get(friend);
-    friend1.addFriend(friend2);        //Colocar excecao do cliente n existir
-    //FIXME é preciso mudar umas cenas
+    friend1.addFriend(friend2);
   }
 
-  public Map<String,Client> getClients () { // aplicar clonable
-    return _clients;
-  }
-
-  public Map<String,Terminal> getTerminals() { // aplicar clonable{
-    return _terminals;
-  }
-
-  public Client getClient(String id) throws UnknownClientException {
-    if (!(_clients.containsKey(id))) {
+  
+  /** 
+   * @param key Client's key
+   * @return Client associated with the client's key
+   * @throws UnknownClientException if there is no client associated with the client's key
+   */
+  public Client getClient(String key) throws UnknownClientException {
+    if (!(_clients.containsKey(key))) {
       throw new UnknownClientException();
     }
-    return _clients.get(id);
+    return _clients.get(key);
   }
 
-  public String showClient(String clientID)  throws UnknownClientException {
-    if (!(_clients.containsKey(clientID))) {
-      throw new UnknownClientException();
+  
+  /** 
+   * @param clientKey Client's key
+   * @return Client's toString form 
+   * @throws UnknownClientException if there is no client associated with the client's key
+   */
+  public String showClient(String clientKey)  throws UnknownClientException {
+    Client client = getClient(clientKey); 
+    return _clients.get(clientKey).toString();
+  }
+
+
+    /** 
+   * @return List<String>
+   */
+  public List<String> showClients()  {
+    List<String> clientsToString = new ArrayList<>();
+    List<String> clientKeys = new ArrayList<>(_clients.keySet());
+    Collections.sort(clientKeys,new IdComparator());
+
+    for ( String elemento : clientKeys) {
+      clientsToString.add(_clients.get(elemento).toString());
     }
-    return _clients.get(clientID).toString();
+    return clientsToString;
   }
-
+  
+  /** 
+   * @param terminalID terminal's ID
+   * @return Terminal associated with the terminalID 
+   * @throws UnknownClientException if there is no terminal associated with the terminalID
+   */
   public Terminal getTerminal(String terminalID) throws UnknownClientException {
     if(!(_terminals.containsKey(terminalID))) {
       throw new UnknownClientException();
@@ -122,41 +157,44 @@ public class Network implements Serializable {
     return _terminals.get(terminalID);
   }
 
-  public List<String> showClients()  {
-    List<String> clientsToString = new ArrayList<>();
-    List<String> clientIDS = new ArrayList<>(_clients.keySet());
-    Collections.sort(clientIDS,new IdComparator());
-
-    for ( String elemento : clientIDS) {
-      clientsToString.add(_clients.get(elemento).toString());
-    }
-    return clientsToString;
-  }
-
-  public String Terminal(String terminalID)  throws UnknownClientException {
-    if (!(_terminals.containsKey(terminalID))) {
-      throw new UnknownClientException();
-    }
+  
+  /** 
+   * @param terminalID terminal's ID
+   * @return terminal's toString form
+   * @throws UnknownClientException if there is no terminal associated with termnalID
+   */
+  public String showTerminal(String terminalID)  throws UnknownClientException {
+    Terminal terminal = getTerminal(terminalID);
     return _terminals.get(terminalID).toString();
   }
 
-  public List<String> showTerminals()  {
+  
+  /** 
+   * @return String list with all of the toString form of all the Terminals
+   */
+  public List<String> showTerminals() {
     List<String> terminalsToString = new ArrayList<>();
-    List<String> terminalIDS = new ArrayList<>(_terminals.keySet());
-    Collections.sort(terminalIDS,new IdComparator());
+    List<String> terminalIDs = new ArrayList<>(_terminals.keySet());
+    Collections.sort(terminalIDs,new IdComparator());
 
-    for ( String elemento : terminalIDS) {
+    for ( String elemento : terminalIDs) {
       terminalsToString.add(_terminals.get(elemento).toString());
     }
     return terminalsToString;
   }
 
+  
+  /** 
+   * @return String list with all of the toString form of all the unused Terminals
+   */
+
+
   public List<String> showUnusedTerminals()  {
     List<String> terminalsToString = new ArrayList<>();
-    List<String> terminalIDS = new ArrayList<>(_terminals.keySet());
-    Collections.sort(terminalIDS,new IdComparator());
+    List<String> terminalIDs = new ArrayList<>(_terminals.keySet());
+    Collections.sort(terminalIDs,new IdComparator());
 
-    for (String elemento : terminalIDS) {
+    for (String elemento : terminalIDs) {
      if (_terminals.get(elemento).getMadeCommunications() == null &&
              _terminals.get(elemento).getReceivedCommunications() == null) {
        terminalsToString.add(_terminals.get(elemento).toString());
@@ -165,9 +203,11 @@ public class Network implements Serializable {
   }
 }
 
+
+
   class IdComparator implements Comparator<String> {
-    public int compare(String id1, String id2) {
-      return id1.compareToIgnoreCase(id2);
+    public int compare(String key1, String key2) {
+      return key1.compareToIgnoreCase(key2);
     }
   }
 

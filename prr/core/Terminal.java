@@ -8,7 +8,9 @@ import java.util.Set;
 import java.util.regex.Pattern;
 import prr.core.exception.*;
 
-// FIXME add more import if needed (cannot import from pt.tecnico or prr.app)
+/*
+ *  Enum values that represent the Terminal's Mode
+ */
 
 enum TerminalMode {
     BUSY,
@@ -24,6 +26,7 @@ public class Terminal implements Serializable /* FIXME maybe addd more interface
      */
     @Serial
     private static final long serialVersionUID = 202208091753L;
+
     private final String _id;
     private TerminalMode _mode; 
     private double _debt;
@@ -33,7 +36,6 @@ public class Terminal implements Serializable /* FIXME maybe addd more interface
     private Map<String,Communication> _madeCommunications;
     private Map<String,Communication> _receivedCommunications;
     private InteractiveCommunication _ongoingCommunication;
-    //Colocar Comunicacoes
 
 
     public Terminal(String terminalID, Client owner) throws NumberFormatException,InvalidKeyNumberException {
@@ -47,33 +49,22 @@ public class Terminal implements Serializable /* FIXME maybe addd more interface
         _mode = TerminalMode.IDLE;
     }
 
-// FIXME define attributes
-// FIXME define contructor(s)
-// FIXME define methods
 
-    public String getId() {
-        return _id;
-    }
+    public String getId() {return _id;}
 
-    public TerminalMode getMode() {
-        return _mode;
-    }
+    public TerminalMode getMode() {return _mode;}
 
-    public double getDebt() {
-        return _debt;
-    }
+    public double getDebt() {return _debt;}
 
-    public double getPayments() {
-        return _payments;
-    }
+    public double getPayments() {return _payments;}
 
     public ArrayList<String> getMadeCommunications() {
         if (_madeCommunications == null) {
             return null;
         }
-
         return new ArrayList<>(_madeCommunications.keySet());
     }
+
 
     public ArrayList<String> getReceivedCommunications() {
         if (_receivedCommunications == null) {
@@ -82,13 +73,9 @@ public class Terminal implements Serializable /* FIXME maybe addd more interface
         return new ArrayList<>(_receivedCommunications.keySet());
     }
 
-    public Map<String, Terminal> getFriends() {
-        return _friends;
-    }
+    public Map<String, Terminal> getFriends() {return _friends;}
 
-    public Client getOwner() {
-        return _owner;
-    }
+    public Client getOwner() {return _owner;}
 
 
     public void makeSMS(Terminal to, String message) {
@@ -113,33 +100,27 @@ public class Terminal implements Serializable /* FIXME maybe addd more interface
         this.setOnIdle();
     }
 
-    public boolean setOnIdle() { // É suposto dar true
+    public boolean setOnIdle() { //Sets the terminal Mode to Idle
 
-        if (_mode == TerminalMode.IDLE) {
-            return false;
-        } else {
+        if (_mode == TerminalMode.IDLE) { return false; }
+        else {
             _mode = TerminalMode.IDLE;
             return true;
-        }
-    }
+        }}
 
     public boolean setBusy() {
         if (_mode == TerminalMode.IDLE || _mode == TerminalMode.SILENCE) {
             _mode = TerminalMode.BUSY;
             return true;
-        } else {
-            return false;
-        }
-    }
+        } 
+        else {return false;}}
 
     public boolean setOnSilent() {
         if (_mode == TerminalMode.IDLE || _mode == TerminalMode.BUSY) {
             _mode = TerminalMode.SILENCE;
             return true;
-        } else {
-            return false;
-        }
-    }
+        } 
+        else {return false;}}
 
     public boolean turnOff() {
         if (_mode == TerminalMode.IDLE || _mode == TerminalMode.SILENCE) {
