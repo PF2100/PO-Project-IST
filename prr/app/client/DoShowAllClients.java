@@ -8,7 +8,6 @@ import java.util.Map;
 import java.util.*;
 
 import prr.core.exception.UnknownClientException;
-//FIXME add more imports if needed
 
 /**
  * Show all clients.

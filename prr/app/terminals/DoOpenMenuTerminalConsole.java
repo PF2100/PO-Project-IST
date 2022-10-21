@@ -10,8 +10,6 @@ import java.util.Map;
 import prr.app.exception.*;
 import prr.core.exception.*;
 
-//FIXME add mode import if needed
-
 /**
  * Open a specific terminal's menu.
  */

@@ -9,8 +9,6 @@ import pt.tecnico.uilib.menus.Command;
 import pt.tecnico.uilib.menus.CommandException;
 import java.util.*;
 
-//FIXME add more imports if needed
-
 /**
  * Show all terminals.
  */
