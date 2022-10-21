@@ -28,7 +28,7 @@ class DoOpenMenuTerminalConsole extends Command<Network> {
     try {
       Terminal terminal = _receiver.getTerminal(terminalNumber);
       (new prr.app.terminal.Menu(_receiver,terminal)).open();
-    }catch(UnknownClientException uce ) {
+    }catch(UnknownTerminalException ute ) {
       throw new UnknownTerminalKeyException(terminalNumber);
     }
     

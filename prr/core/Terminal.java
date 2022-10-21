@@ -38,9 +38,9 @@ public class Terminal implements Serializable /* FIXME maybe addd more interface
     private InteractiveCommunication _ongoingCommunication;
 
 
-    public Terminal(String terminalID, Client owner) throws NumberFormatException,InvalidKeyNumberException {
+    public Terminal(String terminalID, Client owner) throws InvalidKeyNumberException {
         if(!(Pattern.matches("[0-9]{6}", terminalID))) {
-            throw new InvalidKeyNumberException(); 
+            throw new InvalidKeyNumberException(terminalID); 
         }
         _id = terminalID;
         _debt = 0;

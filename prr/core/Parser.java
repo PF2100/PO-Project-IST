@@ -61,8 +61,8 @@ public class Parser {
       _network.registerClient(components[1], components[2], taxNumber);
     } catch (NumberFormatException nfe) {
       throw new UnrecognizedEntryException("Invalid number in line " + line, nfe);
-    } catch (Exception e) { // Trocar exception
-      throw new UnrecognizedEntryException("Invalid specification in line: " + line, e);
+    } catch (KeyAlreadyExistsException kaee) { // Trocar exception
+      throw new UnrecognizedEntryException("Invalid specification in line: " + line, kaee);
     }
   }
 
@@ -81,7 +81,7 @@ public class Parser {
            throw new UnrecognizedEntryException("Invalid specification in line: " + line);
         } 
       }
-    } catch (Exception e) { // Trocar exception
+    } catch (KeyAlreadyExistsException | UnknownClientException |InvalidKeyNumberException e ) { 
       throw new UnrecognizedEntryException("Invalid specification: " + line, e);
     }
   }

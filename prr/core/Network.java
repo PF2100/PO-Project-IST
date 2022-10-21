@@ -14,8 +14,6 @@ import prr.core.Terminal;
 import prr.core.Client;
 import prr.core.exception.*;
 
-import prr.app.exception.DuplicateClientKeyException;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ArrayList;
@@ -24,10 +22,9 @@ import java.util.Collections;
 import java.util.Comparator;
 
 
-// FIXME add more import if needed (cannot import from pt.tecnico or prr.app)
 
 /**
- * Class Store implements a store.
+ * Class Network implements Serializable.
  */
 public class Network implements Serializable {
 
@@ -46,9 +43,7 @@ public class Network implements Serializable {
    * @throws IOException if there is an IO error while processing the text file
    */
   
-  
-   void importFile(String filename) throws UnrecognizedEntryException, IOException /* FIXME maybe other exceptions */  {
-    //FIXME implement method
+   void importFile(String filename) throws UnrecognizedEntryException, IOException  {
     Parser _parser = new Parser(this);
     _parser.parseFile(filename);
   }
@@ -61,7 +56,7 @@ public class Network implements Serializable {
    */
   public void registerClient(String key, String nome, int taxNumber) throws KeyAlreadyExistsException {
     
-    if (_clients.containsKey(key)) {throw new KeyAlreadyExistsException();}
+    if (_clients.containsKey(key)) {throw new KeyAlreadyExistsException(key);}
     else {
       Client client = new Client(key, nome, taxNumber);
       _clients.put(key, client);
@@ -83,7 +78,7 @@ public class Network implements Serializable {
   public Terminal registerTerminal(String type,String terminalID , String clientKey ) throws KeyAlreadyExistsException, UnknownClientException, InvalidKeyNumberException {
     Terminal terminal;
     Client client = getClient(clientKey); //Throws UnknownClientException;
-    if (_terminals.containsKey(terminalID)) {throw new KeyAlreadyExistsException();}
+    if (_terminals.containsKey(terminalID)) {throw new KeyAlreadyExistsException(terminalID);}
     if ( type.equals("BASIC")) {
       terminal = new Terminal(terminalID,client); //Throws  InvalidKeyNumberException and NumberFormatException
     }
@@ -114,7 +109,7 @@ public class Network implements Serializable {
    */
   public Client getClient(String key) throws UnknownClientException {
     if (!(_clients.containsKey(key))) {
-      throw new UnknownClientException();
+      throw new UnknownClientException(key);
     }
     return _clients.get(key);
   }
@@ -127,7 +122,7 @@ public class Network implements Serializable {
    */
   public String showClient(String clientKey)  throws UnknownClientException {
     Client client = getClient(clientKey); 
-    return _clients.get(clientKey).toString();
+    return client.toString();
   }
 
 
@@ -148,11 +143,11 @@ public class Network implements Serializable {
   /** 
    * @param terminalID terminal's ID
    * @return Terminal associated with the terminalID 
-   * @throws UnknownClientException if there is no terminal associated with the terminalID
+   * @throws UnknownTerminalException  if there is no terminal associated with the terminalID
    */
-  public Terminal getTerminal(String terminalID) throws UnknownClientException {
+  public Terminal getTerminal(String terminalID) throws UnknownTerminalException {
     if(!(_terminals.containsKey(terminalID))) {
-      throw new UnknownClientException();
+      throw new UnknownTerminalException (terminalID);
     }
     return _terminals.get(terminalID);
   }
@@ -161,9 +156,9 @@ public class Network implements Serializable {
   /** 
    * @param terminalID terminal's ID
    * @return terminal's toString form
-   * @throws UnknownClientException if there is no terminal associated with termnalID
+   * @throws UnknownTerminalException  if there is no terminal associated with terminalID
    */
-  public String showTerminal(String terminalID)  throws UnknownClientException {
+  public String showTerminal(String terminalID)  throws UnknownTerminalException  {
     Terminal terminal = getTerminal(terminalID);
     return _terminals.get(terminalID).toString();
   }
@@ -204,10 +199,6 @@ public class Network implements Serializable {
 }
 
 
-
-  class IdComparator implements Comparator<String> {
-    public int compare(String key1, String key2) {
-      return key1.compareToIgnoreCase(key2);
-    }
-  }
+class IdComparator implements Comparator<String> {
+  public int compare(String key1, String key2) {return key1.compareToIgnoreCase(key2);}}
 
