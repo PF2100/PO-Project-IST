@@ -2,11 +2,11 @@ package prr.core;
 
 import java.io.Serial;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Map;
-import java.util.Set;
+
 import java.util.regex.Pattern;
 import prr.core.exception.*;
+
+import java.util.*;
 
 /*
  *  Enum values that represent the Terminal's Mode
@@ -19,7 +19,7 @@ enum TerminalMode {
     OFF
 }
 
-public class Terminal implements Serializable /* FIXME maybe addd more interfaces */ {
+public abstract class Terminal implements Serializable /* FIXME maybe addd more interfaces */ {
 
     /**
      * Serial number for serialization.
@@ -73,7 +73,7 @@ public class Terminal implements Serializable /* FIXME maybe addd more interface
         return new ArrayList<>(_receivedCommunications.keySet());
     }
 
-    public Map<String, Terminal> getFriends() {return _friends;}
+    public Collection<String> getFriends() {return _friends.keySet();}
 
     public Client getOwner() {return _owner;}
 
@@ -96,7 +96,7 @@ public class Terminal implements Serializable /* FIXME maybe addd more interface
     }
 
     public void endOngoingCommunication(int size) {
-        // implementar
+        // implementar 
         this.setOnIdle();
     }
 
@@ -131,17 +131,8 @@ public class Terminal implements Serializable /* FIXME maybe addd more interface
         }
     }
 
-    public String toString() {
-        String message = "BASIC" +"|"+ _id + "|" + _owner.getKey() + "|" + _mode + "|" + Math.round(_payments)
-                + "|" + Math.round(_debt);
-
-        /* 
-        for (String terminalID : _friends.keySet()) {
-            message = message + "|" + terminalID;
-        }
-        */
-        return message;
-    }
+    public abstract String toString();
+   
 
     /**
      * Checks if this terminal can end the current interactive communication.
@@ -150,11 +141,7 @@ public class Terminal implements Serializable /* FIXME maybe addd more interface
      * it was the originator of this communication.
      **/
     public boolean canEndCurrentCommunication() {
-        if ( _mode == TerminalMode.BUSY && _ongoingCommunication != null && (_ongoingCommunication.getFrom()).getId().equals(_id))
-            return true; 
-        else{
-            return false;
-        }
+        return  _mode == TerminalMode.BUSY && _ongoingCommunication != null && _ongoingCommunication.getFrom().getId().equals(_id) ;
     }
 
     /**
@@ -172,5 +159,13 @@ public class Terminal implements Serializable /* FIXME maybe addd more interface
 
     public void addFriend(Terminal friend) {
         _friends.put(friend.getId(), friend);
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if(other instanceof Terminal ){
+            return (this.getId().compareTo( ((Terminal)other).getId())) == 0;
+        }
+        return false;
     }
 }

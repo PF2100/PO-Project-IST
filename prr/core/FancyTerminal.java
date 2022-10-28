@@ -1,6 +1,7 @@
 package prr.core;
 
 import prr.core.exception.InvalidKeyNumberException;
+import prr.core.Terminal;
 
 public class FancyTerminal extends Terminal {
 

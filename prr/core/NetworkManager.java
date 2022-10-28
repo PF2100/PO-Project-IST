@@ -58,7 +58,9 @@ public class NetworkManager {
     }
     try(ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(_file))) {
       oos.writeObject(_network);
-    }catch(IOException ioe){throw new IOException();}
+    }catch(IOException ioe){
+      ioe.printStackTrace();
+      throw new IOException();}
   }
   
   /**

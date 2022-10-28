@@ -32,11 +32,11 @@ class DoRegisterTerminal extends Command<Network> {
   protected final void execute() throws CommandException { // InvalidTerminalKeyException DuplicateTerminalKeyException é preciso adicionar
     String key = stringField("key");
     String type = stringField("type");
-    String clientID = stringField("clientID");
+    String clientId = stringField("clientID");
     try {  
-      Terminal terminal = _receiver.registerTerminal(type,key,clientID);
+      Terminal terminal = _receiver.registerTerminal(type,key,clientId);
     }catch(UnknownClientException uce){
-      throw new UnknownClientKeyException(clientID);
+      throw new UnknownClientKeyException(clientId);
     }
     catch(NumberFormatException | InvalidKeyNumberException ikne ){
       throw new InvalidTerminalKeyException(key);

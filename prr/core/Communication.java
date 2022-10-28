@@ -8,17 +8,15 @@ public abstract class Communication implements Serializable {
     private boolean _isPaid;
     private double _cost;
     private boolean _isOngoing;
-    private static int _nComms;
+    
 
     private Terminal _from;
 
     private Terminal _to;
 
     public Communication(Terminal from, Terminal to) {
-        _id = _nComms;
         _from = from;
         _to = to;
-        _nComms += 1;
         _isPaid = false;
     }
 

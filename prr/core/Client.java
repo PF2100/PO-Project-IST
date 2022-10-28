@@ -17,7 +17,7 @@ public class Client implements Serializable {
 
     private static final long serialVersionUID = 202208091753L;
 
-    private String _key; // Client's unique key
+    private final String _key; // Client's unique key
     private String _name;
     private int _taxNumber;
     private ClientLevel _level; // Client's Tariff Level
@@ -75,7 +75,6 @@ public class Client implements Serializable {
         }
         return debt;
     }
-
     
     //Iterates through the terminals to obtain all of their payment values
     public double getPayments() { 
@@ -85,4 +84,12 @@ public class Client implements Serializable {
         }
         return payments;
     } 
+
+    @Override
+    public boolean equals(Object other) {
+        if(other instanceof Client ){
+            return (this.getKey().compareToIgnoreCase( ((Client)other).getKey())) == 0;
+        }
+        return false;
+    }
 }

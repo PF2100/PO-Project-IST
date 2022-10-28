@@ -14,7 +14,13 @@ import prr.core.Terminal;
 import prr.core.Client;
 import prr.core.exception.*;
 
+import java.util.SortedMap;
 import java.util.HashMap;
+import java.util.TreeMap;
+
+import javax.swing.AbstractAction;
+
+import java.util.Map;
 import java.util.Map;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,8 +34,9 @@ import java.util.Comparator;
  */
 public class Network implements Serializable {
 
-  private Map<String,Client> _clients = new HashMap<>();
-  private Map<String,Terminal> _terminals = new HashMap<>();
+  private Map<String,Client> _clients = new TreeMap<>(new IdComparator());
+  private Map<String,Terminal> _terminals = new TreeMap<>(new IdComparator());
+  private int _nComms;
 
   /** Serial number for serialization. */
   @Serial
@@ -44,8 +51,8 @@ public class Network implements Serializable {
    */
   
    void importFile(String filename) throws UnrecognizedEntryException, IOException  {
-    Parser _parser = new Parser(this);
-    _parser.parseFile(filename);
+    Parser parser = new Parser(this);
+    parser.parseFile(filename);
   }
 
   
@@ -62,8 +69,6 @@ public class Network implements Serializable {
       _clients.put(key, client);
     }
   }
-
- 
   
   /** 
    * @param type Terminal type (FANCY or BASIC)
@@ -75,18 +80,18 @@ public class Network implements Serializable {
    * @throws InvalidKeyNumberException if the terminal key is invalid , throws the exception
    */
 
-  public Terminal registerTerminal(String type,String terminalID , String clientKey ) throws KeyAlreadyExistsException, UnknownClientException, InvalidKeyNumberException {
+  public Terminal registerTerminal(String type,String terminalId , String clientKey ) throws KeyAlreadyExistsException, UnknownClientException, InvalidKeyNumberException {
     Terminal terminal;
     Client client = getClient(clientKey); //Throws UnknownClientException;
-    if (_terminals.containsKey(terminalID)) {throw new KeyAlreadyExistsException(terminalID);}
+    if (_terminals.containsKey(terminalId)) {throw new KeyAlreadyExistsException(terminalId);}
     if ( type.equals("BASIC")) {
-      terminal = new Terminal(terminalID,client); //Throws  InvalidKeyNumberException and NumberFormatException
+      terminal = new BasicTerminal(terminalId,client); //Throws  InvalidKeyNumberException and NumberFormatException
     }
     else{
-      terminal = new FancyTerminal(terminalID,client); //Throws  InvalidKeyNumberException and NumberFormatException
+      terminal = new FancyTerminal(terminalId,client); //Throws  InvalidKeyNumberException and NumberFormatException
     }
     client.addTerminal(terminal);
-    _terminals.put(terminalID, terminal);
+    _terminals.put(terminalId, terminal);
       return terminal;
   }
 
@@ -101,7 +106,6 @@ public class Network implements Serializable {
     friend1.addFriend(friend2);
   }
 
-  
   /** 
    * @param key Client's key
    * @return Client associated with the client's key
@@ -131,36 +135,33 @@ public class Network implements Serializable {
    */
   public List<String> showClients()  {
     List<String> clientsToString = new ArrayList<>();
-    List<String> clientKeys = new ArrayList<>(_clients.keySet());
-    Collections.sort(clientKeys,new IdComparator());
-
-    for ( String elemento : clientKeys) {
-      clientsToString.add(_clients.get(elemento).toString());
+    for ( Client client : _clients.values()) {
+      clientsToString.add(client.toString());
     }
     return clientsToString;
   }
   
   /** 
-   * @param terminalID terminal's ID
-   * @return Terminal associated with the terminalID 
-   * @throws UnknownTerminalException  if there is no terminal associated with the terminalID
+   * @param terminalId terminal's ID
+   * @return Terminal associated with the terminalId 
+   * @throws UnknownTerminalException  if there is no terminal associated with the terminalId
    */
-  public Terminal getTerminal(String terminalID) throws UnknownTerminalException {
-    if(!(_terminals.containsKey(terminalID))) {
-      throw new UnknownTerminalException (terminalID);
+  public Terminal getTerminal(String terminalId) throws UnknownTerminalException {
+    if(!(_terminals.containsKey(terminalId))) {
+      throw new UnknownTerminalException (terminalId);
     }
-    return _terminals.get(terminalID);
+    return _terminals.get(terminalId);
   }
 
-  
+
   /** 
-   * @param terminalID terminal's ID
+   * @param terminalId terminal's ID
    * @return terminal's toString form
    * @throws UnknownTerminalException  if there is no terminal associated with terminalID
    */
-  public String showTerminal(String terminalID)  throws UnknownTerminalException  {
-    Terminal terminal = getTerminal(terminalID);
-    return _terminals.get(terminalID).toString();
+  public String showTerminal(String terminalId)  throws UnknownTerminalException  {
+    Terminal terminal = getTerminal(terminalId);
+    return _terminals.get(terminalId).toString();
   }
 
   
@@ -169,11 +170,8 @@ public class Network implements Serializable {
    */
   public List<String> showTerminals() {
     List<String> terminalsToString = new ArrayList<>();
-    List<String> terminalIDs = new ArrayList<>(_terminals.keySet());
-    Collections.sort(terminalIDs,new IdComparator());
-
-    for ( String elemento : terminalIDs) {
-      terminalsToString.add(_terminals.get(elemento).toString());
+    for ( Terminal terminal : _terminals.values()) {
+      terminalsToString.add(terminal.toString());
     }
     return terminalsToString;
   }
@@ -186,19 +184,16 @@ public class Network implements Serializable {
 
   public List<String> showUnusedTerminals()  {
     List<String> terminalsToString = new ArrayList<>();
-    List<String> terminalIDs = new ArrayList<>(_terminals.keySet());
-    Collections.sort(terminalIDs,new IdComparator());
-
-    for (String elemento : terminalIDs) {
-     if (_terminals.get(elemento).getMadeCommunications() == null &&
-             _terminals.get(elemento).getReceivedCommunications() == null) {
-       terminalsToString.add(_terminals.get(elemento).toString());
+    for (Terminal terminal : _terminals.values()) {
+     if (terminal.getMadeCommunications() == null && terminal.getReceivedCommunications() == null) {
+       terminalsToString.add(terminal.toString());
      }}
     return terminalsToString;
   }
 }
 
 
-class IdComparator implements Comparator<String> {
+class IdComparator implements Comparator<String> ,Serializable {
   public int compare(String key1, String key2) {return key1.compareToIgnoreCase(key2);}}
+
 

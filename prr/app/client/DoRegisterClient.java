@@ -26,9 +26,9 @@ class DoRegisterClient extends Command<Network> {
   protected final void execute() throws CommandException { //É preciso lançar a duplicateKeyException
     String name = stringField("name");
     String key = stringField("chave");
-    Integer taxID = integerField("taxID"); 
+    Integer taxId = integerField("taxID"); 
     try {
-    _receiver.registerClient(key, name, taxID);
+    _receiver.registerClient(key, name, taxId);
     }catch(KeyAlreadyExistsException kaee) {
       throw new DuplicateClientKeyException(key);
     }
