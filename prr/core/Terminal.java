@@ -9,16 +9,7 @@ import prr.core.exception.*;
 import java.util.*;
 
 
-/*
- *  Enum values that represent the Terminal's Mode
- */
 
-enum TerminalMode {
-    BUSY,
-    IDLE,
-    SILENCE,
-    OFF
-}
 
 public abstract class Terminal implements Serializable /* FIXME maybe addd more interfaces */ {
 
@@ -140,7 +131,6 @@ public abstract class Terminal implements Serializable /* FIXME maybe addd more 
 
         return false;
         //return _state.canEndCurrentCommunication();
-        //return  _mode == TerminalMode.BUSY && _ongoingCommunication != null && _ongoingCommunication.getFrom().getId().equals(_id);
     }
 
     /**
