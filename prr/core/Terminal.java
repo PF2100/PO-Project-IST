@@ -38,11 +38,11 @@ public abstract class Terminal implements Serializable /* FIXME maybe addd more 
     private InteractiveCommunication _ongoingCommunication;
 
 
-    public Terminal(String terminalID, Client owner) throws InvalidKeyNumberException {
-        if(!(Pattern.matches("[0-9]{6}", terminalID))) {
-            throw new InvalidKeyNumberException(terminalID); 
+    public Terminal(String terminalId, Client owner) throws InvalidKeyNumberException {
+        if(!(Pattern.matches("[0-9]{6}", terminalId))) {
+            throw new InvalidKeyNumberException(terminalId);
         }
-        _id = terminalID;
+        _id = terminalId;
         _debt = 0;
         _payments = 0;
         _owner = owner;

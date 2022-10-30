@@ -5,8 +5,8 @@ import prr.core.Terminal;
 
 public class BasicTerminal extends Terminal {
 
-    public BasicTerminal(String terminalID, Client owner) throws InvalidKeyNumberException {
-        super(terminalID, owner);
+    public BasicTerminal(String terminalId, Client owner) throws InvalidKeyNumberException {
+        super(terminalId, owner);
     }
 
     @Override
@@ -14,8 +14,8 @@ public class BasicTerminal extends Terminal {
         String message = "BASIC" +"|"+ getId() + "|" + getOwner().getKey() + "|" + getMode() + "|" + Math.round(getPayments())
          + "|" + Math.round(getDebt());
         /* 
-        for (String terminalID : super.getFriends().keySet()) {
-            message = message + "|" + terminalID;
+        for (String terminalId : super.getFriends().keySet()) {
+            message = message + "|" + terminalId;
         }
         */
         return message;

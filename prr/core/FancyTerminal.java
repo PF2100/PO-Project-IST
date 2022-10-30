@@ -5,8 +5,8 @@ import prr.core.Terminal;
 
 public class FancyTerminal extends Terminal {
 
-    public FancyTerminal(String terminalID, Client owner) throws InvalidKeyNumberException {
-        super(terminalID, owner);
+    public FancyTerminal(String terminalId, Client owner) throws InvalidKeyNumberException {
+        super(terminalId, owner);
     }
 
     public void makeVideoCall(Terminal to) {
@@ -23,8 +23,8 @@ public class FancyTerminal extends Terminal {
         String message = "FANCY" +"|"+ getId() + "|" + getOwner().getKey() + "|" + getMode()
                 + "|" + Math.round(getPayments()) + "|" + Math.round(getDebt());
         /* 
-        for (String terminalID : super.getFriends().keySet()) {
-            message = message + "|" + terminalID;
+        for (String terminalId : super.getFriends().keySet()) {
+            message = message + "|" + terminalId;
         }
         */
         return message;

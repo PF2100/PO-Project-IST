@@ -24,7 +24,7 @@ class DoRegisterTerminal extends Command<Network> {
     super(Label.REGISTER_TERMINAL, receiver);
     addStringField("key", Message.terminalKey());
     addOptionField("type", Message.terminalType(),"FANCY","BASIC");
-    addStringField("clientID",Message.clientKey());
+    addStringField("clientId",Message.clientKey());
 
   }
 
@@ -32,7 +32,7 @@ class DoRegisterTerminal extends Command<Network> {
   protected final void execute() throws CommandException { // InvalidTerminalKeyException DuplicateTerminalKeyException é preciso adicionar
     String key = stringField("key");
     String type = stringField("type");
-    String clientId = stringField("clientID");
+    String clientId = stringField("clientId");
     try {  
       Terminal terminal = _receiver.registerTerminal(type,key,clientId);
     }catch(UnknownClientException uce){
