@@ -21,7 +21,7 @@ class DoDisableClientNotifications extends Command<Network> {
     String clientKey = stringField("clientKey");
     try{
       if(!_receiver.disableClientNotifications(clientKey)) {
-        System.out.println(Message.clientNotificationsAlreadyDisabled());
+        display.popup(Message.clientNotificationsAlreadyDisabled());
       }
     }catch(UnknownClientException uce){
       throw new UnknownClientKeyException(clientKey);
