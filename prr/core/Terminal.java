@@ -8,6 +8,7 @@ import prr.core.exception.*;
 
 import java.util.*;
 
+
 /*
  *  Enum values that represent the Terminal's Mode
  */
@@ -28,7 +29,9 @@ public abstract class Terminal implements Serializable /* FIXME maybe addd more 
     private static final long serialVersionUID = 202208091753L;
 
     private final String _id;
-    private TerminalMode _mode; 
+
+    private TerminalState _state; 
+
     private double _debt;
     private double _payments;
     private Map<String, Terminal> _friends;
@@ -46,13 +49,20 @@ public abstract class Terminal implements Serializable /* FIXME maybe addd more 
         _debt = 0;
         _payments = 0;
         _owner = owner;
-        _mode = TerminalMode.IDLE;
+        _state = new IdleState(this);
+        _ongoingCommunication = null;
     }
 
 
+    /* 
+    public boolean setOnIdle() {
+        return _state.setOnIdle(this);
+    }
+    */
+
     public String getId() {return _id;}
 
-    public TerminalMode getMode() {return _mode;}
+    public TerminalState getState() {return _state;}
 
     public double getDebt() {return _debt;}
 
@@ -78,11 +88,11 @@ public abstract class Terminal implements Serializable /* FIXME maybe addd more 
     public Client getOwner() {return _owner;}
 
 
-    public void makeSMS(Terminal to, String message) {
+    public void makeSms(Terminal to, String message) {
         // implementar
     }
 
-    protected void acceptSMS(Terminal from) {
+    protected void acceptSms(Terminal from) {
         // implementar
     }
 
@@ -92,48 +102,34 @@ public abstract class Terminal implements Serializable /* FIXME maybe addd more 
 
     protected void acceptVoiceCall(Terminal from) {
         // implementar
-        _mode = TerminalMode.BUSY;
+        //_mode = TerminalMode.BUSY;
     }
 
     public void endOngoingCommunication(int size) {
         // implementar 
-        this.setOnIdle();
+        //this.setOnIdle();
     }
 
-    public boolean setOnIdle() { //Sets the terminal Mode to Idle
+    public Communication getOngoingCommunication() {
+        return _ongoingCommunication;
+    }
 
-        if (_mode == TerminalMode.IDLE) { return false; }
-        else {
-            _mode = TerminalMode.IDLE;
-            return true;
-        }}
-
+   
     public boolean setBusy() {
-        if (_mode == TerminalMode.IDLE || _mode == TerminalMode.SILENCE) {
-            _mode = TerminalMode.BUSY;
-            return true;
-        } 
-        else {return false;}}
+        return _state.setBusy(this);
+    }
 
     public boolean setOnSilent() {
-        if (_mode == TerminalMode.IDLE || _mode == TerminalMode.BUSY) {
-            _mode = TerminalMode.SILENCE;
-            return true;
-        } 
-        else {return false;}}
+        return _state.setOnSilent(this);
+    }
 
     public boolean turnOff() {
-        if (_mode == TerminalMode.IDLE || _mode == TerminalMode.SILENCE) {
-            _mode = TerminalMode.OFF;
-            return true;
-        } else {
-            return false;
-        }
+        return _state.turnOff(this);
     }
 
     public abstract String toString();
    
-
+    /* 
     /**
      * Checks if this terminal can end the current interactive communication.
      *
@@ -141,21 +137,24 @@ public abstract class Terminal implements Serializable /* FIXME maybe addd more 
      * it was the originator of this communication.
      **/
     public boolean canEndCurrentCommunication() {
-        return  _mode == TerminalMode.BUSY && _ongoingCommunication != null && _ongoingCommunication.getFrom().getId().equals(_id) ;
+
+        return false;
+        //return _state.canEndCurrentCommunication();
+        //return  _mode == TerminalMode.BUSY && _ongoingCommunication != null && _ongoingCommunication.getFrom().getId().equals(_id);
     }
 
     /**
      * Checks if this terminal can start a new communication.
      *
      * @return true if this terminal is neither off neither busy, false otherwise.
-     **/
+     *
+    /* */
     public boolean canStartCommunication() {
-        if( _mode != TerminalMode.OFF && _mode != TerminalMode.BUSY) {
-            return true;
-        }
-        return false;
-        
+        return true;
+        //return _state.canStartCommunication(); 
     }
+
+    
 
     public void addFriend(Terminal friend) {
         _friends.put(friend.getId(), friend);
@@ -167,5 +166,9 @@ public abstract class Terminal implements Serializable /* FIXME maybe addd more 
             return (this.getId().compareTo( ((Terminal)other).getId())) == 0;
         }
         return false;
+    }
+
+    public void setTerminalState(TerminalState state) {
+        _state = state;
     }
 }

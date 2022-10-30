@@ -10,8 +10,8 @@ public class BasicTerminal extends Terminal {
     }
 
     @Override
-    public String toString() {
-        String message = "BASIC" +"|"+ getId() + "|" + getOwner().getKey() + "|" + getMode() + "|" + Math.round(getPayments())
+    public String toString(){
+        String message = "BASIC" +"|"+ getId() + "|" + getOwner().getKey() + "|" + getState().toString() + "|" + Math.round(getPayments())
          + "|" + Math.round(getDebt());
         /* 
         for (String terminalId : super.getFriends().keySet()) {

@@ -20,7 +20,7 @@ public class FancyTerminal extends Terminal {
 
     @Override
     public String toString() {
-        String message = "FANCY" +"|"+ getId() + "|" + getOwner().getKey() + "|" + getMode()
+        String message = "FANCY" +"|"+ getId() + "|" + getOwner().getKey() + "|" + getState().toString()
                 + "|" + Math.round(getPayments()) + "|" + Math.round(getDebt());
         /* 
         for (String terminalId : super.getFriends().keySet()) {
