@@ -45,12 +45,6 @@ public abstract class Terminal implements Serializable /* FIXME maybe addd more 
     }
 
 
-    /* 
-    public boolean setOnIdle() {
-        return _state.setOnIdle(this);
-    }
-    */
-
     public String getId() {return _id;}
 
     public TerminalState getState() {return _state;}
@@ -105,18 +99,14 @@ public abstract class Terminal implements Serializable /* FIXME maybe addd more 
         return _ongoingCommunication;
     }
 
-   
-    public boolean setBusy() {
-        return _state.setBusy(this);
-    }
 
-    public boolean setOnSilent() {
-        return _state.setOnSilent(this);
-    }
+    public boolean setOnIdle() {return _state.setOnIdle(this);}
 
-    public boolean turnOff() {
-        return _state.turnOff(this);
-    }
+    public boolean setBusy() {return _state.setBusy(this);}
+
+    public boolean setOnSilent() {return _state.setOnSilent(this);}
+
+    public boolean turnOff() {return _state.turnOff(this);}
 
     public abstract String toString();
    

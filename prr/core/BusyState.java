@@ -15,7 +15,7 @@ public class BusyState extends TerminalState {
         return true;
     }
 
-    public String toString(){
+    public String toString() {
         return "BUSY";
     }
     
@@ -24,8 +24,19 @@ public class BusyState extends TerminalState {
         return false;
     }
 
-    public boolean setOnSilent(Terminal terminal) {return true;}
-    public boolean turnOff(Terminal terminal) {return true;}
+    public boolean turnOff(Terminal terminal) {
+        return true;
+    }
+    
+    public boolean setOnSilent(Terminal terminal) {
+        if(terminal.getOngoingCommunication() == null) {
+            terminal.setTerminalState(new SilentState(terminal));
+        }
+        return true;
+    }
+
+
+    
     public boolean makeSms() {return true;}
     public boolean acceptSms() {return true;}
     public boolean makeVoiceCall() {return true;}

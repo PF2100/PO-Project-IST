@@ -1,5 +1,7 @@
 package prr.app.terminal;
 
+import javax.sound.midi.Receiver;
+
 import prr.core.Network;
 import prr.core.Terminal;
 import pt.tecnico.uilib.menus.CommandException;
@@ -16,6 +18,8 @@ class DoSilenceTerminal extends TerminalCommand {
   
   @Override
   protected final void execute() throws CommandException {
-    //FIXME implement command
+    if(!_receiver.setOnSilent()) {
+      _display.popup(Message.alreadySilent());
+    }
   }
 }

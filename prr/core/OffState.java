@@ -12,15 +12,25 @@ public class OffState extends TerminalState {
         return true;
     }
 
-    public String toString(){
+    public String toString() {
         return "OFF";
+    }
+    
+
+    public boolean setBusy(Terminal terminal) {
+        return true;
+    }
+
+    public boolean turnOff(Terminal terminal) {
+        return false;
+    }
+    
+    public boolean setOnSilent(Terminal terminal) {
+        return true;
     }
     
     
 
-    public boolean setBusy(Terminal terminal) {return true;}
-    public boolean setOnSilent(Terminal terminal) {return true;}
-    public boolean turnOff(Terminal terminal) {return true;}
     public boolean makeSms() {return true;}
     public boolean acceptSms() {return true;}
     public boolean makeVoiceCall() {return true;}

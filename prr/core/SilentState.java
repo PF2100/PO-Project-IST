@@ -9,18 +9,29 @@ public class SilentState extends TerminalState{
         super(terminal);
     }
 
-    public boolean setOnIdle(Terminal terminal){
+    public boolean setOnIdle(Terminal terminal) {
+        terminal.setTerminalState(new IdleState(terminal));
         return true;
     }
 
-    public String toString(){
+    public String toString() {
         return "SILENT";
     }
     
+    public boolean setBusy(Terminal terminal) {
+        terminal.setTerminalState(new BusyState(terminal));
+        return true;
+    }
+
+    public boolean turnOff(Terminal terminal) {
+        terminal.setTerminalState(new OffState(terminal));
+        return true;
+    }
     
-    public boolean setBusy(Terminal terminal) {return true;}
-    public boolean setOnSilent(Terminal terminal) {return true;}
-    public boolean turnOff(Terminal terminal) {return true;}
+    public boolean setOnSilent(Terminal terminal) {
+        return false;
+    }
+    
     public boolean makeSms() {return true;}
     public boolean acceptSms() {return true;}
     public boolean makeVoiceCall() {return true;}
