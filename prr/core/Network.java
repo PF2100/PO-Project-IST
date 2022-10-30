@@ -164,12 +164,18 @@ public class Network implements Serializable {
     return terminal.toString();
   }
 
-  public void enableClientNotifications(String clientKey) throws UnknownClientException{
+  public boolean enableClientNotifications(String clientKey) throws UnknownClientException{
     Client client = getClient(clientKey);
-    client.turnNotificationsOn();
+    return client.turnNotificationsOn();
     /*Falta aplicar lógica de notificações */
   }
   
+  public boolean disableClientNotifications(String clientKey) throws UnknownClientException{
+    Client client = getClient(clientKey);
+    return client.turnNotificationsOff();
+    /*Falta aplicar lógica de notificações */
+  }
+
   /** 
    * @return String list with all of the toString form of all the Terminals
    */
