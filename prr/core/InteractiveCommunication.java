@@ -14,5 +14,5 @@ public abstract class InteractiveCommunication extends Communication implements 
     @Override
     protected int getSize() {
         return _duration;
-    }
+    }    
 }

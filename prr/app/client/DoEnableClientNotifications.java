@@ -21,7 +21,7 @@ class DoEnableClientNotifications extends Command<Network> {
     String clientKey = stringField("clientKey");
     try{
       if(!_receiver.enableClientNotifications(clientKey)) {
-        display.popup(Message.clientNotificationsAlreadyEnabled());
+        _display.popup(Message.clientNotificationsAlreadyEnabled());
       }
     }catch(UnknownClientException uce){
       throw new UnknownClientKeyException(clientKey);
