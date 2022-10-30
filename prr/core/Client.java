@@ -40,9 +40,13 @@ public class Client implements Serializable {
 
     public int getTaxNumber() {return _taxNumber;}
 
-    public void turnNotificationsOn() {_receiveNotifications = true;}
+    public boolean turnNotificationsOn() {
+        if( _receiveNotifications) {return false;}
+        _receiveNotifications = true;
+        return _receiveNotifications;
+    } /*Falta aplicar lógica de notificações */
 
-    public void turnNotificationsOff() {_receiveNotifications = false;}
+    public void turnNotificationsOff() {_receiveNotifications = false;} /*Falta aplicar lógica de notificações */
 
     public void addTerminal(Terminal terminal) {_terminals.put(terminal.getId(),terminal);}
 
