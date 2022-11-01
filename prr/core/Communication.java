@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public abstract class Communication implements Serializable {
     private static final long serialVersionUID = 202208091753L;
-    private int _id;
+    private int _id ;
     private boolean _isPaid;
     private double _cost;
     private boolean _isOngoing;
@@ -19,29 +19,19 @@ public abstract class Communication implements Serializable {
         _isPaid = false;
     }
 
-    public int getId() {
-        return _id;
-    }
+    public int getId() {return _id;}
 
     public Terminal getFrom() {return _from;}
 
     public Terminal getTo() {return _to;}
 
-    public boolean isPaid() {
-        return _isPaid;
-    }
+    public boolean isPaid() {return _isPaid;}
 
-    public void setId(int id){
-        _id = id;
-    }
+    public void setId(int id) {_id = id;}
 
-    public boolean isOngoing() {
-        return _isOngoing;
-    }
+    public boolean isOngoing() {return _isOngoing;}
 
-    public double getCost() {
-        return _cost;
-    }
+    public double getCost() {return _cost;}
 
     public abstract String toString();
 
@@ -53,7 +43,7 @@ public abstract class Communication implements Serializable {
     @Override
     public boolean equals(Object other) {
         if(other instanceof Terminal ){
-            return this.getId() == (Communication)other.getId();
+            return this.getId() == ((Communication)other).getId() ;
         }
         return false;
     }

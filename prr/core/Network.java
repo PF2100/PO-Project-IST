@@ -230,7 +230,7 @@ public class Network implements Serializable {
   public List<String> showAllClientMadeCommunications( String clientKey) throws UnknownClientException{
     Client client = getClient(clientKey);
     List<String> communicationStrings = new ArrayList<>();
-    List<Communication> communications = client.getMadeCommunications();
+    List<Communication> communications = new ArrayList<>(client.getMadeCommunications());
     if( communications != null) {
       Collections.sort(communications,new CommunicationComparator());
       for(Communication communication : communications) {
@@ -243,7 +243,7 @@ public class Network implements Serializable {
   public List<String> showAllClientReceivedCommunications( String clientKey) throws UnknownClientException{
     Client client = getClient(clientKey);
     List<String> communicationStrings = new ArrayList<>();
-    List<Communication> communications = client.getReceivedCommunications();
+    List<Communication> communications = new ArrayList<> (client.getReceivedCommunications());
     if( communications != null) {
       Collections.sort(communications,new CommunicationComparator());
       for(Communication communication : communications) {

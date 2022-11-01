@@ -96,10 +96,10 @@ public class Client implements Serializable {
         return payments;
     }
 
-    public List<Communication> getMadeCommunications() {
-        List<Communication> madeCommunications = new ArrayList<>();
+    public Collection<Communication> getMadeCommunications() {
+        Collection<Communication> madeCommunications = new ArrayList<>();
         for (Terminal terminal : _terminals.values()) {
-            List<Communication> communications = terminal.getMadeCommunications();
+            Collection<Communication> communications = terminal.getMadeCommunications();
             if(communications != null) {
                 madeCommunications.addAll(communications);
             }
@@ -107,10 +107,10 @@ public class Client implements Serializable {
         return madeCommunications;
     }
 
-    public List<Communication> getReceivedCommunications() {
-        List<Communication> receivedCommunications = new ArrayList<>();
+    public Collection<Communication> getReceivedCommunications() {
+        Collection<Communication> receivedCommunications = new ArrayList<>();
         for (Terminal terminal : _terminals.values()) {
-            List<Communication> communications = terminal.getReceivedCommunications();
+            Collection<Communication> communications = terminal.getReceivedCommunications();
             if(communications != null) {
                 receivedCommunications.addAll(communications);
             }
@@ -126,5 +126,10 @@ public class Client implements Serializable {
             return (this.getKey().compareToIgnoreCase( ((Client)other).getKey())) == 0;
         }
         return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return _key.hashCode();
     }
 }
