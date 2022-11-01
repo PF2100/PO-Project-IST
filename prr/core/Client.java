@@ -61,9 +61,8 @@ public class Client implements Serializable {
 
 
     //Returns a list of all the client's terminals 
-    public List<String> getTerminals () { 
-        List <String> terminals = new ArrayList<>(_terminals.keySet());     
-        return terminals;
+    public List<Terminal> getTerminals () {   
+        return new ArrayList<Terminal>(_terminals.values());
     }
 
     //Alters the clientLevel to the Input
@@ -82,20 +81,44 @@ public class Client implements Serializable {
     //Iterates through the terminals to obtain all of their debt values
     public double getDebts() {  
         double debt = 0;
-        for ( Terminal terminal : _terminals.values()) {     
+        for ( Terminal terminal : _terminals.values()) {     //FIXMEEE 
             debt += terminal.getDebt();
         }
         return debt;
     }
     
-    //Iterates through the terminals to obtain all of their payment values
+    //Iterates through the terminals to obtain all of their payment values, 
     public double getPayments() { 
         double payments = 0;
-        for ( Terminal terminal : _terminals.values()) {
+        for ( Terminal terminal : _terminals.values()) { //FIXMEEE
             payments += terminal.getPayments();
         }
         return payments;
-    } 
+    }
+
+    public List<Communication> getMadeCommunications() {
+        List<Communication> madeCommunications = new ArrayList<>();
+        for (Terminal terminal : _terminals.values()) {
+            List<Communication> communications = terminal.getMadeCommunications();
+            if(communications != null) {
+                madeCommunications.addAll(communications);
+            }
+        }
+        return madeCommunications;
+    }
+
+    public List<Communication> getReceivedCommunications() {
+        List<Communication> receivedCommunications = new ArrayList<>();
+        for (Terminal terminal : _terminals.values()) {
+            List<Communication> communications = terminal.getReceivedCommunications();
+            if(communications != null) {
+                receivedCommunications.addAll(communications);
+            }
+        }
+        return receivedCommunications;
+    }
+
+
 
     @Override
     public boolean equals(Object other) {

@@ -32,7 +32,7 @@ public class OffState extends TerminalState {
     
 
     public TextCommunication makeSms(Terminal to, String message) {return null;}
-    public boolean acceptSms(Terminal from, String message) {return true;}
+    public boolean acceptSms(Terminal from) {return true;}
     public boolean makeVoiceCall() {return true;}
     public boolean acceptVoiceCall() {return true;}
     public boolean canEndCurrentCommunication() {return true;}

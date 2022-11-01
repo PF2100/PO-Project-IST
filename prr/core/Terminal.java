@@ -53,19 +53,19 @@ public abstract class Terminal implements Serializable /* FIXME maybe addd more 
 
     public double getPayments() {return _payments;}
 
-    public ArrayList<Integer> getMadeCommunications() {
+    public Collection<Communication> getMadeCommunications(){
         if (_madeCommunications == null) {
             return null;
         }
-        return new ArrayList<>(_madeCommunications.keySet());
+        return _madeCommunications.values();
     }
 
 
-    public ArrayList<Integer> getReceivedCommunications() {
+    public Collection<Communication> getReceivedCommunications() {
         if (_receivedCommunications == null) {
             return null;
         }
-        return new ArrayList<>(_receivedCommunications.keySet());
+        return _receivedCommunications.values();
     }
 
     public Collection<String> getFriends() {return _friends.keySet();}
@@ -77,8 +77,8 @@ public abstract class Terminal implements Serializable /* FIXME maybe addd more 
         return _state.makeSms(to,message);
     }
 
-    protected boolean acceptSms(Terminal from,String message) {
-        return _state.acceptSms(from,message);
+    protected boolean acceptSms(Terminal from) {
+        return _state.acceptSms(from);
     }
 
     public void makeVoiceCall(Terminal to) {
@@ -152,11 +152,9 @@ public abstract class Terminal implements Serializable /* FIXME maybe addd more 
 
     public void addMadeCommunications(Communication comms) {
         _madeCommunications.put(comms.getId(), comms);
-        System.out.println(_madeCommunications+ "->>>>>>>>>>>>>>>>>>>>MADE"); //takeout
     }
 
     public void addReceivedCommunications(Communication comms) {
         _receivedCommunications.put(comms.getId(), comms);
-        System.out.println(_receivedCommunications+"->>>>>>>>>>>>>RECEIVED");//takeout
     }
 }

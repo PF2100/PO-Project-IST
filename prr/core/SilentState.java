@@ -32,10 +32,20 @@ public class SilentState extends TerminalState{
         return false;
     }
     
-    public TextCommunication makeSms(Terminal to, String message) {return null;}
-    public boolean acceptSms(Terminal from, String message) {return true;}
+    public TextCommunication makeSms(Terminal to, String message) {
+        TextCommunication communication = null;
+        if (to.acceptSms(_terminal)) {
+            communication = new TextCommunication(_terminal,to,message); //Se calhar arranjar um método que trata logo disto
+            _terminal.addMadeCommunications(communication);
+            to.addReceivedCommunications(communication);
+        }
+        return communication;
+    }
+
+    public boolean acceptSms(Terminal from){return true;}
     public boolean makeVoiceCall() {return true;}
     public boolean acceptVoiceCall() {return true;}
     public boolean canEndCurrentCommunication() {return true;}
     public boolean canStartCommunication() {return true;}
+    
 }

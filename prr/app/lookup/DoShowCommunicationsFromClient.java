@@ -12,7 +12,6 @@ class DoShowCommunicationsFromClient extends Command<Network> {
 
   DoShowCommunicationsFromClient(Network receiver) {
     super(Label.SHOW_COMMUNICATIONS_FROM_CLIENT, receiver);
-    //FIXME add command fields
   }
 
   @Override

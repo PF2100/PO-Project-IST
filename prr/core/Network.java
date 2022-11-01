@@ -217,9 +217,8 @@ public class Network implements Serializable {
     _nComms++;
     communication.setId(_nComms);
     _communications.put(communication.getId(),communication);
-    System.out.println(communication);
   }
-
+ 
   public List<String> showCommunications() {
     List<String> communicationsToString = new ArrayList<>();
     for ( Communication communication : _communications.values()) {
@@ -228,7 +227,33 @@ public class Network implements Serializable {
     return communicationsToString;
   }
 
+  public List<String> showAllClientMadeCommunications( String clientKey) throws UnknownClientException{
+    Client client = getClient(clientKey);
+    List<String> communicationStrings = new ArrayList<>();
+    List<Communication> communications = client.getMadeCommunications();
+    if( communications != null) {
+      Collections.sort(communications,new CommunicationComparator());
+      for(Communication communication : communications) {
+        communicationStrings.add(communication.toString());
+      }
+    }
+    return communicationStrings;
   }
+
+  public List<String> showAllClientReceivedCommunications( String clientKey) throws UnknownClientException{
+    Client client = getClient(clientKey);
+    List<String> communicationStrings = new ArrayList<>();
+    List<Communication> communications = client.getReceivedCommunications();
+    if( communications != null) {
+      Collections.sort(communications,new CommunicationComparator());
+      for(Communication communication : communications) {
+        communicationStrings.add(communication.toString());
+      }
+    }
+    return communicationStrings;
+  }
+}
+
   
 
 
@@ -237,3 +262,6 @@ class IdComparator implements Comparator<String> ,Serializable {
   public int compare(String key1, String key2) {return key1.compareToIgnoreCase(key2);}}
 
 
+class CommunicationComparator implements Comparator<Communication>,Serializable {
+  public int compare(Communication that, Communication other) {return that.getId() - other.getId();};
+}

@@ -4,6 +4,7 @@ import prr.core.TextCommunication;
 import prr.core.VoiceCommunication;
 import prr.core.VideoCommunication;
 import prr.core.SilentState;
+import prr.core.Terminal;
 import prr.core.TextCommunication;
 
 public class IdleState extends TerminalState{
@@ -34,16 +35,16 @@ public class IdleState extends TerminalState{
     }
 
     public TextCommunication makeSms(Terminal to, String message) {
-        TextCommunication comms = null;
-        if (to.acceptSms(_terminal,message)) {
-            comms = new TextCommunication(_terminal,to,message);
-            _terminal.addMadeCommunications(comms);
+        TextCommunication communication = null;
+        if (to.acceptSms(_terminal)) {
+            communication = new TextCommunication(_terminal,to,message); //Se calhar arranjar um método que trata logo disto
+            _terminal.addMadeCommunications(communication);
+            to.addReceivedCommunications(communication);
         }
-        return comms;
+        return communication;
     }
 
-    public boolean acceptSms(Terminal from, String message) {
-        _terminal.addReceivedCommunications(new TextCommunication(from,_terminal,message));
+    public boolean acceptSms(Terminal from) {
         return true;
     }
 

@@ -49,4 +49,13 @@ public abstract class Communication implements Serializable {
     // falta colocar o tarif plan como argumento ?
 
     protected abstract int getSize();
+
+    @Override
+    public boolean equals(Object other) {
+        if(other instanceof Terminal ){
+            return this.getId() == (Communication)other.getId();
+        }
+        return false;
+    }
+
 }
