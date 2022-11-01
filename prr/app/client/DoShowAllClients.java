@@ -4,7 +4,6 @@ import prr.core.Network;
 import pt.tecnico.uilib.menus.Command;
 import pt.tecnico.uilib.menus.CommandException;
 import prr.core.Client;
-import java.util.Map;
 import java.util.*;
 
 import prr.core.exception.UnknownClientException;

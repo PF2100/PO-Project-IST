@@ -7,8 +7,8 @@ public class OffState extends TerminalState {
         super(terminal);
     }
 
-    public boolean setOnIdle(Terminal terminal){
-        terminal.setTerminalState(new IdleState(terminal));
+    public boolean setOnIdle(){
+        _terminal.setTerminalState(new IdleState(_terminal));
         return true;
     }
 
@@ -17,22 +17,22 @@ public class OffState extends TerminalState {
     }
     
 
-    public boolean setBusy(Terminal terminal) {
+    public boolean setBusy() {
         return true;
     }
 
-    public boolean turnOff(Terminal terminal) {
+    public boolean turnOff() {
         return false;
     }
     
-    public boolean setOnSilent(Terminal terminal) {
+    public boolean setOnSilent() {
         return true;
     }
     
     
 
-    public boolean makeSms() {return true;}
-    public boolean acceptSms() {return true;}
+    public TextCommunication makeSms(Terminal to, String message) {return null;}
+    public boolean acceptSms(Terminal from, String message) {return true;}
     public boolean makeVoiceCall() {return true;}
     public boolean acceptVoiceCall() {return true;}
     public boolean canEndCurrentCommunication() {return true;}

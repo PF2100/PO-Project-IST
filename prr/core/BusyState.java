@@ -8,9 +8,9 @@ public class BusyState extends TerminalState {
         super(terminal);
     }
 
-    public boolean setOnIdle(Terminal terminal){
-        if(terminal.getOngoingCommunication() == null) {
-            terminal.setTerminalState(new IdleState(terminal));
+    public boolean setOnIdle(){
+        if(_terminal.getOngoingCommunication() == null) {
+            _terminal.setTerminalState(new IdleState(_terminal));
         }
         return true;
     }
@@ -20,25 +20,25 @@ public class BusyState extends TerminalState {
     }
     
 
-    public boolean setBusy(Terminal terminal) {
+    public boolean setBusy() {
         return false;
     }
 
-    public boolean turnOff(Terminal terminal) {
+    public boolean turnOff() {
         return true;
     }
     
-    public boolean setOnSilent(Terminal terminal) {
-        if(terminal.getOngoingCommunication() == null) {
-            terminal.setTerminalState(new SilentState(terminal));
+    public boolean setOnSilent() {
+        if(_terminal.getOngoingCommunication() == null) {
+            _terminal.setTerminalState(new SilentState(_terminal));
         }
         return true;
     }
 
 
     
-    public boolean makeSms() {return true;}
-    public boolean acceptSms() {return true;}
+    public TextCommunication makeSms(Terminal to, String message) {return null;}
+    public boolean acceptSms(Terminal from, String message) {return true;}
     public boolean makeVoiceCall() {return true;}
     public boolean acceptVoiceCall() {return true;}
     public boolean canEndCurrentCommunication() {return true;}

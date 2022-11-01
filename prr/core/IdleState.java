@@ -1,36 +1,52 @@
 package prr.core;
 
+import prr.core.TextCommunication;
+import prr.core.VoiceCommunication;
+import prr.core.VideoCommunication;
 import prr.core.SilentState;
+import prr.core.TextCommunication;
 
 public class IdleState extends TerminalState{
     public IdleState(Terminal terminal){
         super(terminal);
     }
 
-    public boolean setOnIdle(Terminal terminal){
+    public boolean setOnIdle(){
         return false;
     }
 
-    public boolean setBusy(Terminal terminal) {
-        terminal.setTerminalState(new BusyState(terminal));
+    public boolean setBusy() {
+        _terminal.setTerminalState(new BusyState(_terminal));
         return true;
     }
 
     public String toString(){
         return "IDLE";
     }
-    public boolean turnOff(Terminal terminal) {
-        terminal.setTerminalState(new OffState(terminal));
+    public boolean turnOff() {
+        _terminal.setTerminalState(new OffState(_terminal));
         return true;
     }
     
-    public boolean setOnSilent(Terminal terminal) {
-        terminal.setTerminalState(new SilentState(terminal));
+    public boolean setOnSilent() {
+        _terminal.setTerminalState(new SilentState(_terminal));
         return true;
     }
 
-    public boolean makeSms() {return true;}
-    public boolean acceptSms() {return true;}
+    public TextCommunication makeSms(Terminal to, String message) {
+        TextCommunication comms = null;
+        if (to.acceptSms(_terminal,message)) {
+            comms = new TextCommunication(_terminal,to,message);
+            _terminal.addMadeCommunications(comms);
+        }
+        return comms;
+    }
+
+    public boolean acceptSms(Terminal from, String message) {
+        _terminal.addReceivedCommunications(new TextCommunication(from,_terminal,message));
+        return true;
+    }
+
     public boolean makeVoiceCall() {return true;}
     public boolean acceptVoiceCall() {return true;}
     public boolean canEndCurrentCommunication() {return true;}

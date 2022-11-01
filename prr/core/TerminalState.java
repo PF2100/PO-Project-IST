@@ -8,12 +8,13 @@ public abstract class TerminalState implements Serializable{
         _terminal = terminal;
     }
 
-    public abstract boolean setOnIdle(Terminal terminal); 
-    public abstract boolean setBusy(Terminal terminal);
-    public abstract boolean setOnSilent(Terminal terminal);
-    public abstract boolean turnOff(Terminal terminal);
-    public abstract boolean makeSms();
-    public abstract boolean acceptSms();
+    public abstract boolean setOnIdle(); 
+    public abstract boolean setBusy();
+    public abstract boolean setOnSilent();
+    public abstract boolean turnOff();
+
+    public abstract Communication makeSms(Terminal to, String message);
+    public abstract boolean acceptSms(Terminal from, String message);
     public abstract boolean makeVoiceCall();
     public abstract boolean acceptVoiceCall();
     public abstract boolean canEndCurrentCommunication();

@@ -28,7 +28,7 @@ public class TextCommunication extends Communication implements Serializable {
 
     @Override
     public String toString() {
-        return "TEXT|"+ getId() +"|"+getFrom().getId()+"|" +getTo().getId() + "|"
+        return "TEXT|" + getId() +"|"+getFrom().getId()+"|" +getTo().getId() + "|"
                 + this.getSize() +"|" + getCost() + "|" + "FINISHED";
     }
 }

@@ -9,8 +9,8 @@ public class SilentState extends TerminalState{
         super(terminal);
     }
 
-    public boolean setOnIdle(Terminal terminal) {
-        terminal.setTerminalState(new IdleState(terminal));
+    public boolean setOnIdle() {
+        _terminal.setTerminalState(new IdleState(_terminal));
         return true;
     }
 
@@ -18,22 +18,22 @@ public class SilentState extends TerminalState{
         return "SILENT";
     }
     
-    public boolean setBusy(Terminal terminal) {
-        terminal.setTerminalState(new BusyState(terminal));
+    public boolean setBusy() {
+        _terminal.setTerminalState(new BusyState(_terminal));
         return true;
     }
 
-    public boolean turnOff(Terminal terminal) {
-        terminal.setTerminalState(new OffState(terminal));
+    public boolean turnOff() {
+        _terminal.setTerminalState(new OffState(_terminal));
         return true;
     }
     
-    public boolean setOnSilent(Terminal terminal) {
+    public boolean setOnSilent() {
         return false;
     }
     
-    public boolean makeSms() {return true;}
-    public boolean acceptSms() {return true;}
+    public TextCommunication makeSms(Terminal to, String message) {return null;}
+    public boolean acceptSms(Terminal from, String message) {return true;}
     public boolean makeVoiceCall() {return true;}
     public boolean acceptVoiceCall() {return true;}
     public boolean canEndCurrentCommunication() {return true;}

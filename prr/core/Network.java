@@ -12,6 +12,7 @@ import prr.core.exception.InvalidKeyNumberException;
 import prr.core.Parser;
 import prr.core.Terminal;
 import prr.core.Client;
+import prr.core.Communication;
 import prr.core.exception.*;
 
 import java.util.SortedMap;
@@ -36,7 +37,8 @@ public class Network implements Serializable {
 
   private Map<String,Client> _clients = new TreeMap<>(new IdComparator());
   private Map<String,Terminal> _terminals = new TreeMap<>(new IdComparator());
-  private int _nComms;
+  private Map<Integer,Communication> _communications = new TreeMap<>();
+  private int _nComms = 0;
 
   /** Serial number for serialization. */
   @Serial
@@ -201,7 +203,34 @@ public class Network implements Serializable {
      }}
     return terminalsToString;
   }
-}
+
+  
+  public void makeSms(Terminal makerTerminal,String terminalId,String message) throws UnknownTerminalException{
+    Terminal terminal = getTerminal(terminalId);
+    Communication communication = makerTerminal.makeSms(terminal,message);
+    if( communication != null) {
+      addCommunication(communication);
+    }
+  }
+
+  public void addCommunication(Communication communication) {
+    _nComms++;
+    communication.setId(_nComms);
+    _communications.put(communication.getId(),communication);
+    System.out.println(communication);
+  }
+
+  public List<String> showCommunications() {
+    List<String> communicationsToString = new ArrayList<>();
+    for ( Communication communication : _communications.values()) {
+      communicationsToString.add(communication.toString());
+    }
+    return communicationsToString;
+  }
+
+  }
+  
+
 
 
 class IdComparator implements Comparator<String> ,Serializable {

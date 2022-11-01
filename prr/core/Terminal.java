@@ -27,8 +27,8 @@ public abstract class Terminal implements Serializable /* FIXME maybe addd more 
     private double _payments;
     private Map<String, Terminal> _friends;
     private Client _owner;
-    private Map<String,Communication> _madeCommunications;
-    private Map<String,Communication> _receivedCommunications;
+    private Map<Integer,Communication> _madeCommunications = new HashMap<>();
+    private Map<Integer,Communication> _receivedCommunications = new HashMap<>();
     private InteractiveCommunication _ongoingCommunication;
 
 
@@ -53,7 +53,7 @@ public abstract class Terminal implements Serializable /* FIXME maybe addd more 
 
     public double getPayments() {return _payments;}
 
-    public ArrayList<String> getMadeCommunications() {
+    public ArrayList<Integer> getMadeCommunications() {
         if (_madeCommunications == null) {
             return null;
         }
@@ -61,7 +61,7 @@ public abstract class Terminal implements Serializable /* FIXME maybe addd more 
     }
 
 
-    public ArrayList<String> getReceivedCommunications() {
+    public ArrayList<Integer> getReceivedCommunications() {
         if (_receivedCommunications == null) {
             return null;
         }
@@ -72,13 +72,13 @@ public abstract class Terminal implements Serializable /* FIXME maybe addd more 
 
     public Client getOwner() {return _owner;}
 
-
-    public void makeSms(Terminal to, String message) {
-        // implementar
+    //Returns the communication if it was successfuly made, null if not
+    public Communication makeSms(Terminal to, String message) {
+        return _state.makeSms(to,message);
     }
 
-    protected void acceptSms(Terminal from) {
-        // implementar
+    protected boolean acceptSms(Terminal from,String message) {
+        return _state.acceptSms(from,message);
     }
 
     public void makeVoiceCall(Terminal to) {
@@ -87,12 +87,10 @@ public abstract class Terminal implements Serializable /* FIXME maybe addd more 
 
     protected void acceptVoiceCall(Terminal from) {
         // implementar
-        //_mode = TerminalMode.BUSY;
     }
 
     public void endOngoingCommunication(int size) {
         // implementar 
-        //this.setOnIdle();
     }
 
     public Communication getOngoingCommunication() {
@@ -100,13 +98,13 @@ public abstract class Terminal implements Serializable /* FIXME maybe addd more 
     }
 
 
-    public boolean setOnIdle() {return _state.setOnIdle(this);}
+    public boolean setOnIdle() {return _state.setOnIdle();}
 
-    public boolean setBusy() {return _state.setBusy(this);}
+    public boolean setBusy() {return _state.setBusy();}
 
-    public boolean setOnSilent() {return _state.setOnSilent(this);}
+    public boolean setOnSilent() {return _state.setOnSilent();}
 
-    public boolean turnOff() {return _state.turnOff(this);}
+    public boolean turnOff() {return _state.turnOff();}
 
     public abstract String toString();
    
@@ -119,7 +117,7 @@ public abstract class Terminal implements Serializable /* FIXME maybe addd more 
      **/
     public boolean canEndCurrentCommunication() {
 
-        return false;
+        return true;
         //return _state.canEndCurrentCommunication();
     }
 
@@ -150,5 +148,15 @@ public abstract class Terminal implements Serializable /* FIXME maybe addd more 
 
     public void setTerminalState(TerminalState state) {
         _state = state;
+    }
+
+    public void addMadeCommunications(Communication comms) {
+        _madeCommunications.put(comms.getId(), comms);
+        System.out.println(_madeCommunications+ "->>>>>>>>>>>>>>>>>>>>MADE"); //takeout
+    }
+
+    public void addReceivedCommunications(Communication comms) {
+        _receivedCommunications.put(comms.getId(), comms);
+        System.out.println(_receivedCommunications+"->>>>>>>>>>>>>RECEIVED");//takeout
     }
 }
