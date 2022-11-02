@@ -9,7 +9,14 @@ public abstract class ClientState implements Serializable{
         _client = client;
     }
 
-    public abstract int calculateCosts();
+    //public abstract void payCommunication() 
+    
+    public abstract String toString();
+
+    public abstract double calculateTextCost(int length);
+    public abstract double calculateVideoCost(int duration);
+    public abstract double calculateVoiceCost(int duration);
+
 
 }
 

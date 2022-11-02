@@ -11,12 +11,6 @@ public class VoiceCommunication extends InteractiveCommunication implements Seri
     }
 
     @Override
-    protected double computeCost() {
-        return 0;
-        //falta implementar
-    }
-
-    @Override
     public String toString() {
         String status;
         if (isOngoing()) {status = "ONGOING";}
@@ -24,5 +18,10 @@ public class VoiceCommunication extends InteractiveCommunication implements Seri
 
         return "VOICE|" + getId() + "|" + getFrom().getId() + "|" + getTo().getId() + "|"
                 + this.getSize() + "|" + getCost() + "|" + status;
+    }
+
+    public void calculateCost ( ClientState state ) {
+        _cost = state.calculateVoiceCost(_duration);
+        this.setPaid();
     }
 }

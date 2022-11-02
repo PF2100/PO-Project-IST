@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public abstract class InteractiveCommunication extends Communication implements Serializable {
     private static final long serialVersionUID = 202208091753L;
-    private int _duration;
+    protected int _duration;
 
     public InteractiveCommunication(Terminal from, Terminal to, int duration) {
         super(from, to);
@@ -14,5 +14,8 @@ public abstract class InteractiveCommunication extends Communication implements 
     @Override
     protected int getSize() {
         return _duration;
-    }    
+    } 
+
+    @Override
+    protected abstract void calculateCost(ClientState state);
 }

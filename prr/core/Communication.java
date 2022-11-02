@@ -6,7 +6,7 @@ public abstract class Communication implements Serializable {
     private static final long serialVersionUID = 202208091753L;
     private int _id ;
     private boolean _isPaid;
-    private double _cost;
+    protected double _cost;
     private boolean _isOngoing;
 
     private Terminal _from;
@@ -35,7 +35,11 @@ public abstract class Communication implements Serializable {
 
     public abstract String toString();
 
-    protected abstract double computeCost ();
+    protected void setCost(double cost) {
+        _cost = cost;
+    }
+
+    protected abstract void calculateCost(ClientState state);
     // falta colocar o tarif plan como argumento ?
 
     protected abstract int getSize();
@@ -46,6 +50,10 @@ public abstract class Communication implements Serializable {
             return this.getId() == ((Communication)other).getId() ;
         }
         return false;
+    }
+    
+    void setPaid() {
+        _isPaid = true;
     }
 
 }

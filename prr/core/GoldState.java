@@ -1,11 +1,22 @@
 package prr.core;
 
-public abstract class GoldState extends ClientState {
+public class GoldState extends ClientState {
     protected Client _client;
     public GoldState(Client client) {
         super(client);
     }
 
-    public abstract int calculateCosts();
+    public  double calculateTextCost(int length){
+        return 0.0;
+    }
+    public  double calculateVideoCost(int duration){
+        return 0.0;
+    }
+    public  double calculateVoiceCost(int duration){
+        return 0.0;
+    }
 
+    public String toString() {
+        return "GOLD";
+    }
 }

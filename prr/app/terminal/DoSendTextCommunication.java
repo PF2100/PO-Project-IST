@@ -2,6 +2,7 @@ package prr.app.terminal;
 
 import prr.core.Network;
 import prr.core.Terminal;
+import prr.core.exception.DestinationTerminalException;
 import prr.core.exception.UnknownTerminalException;
 import prr.app.exception.UnknownTerminalKeyException;
 import pt.tecnico.uilib.forms.Form;
@@ -26,6 +27,8 @@ class DoSendTextCommunication extends TerminalCommand {
       _network.makeSms(_receiver, terminalKey, stringField("message"));
     }catch(UnknownTerminalException ute) {
       throw new UnknownTerminalKeyException(terminalKey);
+    }catch( DestinationTerminalException dte) {
+      _display.popup(Message.destinationIsOff(dte.getKey()));
     }
   }
 } 

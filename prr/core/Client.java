@@ -20,7 +20,7 @@ public class Client implements Serializable {
     private final String _key; // Client's unique key
     private String _name;
     private int _taxNumber;
-    private ClientLevel _level; // Client's Tariff Level
+    private ClientState _state; // Client's Tariff Level
     private boolean _receiveNotifications; //Client notification settings
     private Map<String,Terminal> _terminals;
 
@@ -29,7 +29,7 @@ public class Client implements Serializable {
         _key = key;
         _name = name;
         _taxNumber = taxNumber;
-        _level = ClientLevel.NORMAL;
+        _state = new NormalState(this);
         _receiveNotifications = true;
         _terminals = new HashMap<>();
     }
@@ -66,14 +66,16 @@ public class Client implements Serializable {
     }
 
     //Alters the clientLevel to the Input
-    public void alterClientLevel(String clientLevel) {_level = ClientLevel.valueOf(clientLevel);}
+    public void setClientState(ClientState state) {
+        _state = state;
+    }
 
 
     public String toString() {
         String notifications = "YES";
         if ( !_receiveNotifications) {notifications = "NO";} // if the client does not have the notification on the string is "NO"
 
-        return "CLIENT|"+ _key +"|"+_name+"|" +_taxNumber + "|" + _level +"|" + notifications +"|"
+        return "CLIENT|"+ _key +"|"+_name+"|" +_taxNumber + "|" + _state.toString() +"|" + notifications +"|"
                 + _terminals.size() + "|" + Math.round(getPayments()) + "|" + Math.round(getDebts());
     }
 
@@ -100,9 +102,7 @@ public class Client implements Serializable {
         Collection<Communication> madeCommunications = new ArrayList<>();
         for (Terminal terminal : _terminals.values()) {
             Collection<Communication> communications = terminal.getMadeCommunications();
-            if(communications != null) {
-                madeCommunications.addAll(communications);
-            }
+            madeCommunications.addAll(communications);
         }
         return madeCommunications;
     }
@@ -111,9 +111,7 @@ public class Client implements Serializable {
         Collection<Communication> receivedCommunications = new ArrayList<>();
         for (Terminal terminal : _terminals.values()) {
             Collection<Communication> communications = terminal.getReceivedCommunications();
-            if(communications != null) {
-                receivedCommunications.addAll(communications);
-            }
+            receivedCommunications.addAll(communications);
         }
         return receivedCommunications;
     }
@@ -126,6 +124,11 @@ public class Client implements Serializable {
             return (this.getKey().compareToIgnoreCase( ((Client)other).getKey())) == 0;
         }
         return false;
+    }
+
+
+    void calculateCost(Communication communication) {
+        communication.calculateCost(_state);
     }
 
     @Override

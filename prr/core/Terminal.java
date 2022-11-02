@@ -21,15 +21,17 @@ public abstract class Terminal implements Serializable /* FIXME maybe addd more 
 
     private final String _id;
 
-    private TerminalState _state; 
+    private TerminalState _state;
+
 
     private double _debt;
     private double _payments;
     private Map<String, Terminal> _friends;
     private Client _owner;
-    private Map<Integer,Communication> _madeCommunications = new HashMap<>();
-    private Map<Integer,Communication> _receivedCommunications = new HashMap<>();
+    private List<Communication> _madeCommunications = new ArrayList<>();
+    private List<Communication> _receivedCommunications = new ArrayList<>();
     private InteractiveCommunication _ongoingCommunication;
+
 
 
     public Terminal(String terminalId, Client owner) throws InvalidKeyNumberException {
@@ -54,18 +56,12 @@ public abstract class Terminal implements Serializable /* FIXME maybe addd more 
     public double getPayments() {return _payments;}
 
     public Collection<Communication> getMadeCommunications(){
-        if (_madeCommunications == null) {
-            return null;
-        }
-        return _madeCommunications.values();
+        return _madeCommunications;
     }
 
 
-    public Collection<Communication> getReceivedCommunications() {
-        if (_receivedCommunications == null) {
-            return null;
-        }
-        return _receivedCommunications.values();
+    public List<Communication> getReceivedCommunications() {
+        return _receivedCommunications;
     }
 
     public Collection<String> getFriends() {return _friends.keySet();}
@@ -73,11 +69,11 @@ public abstract class Terminal implements Serializable /* FIXME maybe addd more 
     public Client getOwner() {return _owner;}
 
     //Returns the communication if it was successfuly made, null if not
-    public Communication makeSms(Terminal to, String message) {
+    public Communication makeSms(Terminal to, String message) throws DestinationTerminalException{
         return _state.makeSms(to,message);
     }
 
-    protected boolean acceptSms(Terminal from) {
+    protected boolean acceptSms(Terminal from) throws DestinationTerminalException {
         return _state.acceptSms(from);
     }
 
@@ -116,9 +112,7 @@ public abstract class Terminal implements Serializable /* FIXME maybe addd more 
      * it was the originator of this communication.
      **/
     public boolean canEndCurrentCommunication() {
-
-        return true;
-        //return _state.canEndCurrentCommunication();
+        return _state.canEndCurrentCommunication();
     }
 
     /**
@@ -128,11 +122,15 @@ public abstract class Terminal implements Serializable /* FIXME maybe addd more 
      *
     /* */
     public boolean canStartCommunication() {
-        return true;
-        //return _state.canStartCommunication(); 
+        return _state.canStartCommunication();
     }
 
     
+    public void EndCommunication(){
+        Communication communication = _ongoingCommunication;
+        _ongoingCommunication = null;
+
+    }
 
     public void addFriend(Terminal friend) {
         _friends.put(friend.getId(), friend);
@@ -151,10 +149,10 @@ public abstract class Terminal implements Serializable /* FIXME maybe addd more 
     }
 
     public void addMadeCommunications(Communication comms) {
-        _madeCommunications.put(comms.getId(), comms);
+        _madeCommunications.add(comms);
     }
 
     public void addReceivedCommunications(Communication comms) {
-        _receivedCommunications.put(comms.getId(), comms);
+        _receivedCommunications.add(comms);
     }
 }

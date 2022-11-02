@@ -138,7 +138,7 @@ public class Network implements Serializable {
    */
   public List<String> showClients()  {
     List<String> clientsToString = new ArrayList<>();
-    for ( Client client : _clients.values()) {
+    for ( Client client : _clients.values()) {    //Pode ficar simplificado
       clientsToString.add(client.toString());
     }
     return clientsToString;
@@ -146,7 +146,7 @@ public class Network implements Serializable {
   
   /** 
    * @param terminalId terminal's ID
-   * @return Terminal associated with the terminalId 
+   * @return Terminal associated with the terminalId  
    * @throws UnknownTerminalException  if there is no terminal associated with the terminalId
    */
   public Terminal getTerminal(String terminalId) throws UnknownTerminalException {
@@ -183,7 +183,7 @@ public class Network implements Serializable {
    * @return String list with all of the toString form of all the Terminals
    */
   public List<String> showTerminals() {
-    List<String> terminalsToString = new ArrayList<>();
+    List<String> terminalsToString = new ArrayList<>(); //Pode ficar simplificado
     for ( Terminal terminal : _terminals.values()) {
       terminalsToString.add(terminal.toString());
     }
@@ -199,14 +199,14 @@ public class Network implements Serializable {
   public List<String> showUnusedTerminals()  {
     List<String> terminalsToString = new ArrayList<>();
     for (Terminal terminal : _terminals.values()) {
-     if (terminal.getMadeCommunications() == null && terminal.getReceivedCommunications() == null) {
+     if (terminal.getMadeCommunications() == null && terminal.getReceivedCommunications() == null) { //pode ficar simplificado?
        terminalsToString.add(terminal.toString());
      }}
     return terminalsToString;
   }
 
   
-  public void makeSms(Terminal makerTerminal,String terminalId,String message) throws UnknownTerminalException{
+  public void makeSms(Terminal makerTerminal,String terminalId,String message) throws UnknownTerminalException, DestinationTerminalException{
     Terminal terminal = getTerminal(terminalId);
     Communication communication = makerTerminal.makeSms(terminal,message);
     if( communication != null) {
@@ -222,7 +222,7 @@ public class Network implements Serializable {
  
   public List<String> showCommunications() {
     List<String> communicationsToString = new ArrayList<>();
-    for ( Communication communication : _communications.values()) {
+    for ( Communication communication : _communications.values()) { //Pode ficar simplificado
       communicationsToString.add(communication.toString());
     }
     return communicationsToString;
@@ -230,29 +230,43 @@ public class Network implements Serializable {
 
   
 
-  public List<String> showAllClientReceivedCommunications(String clientKey) throws UnknownClientException{
+  public List<String> getClientReceivedCommunicationStrings(String clientKey) throws UnknownClientException{
     Client client = getClient(clientKey);
-    return showAllCommunications(client.getReceivedCommunications());
+    List<Communication> receivedCommunications = new ArrayList<>(client.getReceivedCommunications());
+    Collections.sort(receivedCommunications,new CommunicationComparator());
+    return getAllCommunications(receivedCommunications);
   }
 
-  public List<String> showAllClientMadeCommunications( String clientKey) throws UnknownClientException{
+  public List<String> getClientMadeCommunicationsStrings( String clientKey) throws UnknownClientException{
     Client client = getClient(clientKey);
-    return showAllCommunications(client.getMadeCommunications());
+    List<Communication> madeCommunications = new ArrayList<>(client.getMadeCommunications());
+    Collections.sort(madeCommunications,new CommunicationComparator());
+    return getAllCommunications(madeCommunications);
+
+  
   }
 
-  public List<String> showAllCommunications(Collection<Communication>comms){
+  /*
+  public List<String> getAll(Collection<Object> coll){
+    List<Object> strings = new ArrayList<>();
+    for(var obj : coll) {
+        strings.add(obj.toString());
+    }
+    return strings;
+  }
+  */
+
+  public List<String> getAllCommunications(Collection<Communication> comms){
     List<String> communicationStrings = new ArrayList<>();
     List<Communication> communications = new ArrayList<>(comms);
-    if( communications != null) {
-      Collections.sort(communications,new CommunicationComparator());
-      for(Communication communication : communications) {
-        communicationStrings.add(communication.toString());
-      }
+    for(Communication communication : communications) {   //Preciso que isto fique de maneira a que funcione para supertipo, e assim não tenho de repetir a mesma cena 20 vezes
+      communicationStrings.add(communication.toString());
     }
     return communicationStrings;
   }
 
 }
+
 
 
 class IdComparator implements Comparator<String> ,Serializable {

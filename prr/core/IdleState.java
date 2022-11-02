@@ -6,6 +6,7 @@ import prr.core.VideoCommunication;
 import prr.core.SilentState;
 import prr.core.Terminal;
 import prr.core.TextCommunication;
+import prr.core.exception.*;
 
 public class IdleState extends TerminalState{
     public IdleState(Terminal terminal){
@@ -34,7 +35,7 @@ public class IdleState extends TerminalState{
         return true;
     }
 
-    public TextCommunication makeSms(Terminal to, String message) {
+    public TextCommunication makeSms(Terminal to, String message) throws DestinationTerminalException { //Mudar as funções
         TextCommunication communication = null;
         if (to.acceptSms(_terminal)) {
             communication = new TextCommunication(_terminal,to,message); //Se calhar arranjar um método que trata logo disto
@@ -44,7 +45,7 @@ public class IdleState extends TerminalState{
         return communication;
     }
 
-    public boolean acceptSms(Terminal from) {
+    public boolean acceptSms(Terminal from) throws DestinationTerminalException {
         return true;
     }
 

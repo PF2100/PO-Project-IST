@@ -1,6 +1,7 @@
 package prr.core;
 
 import prr.core.Terminal;
+import prr.core.exception.DestinationTerminalException;
 
 
 public class SilentState extends TerminalState{
@@ -32,7 +33,7 @@ public class SilentState extends TerminalState{
         return false;
     }
     
-    public TextCommunication makeSms(Terminal to, String message) {
+    public TextCommunication makeSms(Terminal to, String message) throws DestinationTerminalException {
         TextCommunication communication = null;
         if (to.acceptSms(_terminal)) {
             communication = new TextCommunication(_terminal,to,message); //Se calhar arranjar um método que trata logo disto
@@ -42,7 +43,7 @@ public class SilentState extends TerminalState{
         return communication;
     }
 
-    public boolean acceptSms(Terminal from){return true;}
+    public boolean acceptSms(Terminal from) throws DestinationTerminalException{return true;}
     public boolean makeVoiceCall() {return true;}
     public boolean acceptVoiceCall() {return false;}
     public boolean canEndCurrentCommunication() {return false;}

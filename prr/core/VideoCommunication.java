@@ -1,6 +1,7 @@
 package prr.core;
 
 import java.io.Serializable;
+import prr.core.ClientState;
 
 public class VideoCommunication extends InteractiveCommunication implements Serializable {
     private static final long serialVersionUID = 202208091753L;
@@ -9,11 +10,6 @@ public class VideoCommunication extends InteractiveCommunication implements Seri
         super(from, to, duration);
     }
 
-    @Override
-    protected double computeCost() {
-        return 0;
-        //falta implementar
-    }
 
     @Override
     public String toString() {
@@ -23,5 +19,10 @@ public class VideoCommunication extends InteractiveCommunication implements Seri
 
         return "VIDEO|"+ getId() +"|"+getFrom().getId()+"|" +getTo().getId() + "|"
                 + this.getSize() +"|" + getCost() + "|" + status;
+    }
+
+    public void calculateCost ( ClientState state ) {
+        _cost = state.calculateVideoCost(_duration);
+        this.setPaid();
     }
 }
