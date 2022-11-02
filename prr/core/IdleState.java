@@ -5,7 +5,6 @@ import prr.core.VoiceCommunication;
 import prr.core.VideoCommunication;
 import prr.core.SilentState;
 import prr.core.Terminal;
-import prr.core.TextCommunication;
 import prr.core.exception.*;
 
 public class IdleState extends TerminalState{

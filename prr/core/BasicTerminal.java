@@ -13,11 +13,10 @@ public class BasicTerminal extends Terminal {
     public String toString(){
         String message = "BASIC" +"|"+ getId() + "|" + getOwner().getKey() + "|" + getState().toString() + "|" + Math.round(getPayments())
          + "|" + Math.round(getDebt());
-        /* 
-        for (String terminalId : super.getFriends().keySet()) {
-            message = message + "|" + terminalId;
+        if( !(getFriends().isEmpty())) {
+            message += "|";
+            message += String.join(",",getFriends());
         }
-        */
         return message;
     }
 }

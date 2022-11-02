@@ -16,7 +16,7 @@ public class SilentState extends TerminalState{
     }
 
     public String toString() {
-        return "SILENT";
+        return "SILENCE";
     }
     
     public boolean setBusy() {

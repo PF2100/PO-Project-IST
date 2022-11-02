@@ -26,7 +26,7 @@ public abstract class Terminal implements Serializable /* FIXME maybe addd more 
 
     private double _debt;
     private double _payments;
-    private Map<String, Terminal> _friends;
+    private Map<String, Terminal> _friends = new TreeMap<>(new IdComparator());
     private Client _owner;
     private List<Communication> _madeCommunications = new ArrayList<>();
     private List<Communication> _receivedCommunications = new ArrayList<>();
@@ -64,7 +64,7 @@ public abstract class Terminal implements Serializable /* FIXME maybe addd more 
         return _receivedCommunications;
     }
 
-    public Collection<String> getFriends() {return _friends.keySet();}
+    protected Collection<String> getFriends() {return _friends.keySet();}
 
     public Client getOwner() {return _owner;}
 
@@ -137,9 +137,20 @@ public abstract class Terminal implements Serializable /* FIXME maybe addd more 
     } 
 
     public void addFriend(Terminal friend) {
-        _friends.put(friend.getId(), friend);
+        if ( this.equals(friend) || !isFriend(friend)) {
+            _friends.put(friend.getId(),friend);
+        }
     }
 
+    public void removeFriend(Terminal friend) {
+        if (isFriend(friend)) {
+            _friends.remove(friend.getId());
+        }
+    }
+
+    public boolean isFriend(Terminal friend) {
+        return _friends.containsKey(friend.getId());
+    }
     @Override
     public boolean equals(Object other) {
         if(other instanceof Terminal ){
@@ -147,6 +158,7 @@ public abstract class Terminal implements Serializable /* FIXME maybe addd more 
         }
         return false;
     }
+
 
     public void setTerminalState(TerminalState state) {
         _state = state;
