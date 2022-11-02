@@ -1,8 +1,10 @@
 package prr.app.lookup;
 
 import prr.core.Network;
+import prr.core.Terminal;
 import pt.tecnico.uilib.menus.Command;
 import pt.tecnico.uilib.menus.CommandException;
+import java.util.*;
 
 import java.util.List;
 
@@ -17,9 +19,9 @@ class DoShowUnusedTerminals extends Command<Network> {
 
   @Override
   protected final void execute() throws CommandException {
-    List<String> terminals = _receiver.showUnusedTerminals();
-    for (String terminalString : terminals) {
-      _display.addLine(terminalString);
+    List<Terminal> unusedTerminals = _receiver.showUnusedTerminals();
+    for (Terminal terminal : unusedTerminals) {
+      _display.addLine(terminal.toString());
     }
     _display.display();
   }

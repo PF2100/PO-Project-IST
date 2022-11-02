@@ -60,7 +60,7 @@ public abstract class Terminal implements Serializable /* FIXME maybe addd more 
     }
 
 
-    public List<Communication> getReceivedCommunications() {
+    public Collection<Communication> getReceivedCommunications() {
         return _receivedCommunications;
     }
 
@@ -131,6 +131,10 @@ public abstract class Terminal implements Serializable /* FIXME maybe addd more 
         _ongoingCommunication = null;
 
     }
+
+    public boolean isUnused() {
+        return getMadeCommunications().isEmpty() && getReceivedCommunications().isEmpty();
+    } 
 
     public void addFriend(Terminal friend) {
         _friends.put(friend.getId(), friend);

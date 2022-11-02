@@ -18,11 +18,13 @@ class DoShowAllClients extends Command<Network> {
   }
   
   @Override
+
   protected final void execute() throws CommandException {
-      List<String> clients = _receiver.showClients();
-      for (String clientString : clients ){
-        _display.addLine(clientString);
-      }
-      _display.display();
+    List<Client> clients = _receiver.getClients();
+    for (Client client : clients ){
+      _display.addLine(client.toString());
+    }
+    _display.display();
   }
+  
 }

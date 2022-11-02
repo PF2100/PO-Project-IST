@@ -20,9 +20,9 @@ class DoShowAllTerminals extends Command<Network> {
 
   @Override
   protected final void execute() throws CommandException {
-    List<String> terminals = _receiver.showTerminals();
-    for (String terminalString : terminals ){
-      _display.addLine(terminalString);
+    List<Terminal> terminals = _receiver.getTerminals();
+    for (Terminal terminal : terminals ){
+      _display.addLine(terminal.toString());
     }
     _display.display();
   }

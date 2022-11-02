@@ -21,9 +21,9 @@ class DoShowAllCommunications extends Command<Network> {
 
   @Override
   protected final void execute() throws CommandException {
-    List<String> communications = _receiver.showCommunications();
-      for (String communicationString : communications ){
-        _display.addLine(communicationString);
+    List<Communication> communications = _receiver.getCommunications();
+      for (Communication communication : communications ){
+        _display.addLine(communication.toString());
       }
       _display.display();
   }
