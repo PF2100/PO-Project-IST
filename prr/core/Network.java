@@ -25,6 +25,7 @@ import java.util.Map;
 import java.util.Map;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 
@@ -227,35 +228,31 @@ public class Network implements Serializable {
     return communicationsToString;
   }
 
-  public List<String> showAllClientMadeCommunications( String clientKey) throws UnknownClientException{
-    Client client = getClient(clientKey);
-    List<String> communicationStrings = new ArrayList<>();
-    List<Communication> communications = new ArrayList<>(client.getMadeCommunications());
-    if( communications != null) {
-      Collections.sort(communications,new CommunicationComparator());
-      for(Communication communication : communications) {
-        communicationStrings.add(communication.toString());
-      }
-    }
-    return communicationStrings;
-  }
-
-  public List<String> showAllClientReceivedCommunications( String clientKey) throws UnknownClientException{
-    Client client = getClient(clientKey);
-    List<String> communicationStrings = new ArrayList<>();
-    List<Communication> communications = new ArrayList<> (client.getReceivedCommunications());
-    if( communications != null) {
-      Collections.sort(communications,new CommunicationComparator());
-      for(Communication communication : communications) {
-        communicationStrings.add(communication.toString());
-      }
-    }
-    return communicationStrings;
-  }
-}
-
   
 
+  public List<String> showAllClientReceivedCommunications(String clientKey) throws UnknownClientException{
+    Client client = getClient(clientKey);
+    return showAllCommunications(client.getReceivedCommunications());
+  }
+
+  public List<String> showAllClientMadeCommunications( String clientKey) throws UnknownClientException{
+    Client client = getClient(clientKey);
+    return showAllCommunications(client.getMadeCommunications());
+  }
+
+  public List<String> showAllCommunications(Collection<Communication>comms){
+    List<String> communicationStrings = new ArrayList<>();
+    List<Communication> communications = new ArrayList<>(comms);
+    if( communications != null) {
+      Collections.sort(communications,new CommunicationComparator());
+      for(Communication communication : communications) {
+        communicationStrings.add(communication.toString());
+      }
+    }
+    return communicationStrings;
+  }
+
+}
 
 
 class IdComparator implements Comparator<String> ,Serializable {
