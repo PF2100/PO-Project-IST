@@ -18,7 +18,7 @@ public class OffState extends TerminalState {
     
 
     public boolean setBusy() {
-        return true;
+        return false;
     }
 
     public boolean turnOff() {
@@ -32,9 +32,9 @@ public class OffState extends TerminalState {
     
 
     public TextCommunication makeSms(Terminal to, String message) {return null;}
-    public boolean acceptSms(Terminal from) {return true;}
-    public boolean makeVoiceCall() {return true;}
-    public boolean acceptVoiceCall() {return true;}
-    public boolean canEndCurrentCommunication() {return true;}
-    public boolean canStartCommunication() {return true;}
+    public boolean acceptSms(Terminal from) {return false;}
+    public boolean makeVoiceCall() {return false;}
+    public boolean acceptVoiceCall() {return false;}
+    public boolean canEndCurrentCommunication() {return false;}
+    public boolean canStartCommunication() {return false;}
 }

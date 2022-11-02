@@ -44,8 +44,8 @@ public class SilentState extends TerminalState{
 
     public boolean acceptSms(Terminal from){return true;}
     public boolean makeVoiceCall() {return true;}
-    public boolean acceptVoiceCall() {return true;}
-    public boolean canEndCurrentCommunication() {return true;}
+    public boolean acceptVoiceCall() {return false;}
+    public boolean canEndCurrentCommunication() {return false;}
     public boolean canStartCommunication() {return true;}
     
 }

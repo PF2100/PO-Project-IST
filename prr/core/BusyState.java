@@ -18,14 +18,13 @@ public class BusyState extends TerminalState {
     public String toString() {
         return "BUSY";
     }
-    
 
     public boolean setBusy() {
         return false;
     }
 
     public boolean turnOff() {
-        return true;
+        return false;
     }
     
     public boolean setOnSilent() {
@@ -36,14 +35,23 @@ public class BusyState extends TerminalState {
     }
 
 
-    
+
     public TextCommunication makeSms(Terminal to, String message) {
-        return null;
+        TextCommunication communication = null;
+        if (to.acceptSms(_terminal)) {
+            communication = new TextCommunication(_terminal,to,message); //Se calhar arranjar um método que trata logo disto
+            _terminal.addMadeCommunications(communication);
+            to.addReceivedCommunications(communication);
+        }
+        return communication;
     }
+
     public boolean acceptSms(Terminal from) {return true;}
     
     public boolean makeVoiceCall() {return true;}
-    public boolean acceptVoiceCall() {return true;}
-    public boolean canEndCurrentCommunication() {return true;}
-    public boolean canStartCommunication() {return true;}
+    public boolean acceptVoiceCall() {return false;}
+    public boolean canEndCurrentCommunication() {
+        return _terminal.getOngoingCommunication().getFrom().equals(_terminal);
+    }
+    public boolean canStartCommunication() {return false;}
 }

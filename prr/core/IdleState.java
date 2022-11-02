@@ -50,7 +50,8 @@ public class IdleState extends TerminalState{
 
     public boolean makeVoiceCall() {return true;}
     public boolean acceptVoiceCall() {return true;}
-    public boolean canEndCurrentCommunication() {return true;}
+    public boolean canEndCurrentCommunication() {return false;}
+
     public boolean canStartCommunication() {return true;}
 
 }
