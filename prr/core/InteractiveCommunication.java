@@ -6,16 +6,13 @@ public abstract class InteractiveCommunication extends Communication implements 
     private static final long serialVersionUID = 202208091753L;
     protected int _duration;
 
-    public InteractiveCommunication(Terminal from, Terminal to, int duration) {
+    public InteractiveCommunication(Terminal from, Terminal to) {
         super(from, to);
-        _duration = duration;
     }
 
     @Override
-    protected int getSize() {
+    protected int getUnits() {
         return _duration;
     } 
 
-    @Override
-    protected abstract void calculateCost(ClientState state);
 }

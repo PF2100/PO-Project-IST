@@ -127,8 +127,16 @@ public class Client implements Serializable {
     }
 
 
-    void calculateCost(Communication communication) {
-        communication.calculateCost(_state);
+    void calculateTextCost(Communication communication) {
+        _state.calculateTextCost(communication);
+    }
+
+    void calculateVoiceCost(Communication communication) {
+        _state.calculateVoiceCost(communication);
+    }
+
+    void calculateVideoCost(Communication communication) {
+        _state.calculateVideoCost(communication);
     }
 
     @Override

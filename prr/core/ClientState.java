@@ -13,9 +13,9 @@ public abstract class ClientState implements Serializable{
     
     public abstract String toString();
 
-    public abstract double calculateTextCost(int length);
-    public abstract double calculateVideoCost(int duration);
-    public abstract double calculateVoiceCost(int duration);
+    public abstract void calculateTextCost(Communication communication);
+    public abstract void calculateVideoCost(Communication communication);
+    public abstract void calculateVoiceCost(Communication communication);
 
 
 }

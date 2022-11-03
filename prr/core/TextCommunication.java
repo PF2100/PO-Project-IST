@@ -17,19 +17,14 @@ public class TextCommunication extends Communication implements Serializable {
     }
 
     @Override
-    protected int getSize() {
+    protected int getUnits() {
         return _message.length();
     }
 
     @Override
     public String toString() {
         return "TEXT|" + getId() +"|"+getFrom().getId()+"|" +getTo().getId() + "|"
-                + this.getSize() +"|" + getCost() + "|" + "FINISHED";
-    }
-
-    public void calculateCost ( ClientState state ) {
-        _cost = state.calculateTextCost(_message.length());
-        this.setPaid();
+                + this.getUnits() +"|" + getCost() + "|" + "FINISHED";
     }
 
 

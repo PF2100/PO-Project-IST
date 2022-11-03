@@ -6,14 +6,27 @@ public class PlatinumState extends ClientState {
         super(client);
     }
 
-    public  double calculateTextCost(int length){
-        return 0.0;
+    public  void calculateTextCost(Communication communication){
+        int units = communication.getUnits();
+        double price = 0d;
+        if ( units < 50) {
+            price = 0 ;
+        }
+        else {
+            price = 4;
+        }
+        communication.setCost(price * communication.getDiscount());
     }
-    public  double calculateVideoCost(int duration){
-        return 0.0;
+
+    public  void calculateVideoCost(Communication communication){
+        int units = communication.getUnits();
+        double price = units * 30d ;
+        communication.setCost(price * communication.getDiscount());
     }
-    public  double calculateVoiceCost(int duration){
-        return 0.0;
+    public  void calculateVoiceCost(Communication communication){
+        int units = communication.getUnits();
+        double price = units * 20d ;
+        communication.setCost(price * communication.getDiscount());
     }
 
     public String toString() {

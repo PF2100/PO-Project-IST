@@ -212,11 +212,15 @@ public class Network implements Serializable {
     return madeCommunications;
   }
 
+
+
   public void addFriend(Terminal selectedTerminal,String friendKey) throws UnknownTerminalException {
     Terminal friend = getTerminal(friendKey);
     selectedTerminal.addFriend(friend);
   }
 
+
+  
   public void removeFriend(Terminal selectedTerminal,String friendKey) throws UnknownTerminalException {
     Terminal friend = getTerminal(friendKey);
     selectedTerminal.removeFriend(friend);

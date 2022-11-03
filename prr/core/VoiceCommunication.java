@@ -6,8 +6,8 @@ import java.io.Serializable;
 public class VoiceCommunication extends InteractiveCommunication implements Serializable {
     private static final long serialVersionUID = 202208091753L;
 
-    public VoiceCommunication(Terminal from, Terminal to, int duration) {
-        super(from, to, duration);
+    public VoiceCommunication(Terminal from, Terminal to) {
+        super(from, to);
     }
 
     @Override
@@ -17,11 +17,7 @@ public class VoiceCommunication extends InteractiveCommunication implements Seri
         else {status = "FINISHED";}
 
         return "VOICE|" + getId() + "|" + getFrom().getId() + "|" + getTo().getId() + "|"
-                + this.getSize() + "|" + getCost() + "|" + status;
+                + getUnits() + "|" + getCost() + "|" + status;
     }
 
-    public void calculateCost ( ClientState state ) {
-        _cost = state.calculateVoiceCost(_duration);
-        this.setPaid();
-    }
 }

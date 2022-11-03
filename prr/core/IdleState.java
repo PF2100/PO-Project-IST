@@ -16,6 +16,7 @@ public class IdleState extends TerminalState{
         return false;
     }
 
+
     public boolean setBusy() {
         _terminal.setTerminalState(new BusyState(_terminal));
         return true;
@@ -24,6 +25,7 @@ public class IdleState extends TerminalState{
     public String toString(){
         return "IDLE";
     }
+
     public boolean turnOff() {
         _terminal.setTerminalState(new OffState(_terminal));
         return true;
@@ -51,7 +53,6 @@ public class IdleState extends TerminalState{
     public boolean makeVoiceCall() {return true;}
     public boolean acceptVoiceCall() {return true;}
     public boolean canEndCurrentCommunication() {return false;}
-
     public boolean canStartCommunication() {return true;}
 
 }

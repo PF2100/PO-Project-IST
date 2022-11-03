@@ -70,7 +70,9 @@ public abstract class Terminal implements Serializable /* FIXME maybe addd more 
 
     //Returns the communication if it was successfuly made, null if not
     public Communication makeSms(Terminal to, String message) throws DestinationTerminalException{
-        return _state.makeSms(to,message);
+        Communication communication = _state.makeSms(to,message);
+        _owner.calculateTextCost(communication);
+        return communication;
     }
 
     protected boolean acceptSms(Terminal from) throws DestinationTerminalException {

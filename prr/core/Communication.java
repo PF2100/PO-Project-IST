@@ -8,6 +8,7 @@ public abstract class Communication implements Serializable {
     private boolean _isPaid;
     protected double _cost;
     private boolean _isOngoing;
+    private double _discount = 1d;
 
     private Terminal _from;
 
@@ -17,9 +18,16 @@ public abstract class Communication implements Serializable {
         _from = from;
         _to = to;
         _isPaid = false;
+        if ( from.isFriend(to) ) {
+            _discount = 0.5d;
+        }
     }
 
     public int getId() {return _id;}
+
+    public double getDiscount() {
+        return _discount;
+    }
 
     public Terminal getFrom() {return _from;}
 
@@ -39,10 +47,7 @@ public abstract class Communication implements Serializable {
         _cost = cost;
     }
 
-    protected abstract void calculateCost(ClientState state);
-    // falta colocar o tarif plan como argumento ?
-
-    protected abstract int getSize();
+    protected abstract int getUnits();
 
     @Override
     public boolean equals(Object other) {
