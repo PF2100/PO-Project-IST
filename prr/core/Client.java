@@ -6,12 +6,6 @@ import java.io.Serializable;
 import prr.core.Terminal;
 
 
-enum ClientLevel {
-    NORMAL,
-    GOLD,
-    PLATINUM
-}
-
 
 public class Client implements Serializable {
 

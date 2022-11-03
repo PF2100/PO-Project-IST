@@ -19,6 +19,7 @@ public class IdleState extends TerminalState{
 
     public boolean setBusy() {
         _terminal.setTerminalState(new BusyState(_terminal));
+        _terminal.setPreviousState(new IdleState(_terminal));
         return true;
     }
 
@@ -36,22 +37,53 @@ public class IdleState extends TerminalState{
         return true;
     }
 
-    public TextCommunication makeSms(Terminal to, String message) throws DestinationTerminalException { //Mudar as funções
-        TextCommunication communication = null;
-        if (to.acceptSms(_terminal)) {
-            communication = new TextCommunication(_terminal,to,message); //Se calhar arranjar um método que trata logo disto
-            _terminal.addMadeCommunications(communication);
-            to.addReceivedCommunications(communication);
-        }
+    public Communication makeSms(Terminal to, String message) throws DestinationTerminalException { //Mudar as funções
+        Communication communication = new TextCommunication(_terminal,to,message);
+        to.acceptSms(communication);
+        _terminal.addMadeCommunication(communication);
         return communication;
     }
 
-    public boolean acceptSms(Terminal from) throws DestinationTerminalException {
-        return true;
+    public void acceptSms(Communication communication) throws DestinationTerminalException {
+        _terminal.addReceivedCommunication(communication);
     }
 
-    public boolean makeVoiceCall() {return true;}
-    public boolean acceptVoiceCall() {return true;}
+    public Communication makeVoiceCall(Terminal to) throws DestinationTerminalException {
+        Communication communication = new VoiceCommunication(_terminal,to);
+        to.acceptVoiceCall(communication);
+        _terminal.addMadeCommunication(communication);
+        _terminal.setOngoingCommunication(communication);
+        _terminal.setBusy();
+        return communication;
+    }
+
+
+    public void acceptVoiceCall(Communication communication) throws DestinationTerminalException {
+        _terminal.addMadeCommunication(communication);
+        _terminal.setOngoingCommunication(communication);
+        _terminal.setBusy();
+    }
+
+    public Communication makeVideoCall(Terminal to) throws DestinationTerminalException {
+        Communication communication = new VoiceCommunication(_terminal,to);
+        to.acceptVoiceCall(communication);
+        _terminal.addMadeCommunication(communication);
+        _terminal.setOngoingCommunication(communication);
+        _terminal.setBusy();
+        return communication;
+    }
+
+
+    public void acceptVideoCall(Communication communication) throws DestinationTerminalException {
+        _terminal.addMadeCommunication(communication);
+        _terminal.setOngoingCommunication(communication);
+        _terminal.setBusy();
+    }
+
+    public void unBusy() {
+        _terminal.setOnIdle();
+    }
+
     public boolean canEndCurrentCommunication() {return false;}
     public boolean canStartCommunication() {return true;}
 

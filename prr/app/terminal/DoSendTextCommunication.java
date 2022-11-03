@@ -28,7 +28,7 @@ class DoSendTextCommunication extends TerminalCommand {
     }catch(UnknownTerminalException ute) {
       throw new UnknownTerminalKeyException(terminalKey);
     }catch( DestinationTerminalException dte) {
-      _display.popup(Message.destinationIsOff(dte.getKey()));
+      _display.popup(Message.destinationIsOff(terminalKey));
     }
   }
 } 

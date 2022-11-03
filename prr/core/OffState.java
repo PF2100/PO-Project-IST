@@ -31,15 +31,33 @@ public class OffState extends TerminalState {
         return true;
     }
     
-    
 
-    public TextCommunication makeSms(Terminal to, String message) throws DestinationTerminalException {return null;}
-
-    public boolean acceptSms(Terminal from) throws DestinationTerminalException {
-        throw new DestinationTerminalException(_terminal.getId());
+    public Communication makeSms(Terminal to, String message) throws DestinationTerminalException {
+        return null;
     }
-    public boolean makeVoiceCall() {return false;}
-    public boolean acceptVoiceCall() {return false;}
+
+    public void acceptSms(Communication communication) throws DestinationTerminalException {
+        throw new DestinationTerminalException("OFF");
+    }
+
+    public Communication makeVoiceCall(Terminal to) throws DestinationTerminalException{
+        return null;
+    }
+
+    public void acceptVoiceCall(Communication communication) throws DestinationTerminalException {
+        throw new DestinationTerminalException("OFF");
+    }
+
+    public Communication makeVideoCall(Terminal to) throws DestinationTerminalException{
+        return null;
+    }
+
+    public void acceptVideoCall(Communication communication) throws DestinationTerminalException {
+        throw new DestinationTerminalException("OFF");
+    }
+
+    public void unBusy() {}
+
     public boolean canEndCurrentCommunication() {return false;}
     public boolean canStartCommunication() {return false;}
 }

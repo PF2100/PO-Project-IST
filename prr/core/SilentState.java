@@ -21,6 +21,7 @@ public class SilentState extends TerminalState{
     
     public boolean setBusy() {
         _terminal.setTerminalState(new BusyState(_terminal));
+        _terminal.setPreviousState(new IdleState(_terminal));
         return true;
     }
 
@@ -33,19 +34,49 @@ public class SilentState extends TerminalState{
         return false;
     }
     
-    public TextCommunication makeSms(Terminal to, String message) throws DestinationTerminalException {
-        TextCommunication communication = null;
-        if (to.acceptSms(_terminal)) {
-            communication = new TextCommunication(_terminal,to,message); //Se calhar arranjar um método que trata logo disto
-            _terminal.addMadeCommunications(communication);
-            to.addReceivedCommunications(communication);
-        }
+    public Communication makeSms(Terminal to, String message) throws DestinationTerminalException {
+        Communication communication = new TextCommunication(_terminal,to,message);
+        to.acceptSms(communication);
+        _terminal.addMadeCommunication(communication);
         return communication;
     }
 
-    public boolean acceptSms(Terminal from) throws DestinationTerminalException{return true;}
-    public boolean makeVoiceCall() {return true;}
-    public boolean acceptVoiceCall() {return false;}
+    public void acceptSms(Communication communication) throws DestinationTerminalException {
+        _terminal.addReceivedCommunication(communication);
+    }
+
+
+    public Communication makeVoiceCall(Terminal to) throws DestinationTerminalException {
+        Communication communication = new VoiceCommunication(_terminal,to);
+        to.acceptVoiceCall(communication);
+        _terminal.addMadeCommunication(communication);
+        _terminal.setOngoingCommunication(communication);
+        _terminal.setBusy();
+        return communication;
+    }
+
+    public void acceptVoiceCall(Communication communication) throws DestinationTerminalException{
+        throw new DestinationTerminalException("SILENCE");
+    }
+
+    public Communication makeVideoCall(Terminal to) throws DestinationTerminalException {
+        Communication communication = new VoiceCommunication(_terminal,to);
+        to.acceptVoiceCall(communication);
+        _terminal.addMadeCommunication(communication);
+        _terminal.setOngoingCommunication(communication);
+        _terminal.setBusy();
+        return communication;
+    }
+
+
+    public void acceptVideoCall(Communication communication) throws DestinationTerminalException {
+        throw new DestinationTerminalException("SILENT");
+    }
+
+    public void unBusy() {
+        _terminal.setOnSilent();
+    }
+
     public boolean canEndCurrentCommunication() {return false;}
     public boolean canStartCommunication() {return true;}
     

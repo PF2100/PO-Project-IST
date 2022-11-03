@@ -1,5 +1,6 @@
 package prr.core;
 
+import prr.core.exception.DestinationTerminalException;
 import prr.core.exception.InvalidKeyNumberException;
 import prr.core.Terminal;
 
@@ -19,4 +20,18 @@ public class BasicTerminal extends Terminal {
         }
         return message;
     }
+
+    @Override
+
+
+    public Communication makeVideoCall(Terminal to) throws DestinationTerminalException {
+        throw new DestinationTerminalException("ORIGIN");
+    }
+
+
+    public void acceptVideoCall(Communication communication) throws DestinationTerminalException{
+        throw new DestinationTerminalException("RECEIVE");
+    }
+
+
 }

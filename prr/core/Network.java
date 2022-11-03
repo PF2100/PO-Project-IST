@@ -5,10 +5,6 @@ import java.io.Serializable;
 import java.security.InvalidKeyException;
 import java.io.IOException;
 
-import prr.core.exception.UnrecognizedEntryException;
-import prr.core.exception.KeyAlreadyExistsException;
-import prr.core.exception.InvalidKeyNumberException;
-
 import prr.core.Parser;
 import prr.core.Terminal;
 import prr.core.Client;
@@ -104,12 +100,7 @@ public class Network implements Serializable {
    * @param terminal Terminal who will befriend another Terminal
    * @param friend Terminal who will be the friend
    */
-  public void addFriend(String terminal,String friend ) {
-    Terminal friend1= _terminals.get(terminal);
-    Terminal friend2 = _terminals.get(friend);
-    friend1.addFriend(friend2);
-  }
-
+  
   /** 
    * @param key Client's key
    * @return Client associated with the client's key
@@ -182,9 +173,7 @@ public class Network implements Serializable {
   public void makeSms(Terminal makerTerminal,String terminalId,String message) throws UnknownTerminalException, DestinationTerminalException{
     Terminal terminal = getTerminal(terminalId);
     Communication communication = makerTerminal.makeSms(terminal,message);
-    if( communication != null) {
-      addCommunication(communication);
-    }
+    addCommunication(communication);
   }
 
   public void addCommunication(Communication communication) {
@@ -214,7 +203,8 @@ public class Network implements Serializable {
 
 
 
-  public void addFriend(Terminal selectedTerminal,String friendKey) throws UnknownTerminalException {
+  public void addFriend(String selectedTerminalKey,String friendKey) throws UnknownTerminalException {
+    Terminal selectedTerminal = getTerminal(selectedTerminalKey);
     Terminal friend = getTerminal(friendKey);
     selectedTerminal.addFriend(friend);
   }
@@ -234,6 +224,14 @@ public class Network implements Serializable {
     return strings;
   }
   */
+  public void startInteractiveCommunication(String type,Terminal from, String receiverId) throws UnknownTerminalException,DestinationTerminalException{
+    Terminal to = getTerminal(receiverId);
+    Communication communication = null;
+    if(from.equals(to)){throw new DestinationTerminalException("BUSY");}
+    else if (type.equals("VOICE")) {communication = from.makeVoiceCall(to);}
+    else{communication = from.makeVideoCall(to);}
+    addCommunication(communication);
+  }
 }
 
 

@@ -39,6 +39,10 @@ public abstract class Communication implements Serializable {
 
     public boolean isOngoing() {return _isOngoing;}
 
+    public void setOngoing() {_isOngoing = true;}
+
+    public void stopOngoing() { _isOngoing = false;}
+
     public double getCost() {return _cost;}
 
     public abstract String toString();

@@ -37,22 +37,41 @@ public class BusyState extends TerminalState {
 
 
 
-    public TextCommunication makeSms(Terminal to, String message) throws DestinationTerminalException {
-        TextCommunication communication = null;
-        if (to.acceptSms(_terminal)) {
-            communication = new TextCommunication(_terminal,to,message); //Se calhar arranjar um método que trata logo disto
-            _terminal.addMadeCommunications(communication);
-            to.addReceivedCommunications(communication);
-        }
+    public Communication makeSms(Terminal to, String message) throws DestinationTerminalException {
+       return null;
+    }
+
+    public void acceptSms(Communication communication) throws DestinationTerminalException {
+        _terminal.addReceivedCommunication(communication);
+    }
+    
+    public Communication makeVoiceCall(Terminal to) throws DestinationTerminalException {
+        return null; 
+    }
+
+
+    public void acceptVoiceCall(Communication communication) throws DestinationTerminalException {
+        throw new DestinationTerminalException("BUSY");
+    }
+
+    public Communication makeVideoCall(Terminal to) throws DestinationTerminalException {
+        Communication communication = new VoiceCommunication(_terminal,to);
+        to.acceptVoiceCall(communication);
+        _terminal.addMadeCommunication(communication);
+        _terminal.setOngoingCommunication(communication);
+        _terminal.setBusy();
         return communication;
     }
 
-    public boolean acceptSms(Terminal from) throws DestinationTerminalException {
-        return true;
+
+    public void acceptVideoCall(Communication communication) throws DestinationTerminalException {
+        _terminal.addMadeCommunication(communication);
+        _terminal.setOngoingCommunication(communication);
+        _terminal.setBusy();
     }
-    
-    public boolean makeVoiceCall() {return true;}
-    public boolean acceptVoiceCall() {return false;}
+
+    public void unBusy() {}
+
     public boolean canEndCurrentCommunication() {
         return _terminal.getOngoingCommunication().getFrom().equals(_terminal);
     }
