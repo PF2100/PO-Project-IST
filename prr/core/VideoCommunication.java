@@ -22,7 +22,7 @@ public class VideoCommunication extends InteractiveCommunication implements Seri
         else {status = "FINISHED";}
 
         return "VIDEO|"+ getId() +"|"+getFrom().getId()+"|" +getTo().getId() + "|"
-                + getUnits() +"|" + getCost() + "|" + status;
+                + getUnits() +"|" + Math.round(getCost()) + "|" + status;
     }
 
 }

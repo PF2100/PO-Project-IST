@@ -29,7 +29,7 @@ public class TextCommunication extends Communication implements Serializable {
     @Override
     public String toString() {
         return "TEXT|" + getId() +"|"+getFrom().getId()+"|" +getTo().getId() + "|"
-                + this.getUnits() +"|" + getCost() + "|" + "FINISHED";
+                + this.getUnits() +"|" + Math.round(getCost()) + "|" + "FINISHED";
     }
 
 

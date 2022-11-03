@@ -229,8 +229,15 @@ public class Network implements Serializable {
     Communication communication = null;
     if(from.equals(to)){throw new DestinationTerminalException("BUSY");}
     else if (type.equals("VOICE")) {communication = from.makeVoiceCall(to);}
-    else{communication = from.makeVideoCall(to);}
+    else{
+      
+      communication = from.makeVideoCall(to)
+      ;}
     addCommunication(communication);
+  }
+
+  public long endOngoingCommunication(int duration,Terminal terminal) {
+    return terminal.endOngoingCommunication(duration);
   }
 }
 

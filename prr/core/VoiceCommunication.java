@@ -23,7 +23,7 @@ public class VoiceCommunication extends InteractiveCommunication implements Seri
         else {status = "FINISHED";}
 
         return "VOICE|" + getId() + "|" + getFrom().getId() + "|" + getTo().getId() + "|"
-                + getUnits() + "|" + getCost() + "|" + status;
+                + getUnits() + "|" + Math.round(getCost()) + "|" + status;
     }
 
 }

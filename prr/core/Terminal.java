@@ -31,7 +31,7 @@ public abstract class Terminal implements Serializable /* FIXME maybe addd more 
     private Client _owner;
     private List<Communication> _madeCommunications = new ArrayList<>();
     private List<Communication> _receivedCommunications = new ArrayList<>();
-    private Communication _ongoingCommunication;
+    private InteractiveCommunication _ongoingCommunication;
 
 
 
@@ -96,25 +96,34 @@ public abstract class Terminal implements Serializable /* FIXME maybe addd more 
     public abstract void acceptVideoCall(Communication communication) throws DestinationTerminalException;
 
 
-    /* 
-    public void endOngoingCommunication(int units) {
-        _ongoingCommunication.calculateCost(_ongoingCommunication);
+    
+    public long endOngoingCommunication(int duration) {
+        _ongoingCommunication.setDuration(duration);
+        _ongoingCommunication.calculateCost();
+        double price = _ongoingCommunication.getCost();
         Terminal to = _ongoingCommunication.getTo();
-        to.unbusy();
-        this.unbusy
+        to.returnState();
+        returnState();
+        _ongoingCommunication.stopOngoing();
+        to.setOngoingCommunication(null);
+        setOngoingCommunication(null);
+        return Math.round(price);
     }
-    */
+
+
     public Communication getOngoingCommunication() {
         return _ongoingCommunication;
     }
 
+
+
+
     public void setOngoingCommunication(Communication ongoingCommunication) {
-        _ongoingCommunication = ongoingCommunication;
-        ongoingCommunication.setOngoing();
+        _ongoingCommunication = (InteractiveCommunication)ongoingCommunication;
     }
 
     public void returnState(){
-        _state.unBusy();
+        _previous.unBusy();
     }
 
     public boolean setOnIdle() {return _state.setOnIdle();}

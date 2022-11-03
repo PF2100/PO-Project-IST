@@ -11,6 +11,9 @@ public abstract class InteractiveCommunication extends Communication implements 
         super(from, to);
     }
 
+    public void setDuration(int duration) {
+        _duration = duration;
+    }
 
     @Override
     protected int getUnits() {

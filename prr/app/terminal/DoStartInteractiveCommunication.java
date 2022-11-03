@@ -33,7 +33,7 @@ class DoStartInteractiveCommunication extends TerminalCommand {
         case "ORIGIN" :
           _display.popup(Message.unsupportedAtOrigin(terminalKey, communicationType));
           break;
-        case "RECEIVER":
+        case "RECEIVE":
           _display.popup(Message.unsupportedAtDestination(terminalKey, communicationType));
           break;
         case "OFF" :
