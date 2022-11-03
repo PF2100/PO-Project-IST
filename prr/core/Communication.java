@@ -1,6 +1,7 @@
 package prr.core;
 
 import java.io.Serializable;
+import prr.core.*;
 
 public abstract class Communication implements Serializable {
     private static final long serialVersionUID = 202208091753L;
@@ -8,7 +9,7 @@ public abstract class Communication implements Serializable {
     private boolean _isPaid;
     protected double _cost;
     private boolean _isOngoing;
-    private double _discount = 1d;
+    private double _discount = 1;
 
     private Terminal _from;
 
@@ -19,7 +20,7 @@ public abstract class Communication implements Serializable {
         _to = to;
         _isPaid = false;
         if ( from.isFriend(to) ) {
-            _discount = 0.5d;
+            _discount = 0.5;
         }
     }
 
@@ -45,11 +46,16 @@ public abstract class Communication implements Serializable {
 
     public double getCost() {return _cost;}
 
+
+
+    public abstract void calculateCost();
+
     public abstract String toString();
 
     protected void setCost(double cost) {
         _cost = cost;
     }
+
 
     protected abstract int getUnits();
 

@@ -55,19 +55,12 @@ public class BusyState extends TerminalState {
     }
 
     public Communication makeVideoCall(Terminal to) throws DestinationTerminalException {
-        Communication communication = new VoiceCommunication(_terminal,to);
-        to.acceptVoiceCall(communication);
-        _terminal.addMadeCommunication(communication);
-        _terminal.setOngoingCommunication(communication);
-        _terminal.setBusy();
-        return communication;
+       return null;
     }
 
 
     public void acceptVideoCall(Communication communication) throws DestinationTerminalException {
-        _terminal.addMadeCommunication(communication);
-        _terminal.setOngoingCommunication(communication);
-        _terminal.setBusy();
+        throw new DestinationTerminalException("OFF");
     }
 
     public void unBusy() {}

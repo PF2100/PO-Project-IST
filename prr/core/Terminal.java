@@ -69,6 +69,8 @@ public abstract class Terminal implements Serializable /* FIXME maybe addd more 
 
     public Client getOwner() {return _owner;}
 
+
+
     //Returns the communication if it was successfuly made, null if not
     public Communication makeSms(Terminal to, String message) throws DestinationTerminalException{
         Communication communication = _state.makeSms(to,message);
@@ -94,11 +96,14 @@ public abstract class Terminal implements Serializable /* FIXME maybe addd more 
     public abstract void acceptVideoCall(Communication communication) throws DestinationTerminalException;
 
 
-
-    public void endOngoingCommunication(int size) {
-        // implementar 
+    /* 
+    public void endOngoingCommunication(int units) {
+        _ongoingCommunication.calculateCost(_ongoingCommunication);
+        Terminal to = _ongoingCommunication.getTo();
+        to.unbusy();
+        this.unbusy
     }
-
+    */
     public Communication getOngoingCommunication() {
         return _ongoingCommunication;
     }
@@ -106,6 +111,10 @@ public abstract class Terminal implements Serializable /* FIXME maybe addd more 
     public void setOngoingCommunication(Communication ongoingCommunication) {
         _ongoingCommunication = ongoingCommunication;
         ongoingCommunication.setOngoing();
+    }
+
+    public void returnState(){
+        _state.unBusy();
     }
 
     public boolean setOnIdle() {return _state.setOnIdle();}

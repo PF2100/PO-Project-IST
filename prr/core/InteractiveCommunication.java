@@ -1,6 +1,7 @@
 package prr.core;
 
 import java.io.Serializable;
+import prr.core.*;
 
 public abstract class InteractiveCommunication extends Communication implements Serializable {
     private static final long serialVersionUID = 202208091753L;
@@ -9,6 +10,7 @@ public abstract class InteractiveCommunication extends Communication implements 
     public InteractiveCommunication(Terminal from, Terminal to) {
         super(from, to);
     }
+
 
     @Override
     protected int getUnits() {

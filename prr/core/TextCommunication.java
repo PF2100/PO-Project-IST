@@ -1,7 +1,7 @@
 package prr.core;
 
 import java.io.Serializable;
-import prr.core.ClientState;
+import prr.core.*;
 
 public class TextCommunication extends Communication implements Serializable {
     private static final long serialVersionUID = 202208091753L;
@@ -10,10 +10,15 @@ public class TextCommunication extends Communication implements Serializable {
     public TextCommunication(Terminal from, Terminal to, String message) {
         super(from, to);
         _message = message;
+        calculateCost();
     }
 
     public String getMessage() {
         return _message;
+    }
+
+    public void calculateCost() {
+        getFrom().getOwner().calculateTextCost(this);
     }
 
     @Override

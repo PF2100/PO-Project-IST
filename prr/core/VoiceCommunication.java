@@ -10,6 +10,12 @@ public class VoiceCommunication extends InteractiveCommunication implements Seri
         super(from, to);
     }
 
+
+    public void calculateCost() {
+        getFrom().getOwner().calculateVoiceCost(this);
+    }
+
+
     @Override
     public String toString() {
         String status;
