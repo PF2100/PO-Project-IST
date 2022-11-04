@@ -50,41 +50,33 @@ public class IdleState extends TerminalState{
     public Communication makeVoiceCall(Terminal to) throws DestinationTerminalException {
         Communication communication = new VoiceCommunication(_terminal,to);
         to.acceptVoiceCall(communication);
-        _terminal.addMadeCommunication(communication);
-        _terminal.setOngoingCommunication(communication);
-        communication.setOngoing();
-        _terminal.setBusy();
+        makeInteractiveCommunication(communication);
         return communication;
     }
 
 
     public void acceptVoiceCall(Communication communication) throws DestinationTerminalException {
-        _terminal.addReceivedCommunication(communication);
-        _terminal.setOngoingCommunication(communication);
-        _terminal.setBusy();
+        receiveInteractiveCommunication(communication);
     }
 
     public Communication makeVideoCall(Terminal to) throws DestinationTerminalException {
         Communication communication = new VideoCommunication(_terminal,to);
         to.acceptVideoCall(communication);
-        _terminal.addMadeCommunication(communication);
-        _terminal.setOngoingCommunication(communication);
-        communication.setOngoing();
-        _terminal.setBusy();
+        makeInteractiveCommunication(communication);
         return communication;
     }
 
     public void acceptVideoCall(Communication communication) throws DestinationTerminalException {
-        _terminal.addReceivedCommunication(communication);
-        _terminal.setOngoingCommunication(communication);
-        _terminal.setBusy();
+        receiveInteractiveCommunication(communication);
     }
 
     public void unBusy() {
+        _terminal.notifyClients("B2I");
         _terminal.setTerminalState(this);
     }
 
     public boolean canEndCurrentCommunication() {return false;}
     public boolean canStartCommunication() {return true;}
 
+    
 }

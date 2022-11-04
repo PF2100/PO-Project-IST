@@ -29,7 +29,22 @@ public abstract class TerminalState implements Serializable{
 
     
 
-    protected abstract void acceptVideoCall(Communication communication) throws DestinationTerminalException;
+    public abstract void acceptVideoCall(Communication communication) throws DestinationTerminalException;
+
+    public void makeInteractiveCommunication(Communication communication){
+        _terminal.addMadeCommunication(communication);
+        _terminal.setOngoingCommunication(communication);
+        communication.setOngoing();
+        _terminal.setBusy();
+    }
+    
+    public void receiveInteractiveCommunication(Communication communication){
+        _terminal.addReceivedCommunication(communication);
+        _terminal.setOngoingCommunication(communication);
+        _terminal.setBusy();
+    }
+
+
 
 
     public abstract boolean canEndCurrentCommunication();

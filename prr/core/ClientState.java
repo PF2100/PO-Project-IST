@@ -17,6 +17,7 @@ public abstract class ClientState implements Serializable{
     public abstract void calculateVideoCost(Communication communication);
     public abstract void calculateVoiceCost(Communication communication);
 
+   // public abstract void checkClientUpdate(Communication communication);
 
 }
 

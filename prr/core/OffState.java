@@ -10,6 +10,7 @@ public class OffState extends TerminalState {
 
     public boolean setOnIdle(){
         _terminal.setTerminalState(new IdleState(_terminal));
+        _terminal.notifyClients("O2I");
         return true;
     }
 
@@ -28,6 +29,7 @@ public class OffState extends TerminalState {
     
     public boolean setOnSilent() {
         _terminal.setTerminalState(new SilentState(_terminal));
+        _terminal.notifyClients("O2S");
         return true;
     }
     
@@ -37,6 +39,7 @@ public class OffState extends TerminalState {
     }
 
     public void acceptSms(Communication communication) throws DestinationTerminalException {
+        _terminal.addNotifiableClient(communication);
         throw new DestinationTerminalException("OFF");
     }
 
@@ -45,6 +48,7 @@ public class OffState extends TerminalState {
     }
 
     public void acceptVoiceCall(Communication communication) throws DestinationTerminalException {
+        _terminal.addNotifiableClient(communication);
         throw new DestinationTerminalException("OFF");
     }
 
@@ -53,6 +57,7 @@ public class OffState extends TerminalState {
     }
 
     public void acceptVideoCall(Communication communication) throws DestinationTerminalException {
+        _terminal.addNotifiableClient(communication);
         throw new DestinationTerminalException("OFF");
     }
 

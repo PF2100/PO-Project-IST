@@ -11,10 +11,7 @@ public class BusyState extends TerminalState {
     }
 
     public boolean setOnIdle(){
-        if(_terminal.getOngoingCommunication() == null) {
-            _terminal.setTerminalState(new IdleState(_terminal));
-        }
-        return true;
+        return false;
     }
 
     public String toString() {
@@ -52,6 +49,7 @@ public class BusyState extends TerminalState {
 
 
     public void acceptVoiceCall(Communication communication) throws DestinationTerminalException {
+        _terminal.addNotifiableClient(communication);
         throw new DestinationTerminalException("BUSY");
     }
 
@@ -61,6 +59,7 @@ public class BusyState extends TerminalState {
 
 
     public void acceptVideoCall(Communication communication) throws DestinationTerminalException {
+        _terminal.addNotifiableClient(communication);
         throw new DestinationTerminalException("OFF");
     }
 

@@ -46,7 +46,7 @@ public abstract class Communication implements Serializable {
 
     public double getCost() {return _cost;}
 
-
+    public Client getClientOwner() {return getFrom().getOwner();}
 
     public abstract void calculateCost();
 
@@ -71,6 +71,7 @@ public abstract class Communication implements Serializable {
 
     void payCommunication() {
         _isPaid = true;
+        getClientOwner().checkUpdates();
     }
 
 }

@@ -18,7 +18,7 @@ class DoPerformPayment extends TerminalCommand {
   
   @Override
   protected final void execute() throws CommandException {
-    int communicationId = integerField("communicationId");
+    Integer communicationId = integerField("communicationId");
     try{
     _network.payCommunication(_receiver, communicationId);
     }catch(UnknownCommunicationException uce) {

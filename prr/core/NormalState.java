@@ -38,4 +38,8 @@ public class NormalState extends ClientState {
         return "NORMAL";
     }
 
+    public void CheckUpdate(Communication communication) {
+        
+    }
+
 }

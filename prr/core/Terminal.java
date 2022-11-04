@@ -26,9 +26,11 @@ public abstract class Terminal implements Serializable /* FIXME maybe addd more 
 
 
     private Map<String, Terminal> _friends = new TreeMap<>(new IdComparator());
+    private List<Client> _toNotify = new ArrayList<>();
     private Client _owner;
     private List<Communication> _madeCommunications = new ArrayList<>();
     private List<Communication> _receivedCommunications = new ArrayList<>();
+
     private InteractiveCommunication _ongoingCommunication;
 
 
@@ -41,6 +43,21 @@ public abstract class Terminal implements Serializable /* FIXME maybe addd more 
         _owner = owner;
         _state = new IdleState(this);
         _ongoingCommunication = null;
+    }
+
+    public void notifyClients(String type){
+        for(Client client : _toNotify){
+            client.getNotification(this,type);
+        }
+        _toNotify.clear();
+    }
+
+
+    public void addNotifiableClient(Communication communication) {
+        if(communication.getClientOwner().canReceiveNotifications()) {
+         _toNotify.add(communication.getFrom().getOwner());
+      
+        }
     }
 
 

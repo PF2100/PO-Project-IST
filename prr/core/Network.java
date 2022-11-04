@@ -18,7 +18,6 @@ import java.util.TreeMap;
 import javax.swing.AbstractAction;
 
 import java.util.Map;
-import java.util.Map;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Collection;
@@ -69,7 +68,7 @@ public class Network implements Serializable {
       _clients.put(key, client);
     }
   }
-  
+
   /** 
    * @param type Terminal type (FANCY or BASIC)
    * @param terminalkey Terminal's key
@@ -114,9 +113,18 @@ public class Network implements Serializable {
     return _clients.get(key);
   }
 
-    /** 
-   * @return List<Client>
-   */
+  public List<String> getNotifications(Client client) {
+      List <String> notificationStrings = new ArrayList<>();
+      for(Notification notification : client.getNotifications()){
+          notificationStrings.add(notification.toString());
+      }
+      client.clearNotifications();
+      return notificationStrings;
+    }
+
+  /* 
+  * @return List<Client>
+  */
 
   public List<Client> getClients() {
     return new ArrayList<Client>( _clients.values());
@@ -238,13 +246,13 @@ public class Network implements Serializable {
   }
 
   public Communication getCommunication(Integer key) throws UnknownCommunicationException {
-    if (!(_clients.containsKey(key))) {
+    if (!(_communications.containsKey(key))) {
       throw new UnknownCommunicationException(key);
     }
     return _communications.get(key);
   }
 
-  public void payCommunication(Terminal terminal, int communicationId) throws UnknownCommunicationException {
+  public void payCommunication(Terminal terminal, Integer communicationId) throws UnknownCommunicationException {
     Communication communication = getCommunication(communicationId);
     if(!communication.isPaid() && communication.getFrom().equals(terminal) ) {
       communication.payCommunication();
@@ -318,6 +326,7 @@ class DebtComparator implements Comparator<Client>,Serializable{
     if( that.getDebts() == other.getDebts()) {
       return that.getKey().compareToIgnoreCase(other.getKey());
     }
-    return (int)other.getDebts() - (int)that.getDebts();
+    else if( that.getDebts() - other.getDebts() > 0) {return -1;}
+    else{return 1;}
   }
 }

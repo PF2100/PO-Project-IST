@@ -3,6 +3,10 @@ package prr.core;
 import java.util.*;
 import java.io.Serializable;
 
+import prr.core.DefaultBehaviour;
+import prr.core.Notification;
+import prr.core.NotificationBehaviour;
+import prr.core.SmsBehaviour;
 import prr.core.Terminal;
 
 
@@ -17,6 +21,9 @@ public class Client implements Serializable {
     private ClientState _state; // Client's Tariff Level
     private boolean _receiveNotifications; //Client notification settings
     private Map<String,Terminal> _terminals;
+    private NotificationBehaviour _notificationBehaviour;
+    private List<Notification> _notifications = new ArrayList<>();
+
 
 
     public Client(String key, String name, int taxNumber) {
@@ -26,6 +33,13 @@ public class Client implements Serializable {
         _state = new NormalState(this);
         _receiveNotifications = true;
         _terminals = new HashMap<>();
+        _notificationBehaviour = new DefaultBehaviour();
+    }
+
+    public void addNotification(Notification notification){
+        if(!_notifications.contains(notification)){
+            _notifications.add(notification);
+        }
     }
 
     public String getKey() {return _key;}
@@ -33,6 +47,13 @@ public class Client implements Serializable {
     public String getName() {return _name;}
 
     public int getTaxNumber() {return _taxNumber;}
+
+    public boolean canReceiveNotifications(){return _receiveNotifications;};
+
+    public void getNotification(Terminal terminal, String message){
+        Notification notification = new Notification(terminal, message);
+        _notificationBehaviour.notifyClient(notification,this);
+    }
 
     public boolean turnNotificationsOn() {
         if( _receiveNotifications) {
@@ -73,7 +94,15 @@ public class Client implements Serializable {
                 + _terminals.size() + "|" + Math.round(getPayments()) + "|" + Math.round(getDebts());
     }
 
-    
+    public void checkUpdates() {}
+
+    public List<Notification> getNotifications(){
+        return new ArrayList<>(_notifications);
+    }
+    public void clearNotifications(){
+        _notifications.clear();
+    }
+
 
     public Collection<Communication> getMadeCommunications() {
         Collection<Communication> madeCommunications = new ArrayList<>();

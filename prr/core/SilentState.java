@@ -12,6 +12,7 @@ public class SilentState extends TerminalState{
 
     public boolean setOnIdle() {
         _terminal.setTerminalState(new IdleState(_terminal));
+        _terminal.notifyClients("S2I");
         return true;
     }
 
@@ -48,29 +49,25 @@ public class SilentState extends TerminalState{
     public Communication makeVoiceCall(Terminal to) throws DestinationTerminalException {
         Communication communication = new VoiceCommunication(_terminal,to);
         to.acceptVoiceCall(communication);
-        _terminal.addMadeCommunication(communication);
-        _terminal.setOngoingCommunication(communication);
-        communication.setOngoing();
-        _terminal.setBusy();
+        makeInteractiveCommunication(communication);
         return communication;
     }
 
     public void acceptVoiceCall(Communication communication) throws DestinationTerminalException{
+        _terminal.addNotifiableClient(communication);
         throw new DestinationTerminalException("SILENCE");
     }
 
     public Communication makeVideoCall(Terminal to) throws DestinationTerminalException {
         InteractiveCommunication communication = new VideoCommunication(_terminal,to);
         to.acceptVideoCall(communication);
-        _terminal.addMadeCommunication(communication);
-        _terminal.setOngoingCommunication(communication);
-        communication.setOngoing();
-        _terminal.setBusy();
+        makeInteractiveCommunication(communication);
         return communication;
     }
 
 
     public void acceptVideoCall(Communication communication) throws DestinationTerminalException {
+        _terminal.addNotifiableClient(communication);
         throw new DestinationTerminalException("SILENCE");
     }
 
