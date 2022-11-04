@@ -42,7 +42,7 @@ class DoStartInteractiveCommunication extends TerminalCommand {
         case "BUSY":
            _display.popup(Message.destinationIsBusy(terminalKey));
            break;
-        case "SILENT":
+        case "SILENCE":
           _display.popup(Message.destinationIsSilent(terminalKey));
           break;
       }

@@ -14,6 +14,9 @@ public abstract class InteractiveCommunication extends Communication implements 
     public void setDuration(int duration) {
         _duration = duration;
     }
+    
+    @Override
+    public abstract String toString();
 
     @Override
     protected int getUnits() {

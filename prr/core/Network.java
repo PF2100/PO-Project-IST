@@ -274,7 +274,19 @@ public class Network implements Serializable {
     Collections.sort(clientsWithDebts,new DebtComparator());
     return Collections.unmodifiableList(clientsWithDebts);
   }
+
+
+  public List<Terminal> getTerminalWithPosBalance()  {
+    List<Terminal> terminalsWithPosBalance = new ArrayList<>();
+    for (Terminal terminal : _terminals.values()) {
+    if (terminal.getBalance() > 0) { 
+      terminalsWithPosBalance.add(terminal);
+    }}
+    return Collections.unmodifiableList(terminalsWithPosBalance);
+  }
 }
+
+
 
 
 class IdComparator implements Comparator<String> ,Serializable {

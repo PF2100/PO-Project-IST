@@ -1,8 +1,10 @@
 package prr.app.lookup;
 
 import prr.core.Network;
+import prr.core.Terminal;
 import pt.tecnico.uilib.menus.Command;
 import pt.tecnico.uilib.menus.CommandException;
+import java.util.List;
 //FIXME add more imports if needed
 
 /**
@@ -16,6 +18,9 @@ class DoShowTerminalsWithPositiveBalance extends Command<Network> {
 
   @Override
   protected final void execute() throws CommandException {
-    //FIXME implement command
+    List<Terminal> terminalsWithPosBalance = _receiver.getTerminalWithPosBalance();
+    for(Terminal terminal : terminalsWithPosBalance){
+      _display.popup(terminal.toString());
+    }
   }
 }

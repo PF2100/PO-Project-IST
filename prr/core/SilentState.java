@@ -60,7 +60,7 @@ public class SilentState extends TerminalState{
     }
 
     public Communication makeVideoCall(Terminal to) throws DestinationTerminalException {
-        InteractiveCommunication communication = new VoiceCommunication(_terminal,to);
+        InteractiveCommunication communication = new VideoCommunication(_terminal,to);
         to.acceptVideoCall(communication);
         _terminal.addMadeCommunication(communication);
         _terminal.setOngoingCommunication(communication);

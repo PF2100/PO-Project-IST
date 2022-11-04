@@ -65,7 +65,7 @@ public class IdleState extends TerminalState{
     }
 
     public Communication makeVideoCall(Terminal to) throws DestinationTerminalException {
-        Communication communication = new VoiceCommunication(_terminal,to);
+        Communication communication = new VideoCommunication(_terminal,to);
         to.acceptVideoCall(communication);
         _terminal.addMadeCommunication(communication);
         _terminal.setOngoingCommunication(communication);
@@ -73,7 +73,6 @@ public class IdleState extends TerminalState{
         _terminal.setBusy();
         return communication;
     }
-
 
     public void acceptVideoCall(Communication communication) throws DestinationTerminalException {
         _terminal.addReceivedCommunication(communication);

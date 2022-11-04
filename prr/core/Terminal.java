@@ -228,7 +228,7 @@ public abstract class Terminal implements Serializable /* FIXME maybe addd more 
         return payments;
     }
 
-    public double calculateBalance() {
+    public double getBalance() {
         return getPayments() - getDebts(); 
     }
 }
