@@ -67,7 +67,9 @@ public abstract class Communication implements Serializable {
         return false;
     }
     
-    void setPaid() {
+
+
+    void payCommunication() {
         _isPaid = true;
     }
 

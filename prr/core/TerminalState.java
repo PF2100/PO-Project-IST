@@ -6,6 +6,7 @@ import prr.core.exception.DestinationTerminalException;
 
 public abstract class TerminalState implements Serializable{
     protected Terminal _terminal;
+    protected TerminalState _previous;
 
     public TerminalState(Terminal terminal) {
         _terminal = terminal;
@@ -30,10 +31,14 @@ public abstract class TerminalState implements Serializable{
 
     protected abstract void acceptVideoCall(Communication communication) throws DestinationTerminalException;
 
+
     public abstract boolean canEndCurrentCommunication();
     public abstract boolean canStartCommunication();
     public abstract String toString();
 
+    public void returnState() {
+        _previous.unBusy();
+    }
     public abstract void unBusy();
 
 

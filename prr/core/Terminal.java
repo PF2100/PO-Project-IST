@@ -100,15 +100,16 @@ public abstract class Terminal implements Serializable /* FIXME maybe addd more 
     public long endOngoingCommunication(int duration) {
         _ongoingCommunication.setDuration(duration);
         _ongoingCommunication.calculateCost();
+        _ongoingCommunication.stopOngoing();
         double price = _ongoingCommunication.getCost();
         Terminal to = _ongoingCommunication.getTo();
-        to.returnState();
-        returnState();
-        _ongoingCommunication.stopOngoing();
         to.setOngoingCommunication(null);
         setOngoingCommunication(null);
+        to.returnState();
+        returnState();
         return Math.round(price);
     }
+
 
 
     public Communication getOngoingCommunication() {
@@ -122,8 +123,10 @@ public abstract class Terminal implements Serializable /* FIXME maybe addd more 
         _ongoingCommunication = (InteractiveCommunication)ongoingCommunication;
     }
 
+    
+
     public void returnState(){
-        _previous.unBusy();
+        _state.returnState();
     }
 
     public boolean setOnIdle() {return _state.setOnIdle();}

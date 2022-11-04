@@ -5,8 +5,9 @@ import prr.core.exception.DestinationTerminalException;
 
 
 public class BusyState extends TerminalState {
-    public BusyState(Terminal terminal){
+    public BusyState(Terminal terminal,TerminalState state){
         super(terminal);
+        _previous = state;
     }
 
     public boolean setOnIdle(){

@@ -20,8 +20,7 @@ public class SilentState extends TerminalState{
     }
     
     public boolean setBusy() {
-        _terminal.setTerminalState(new BusyState(_terminal));
-        _terminal.setPreviousState(new IdleState(_terminal));
+        _terminal.setTerminalState(new BusyState(_terminal,_terminal.getState()));
         return true;
     }
 
@@ -76,7 +75,7 @@ public class SilentState extends TerminalState{
     }
 
     public void unBusy() {
-        _terminal.setOnSilent();
+        _terminal.setTerminalState(this);
     }
 
     public boolean canEndCurrentCommunication() {return false;}
