@@ -21,7 +21,7 @@ class DoOpenMenuTerminalConsole extends Command<Network> {
   }
 
   @Override
-  protected final void execute() throws CommandException { //Adicionar exceção denão existir este terminal
+  protected final void execute() throws CommandException {
     String terminalNumber = stringField("terminal");
     try {
       Terminal terminal = _receiver.getTerminal(terminalNumber);

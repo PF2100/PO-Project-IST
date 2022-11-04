@@ -29,7 +29,7 @@ class DoRegisterTerminal extends Command<Network> {
   }
 
   @Override
-  protected final void execute() throws CommandException { // InvalidTerminalKeyException DuplicateTerminalKeyException é preciso adicionar
+  protected final void execute() throws CommandException {
     String key = stringField("key");
     String type = stringField("type");
     String clientId = stringField("clientId");
@@ -38,7 +38,7 @@ class DoRegisterTerminal extends Command<Network> {
     }catch(UnknownClientException uce){
       throw new UnknownClientKeyException(clientId);
     }
-    catch(NumberFormatException | InvalidKeyNumberException ikne ){
+    catch(NumberFormatException | InvalidKeyNumberException ikne) {
       throw new InvalidTerminalKeyException(key);
     }
     catch(KeyAlreadyExistsException kaee) {

@@ -9,7 +9,6 @@ import java.util.Collection;
 import java.util.ArrayList;
 
 import prr.core.exception.*;
-//import more exception core classes if needed
 
 /* 
  * A concretização desta classe depende da funcionalidade suportada pelas entidades do core:
@@ -52,7 +51,7 @@ public class Parser {
       throw new UnrecognizedEntryException("Invalid number of fields in line: " + line);
   }
   
-  // parse a client with format CLIENT|id|nome|taxId
+  // Parses a client with format CLIENT|id|nome|taxId
   private void parseClient(String[] components, String line) throws UnrecognizedEntryException {
     checkComponentsLength(components, 4, line);
 
@@ -61,12 +60,12 @@ public class Parser {
       _network.registerClient(components[1], components[2], taxNumber);
     } catch (NumberFormatException nfe) {
       throw new UnrecognizedEntryException("Invalid number in line " + line, nfe);
-    } catch (KeyAlreadyExistsException kaee) { // Trocar exception
+    } catch (KeyAlreadyExistsException kaee) {
       throw new UnrecognizedEntryException("Invalid specification in line: " + line, kaee);
     }
   }
 
-  // parse a line with format terminal-type|idTerminal|idClient|state
+  // Parses a line with format terminal-type|idTerminal|idClient|state
    
   private void parseTerminal(String[] components, String line) throws UnrecognizedEntryException{
     checkComponentsLength(components, 4, line);
@@ -87,7 +86,7 @@ public class Parser {
   }
 
 
-  //Parse a line with format FRIENDS|idTerminal|idTerminal1,...,idTerminalN
+  //Parses a line with format FRIENDS|idTerminal|idTerminal1,...,idTerminalN
   private void parseFriends(String[] components, String line) throws UnrecognizedEntryException {
     checkComponentsLength(components, 3, line);
       
@@ -97,8 +96,8 @@ public class Parser {
       
       for (String friend : friends)
         _network.addFriend(terminal, friend);
-    } catch (Exception e) { //trocar exeption
-      throw new UnrecognizedEntryException("Some message error in line:  " + line, e);
+    } catch (UnknownTerminalException ute) {
+      throw new UnrecognizedEntryException("Some message error in line:  " + line, ute);
     }
   }
 }

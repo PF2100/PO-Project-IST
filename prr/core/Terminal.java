@@ -8,7 +8,7 @@ import prr.core.exception.*;
 
 import java.util.*;
 
-public abstract class Terminal implements Serializable /* FIXME maybe addd more interfaces */ {
+public abstract class Terminal implements Serializable {
 
     /**
      * Serial number for serialization.

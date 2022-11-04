@@ -10,8 +10,6 @@ public abstract class ClientState implements Serializable{
         _client = client;
     }
 
-    //public abstract void payCommunication() 
-
     public void checkUpdates(CommunicationType type){
         CommunicationType previous = _client.getPreviousType();
         if(previous != null && type.equals(_client.getPreviousType())){
