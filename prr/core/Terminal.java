@@ -67,7 +67,7 @@ public abstract class Terminal implements Serializable /* FIXME maybe addd more 
     //Returns the communication if it was successfuly made, null if not
     public Communication makeSms(Terminal to, String message) throws DestinationTerminalException{
         Communication communication = _state.makeSms(to,message);
-        _owner.calculateTextCost(communication);
+        communication.calculateCost();
         return communication;
     }
 
@@ -168,7 +168,7 @@ public abstract class Terminal implements Serializable /* FIXME maybe addd more 
     } 
 
     public void addFriend(Terminal friend) {
-        if ( this.equals(friend) || !isFriend(friend)) {
+        if ( !this.equals(friend) && !isFriend(friend)) {
             _friends.put(friend.getId(),friend);
         }
     }

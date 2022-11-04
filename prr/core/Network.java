@@ -284,6 +284,22 @@ public class Network implements Serializable {
     }}
     return Collections.unmodifiableList(terminalsWithPosBalance);
   }
+
+  public double getDebts(){
+    double debt = 0;
+    for(Client client : _clients.values()) {
+        debt += client.getDebts();
+    }
+    return debt;
+}
+
+public double getPayments(){
+    double payments = 0;
+    for(Client client : _clients.values()) {
+      payments += client.getPayments();
+  }
+    return payments;
+}
 }
 
 

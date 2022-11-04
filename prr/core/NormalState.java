@@ -14,7 +14,7 @@ public class NormalState extends ClientState {
         if ( units < 50) {
             price = 10 ;
         }
-        else if ( 50 <= units  && units<= 100) {
+        else if ( 50 <= units  && units < 100) {
             price = 16;
         }
         else {
