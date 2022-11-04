@@ -6,7 +6,6 @@ import java.io.Serializable;
 import prr.core.DefaultBehaviour;
 import prr.core.Notification;
 import prr.core.NotificationBehaviour;
-import prr.core.SmsBehaviour;
 import prr.core.Terminal;
 
 
