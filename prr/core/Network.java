@@ -229,15 +229,50 @@ public class Network implements Serializable {
     Communication communication = null;
     if(from.equals(to)){throw new DestinationTerminalException("BUSY");}
     else if (type.equals("VOICE")) {communication = from.makeVoiceCall(to);}
-    else{
-      
-      communication = from.makeVideoCall(to)
-      ;}
+    else{communication = from.makeVideoCall(to);}
     addCommunication(communication);
   }
 
   public long endOngoingCommunication(int duration,Terminal terminal) {
     return terminal.endOngoingCommunication(duration);
+  }
+
+  public Communication getCommunication(Integer key) throws UnknownCommunicationException {
+    if (!(_clients.containsKey(key))) {
+      throw new UnknownCommunicationException(key);
+    }
+    return _communications.get(key);
+  }
+
+  public void payCommunication(Terminal terminal, int communicationId) throws UnknownCommunicationException {
+    Communication communication = getCommunication(communicationId);
+    if(!communication.isPaid() && communication.getFrom().equals(terminal) ) {
+      communication.payCommunication();
+    }
+  }
+
+  public Communication getOngoingCommunication(Terminal terminal){
+    Communication communication = terminal.getOngoingCommunication();
+    return communication;
+  }
+
+  public List<Client> getClientsWithoutDebts()  {
+    List<Client> clientsWithoutDebts = new ArrayList<>();
+    for (Client client : _clients.values()) {
+     if (client.getDebts() == 0) { 
+       clientsWithoutDebts.add(client);
+     }}
+    return Collections.unmodifiableList(clientsWithoutDebts);
+  }
+
+  public List<Client> getClientsWithDebts()  {
+    List<Client> clientsWithDebts = new ArrayList<>();
+    for (Client client : _clients.values()) {
+     if (client.getDebts() != 0) { 
+       clientsWithDebts.add(client);
+     }}
+    Collections.sort(clientsWithDebts,new DebtComparator());
+    return Collections.unmodifiableList(clientsWithDebts);
   }
 }
 
@@ -248,4 +283,13 @@ class IdComparator implements Comparator<String> ,Serializable {
 
 class CommunicationComparator implements Comparator<Communication>,Serializable {
   public int compare(Communication that, Communication other) {return that.getId() - other.getId();};
+}
+
+class DebtComparator implements Comparator<Client>,Serializable{
+  public int compare(Client that, Client other){
+    if( that.getDebts() == other.getDebts()) {
+      return that.getKey().compareToIgnoreCase(other.getKey());
+    }
+    return (int)other.getDebts() - (int)that.getDebts();
+  }
 }

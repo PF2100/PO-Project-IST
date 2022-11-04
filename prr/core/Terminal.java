@@ -25,8 +25,6 @@ public abstract class Terminal implements Serializable /* FIXME maybe addd more 
     protected TerminalState _previous;
 
 
-    private double _debt;
-    private double _payments;
     private Map<String, Terminal> _friends = new TreeMap<>(new IdComparator());
     private Client _owner;
     private List<Communication> _madeCommunications = new ArrayList<>();
@@ -40,8 +38,6 @@ public abstract class Terminal implements Serializable /* FIXME maybe addd more 
             throw new InvalidKeyNumberException(terminalId);
         }
         _id = terminalId;
-        _debt = 0;
-        _payments = 0;
         _owner = owner;
         _state = new IdleState(this);
         _ongoingCommunication = null;
@@ -52,9 +48,6 @@ public abstract class Terminal implements Serializable /* FIXME maybe addd more 
 
     public TerminalState getState() {return _state;}
 
-    public double getDebt() {return _debt;}
-
-    public double getPayments() {return _payments;}
 
     public Collection<Communication> getMadeCommunications(){
         return _madeCommunications;
@@ -212,5 +205,30 @@ public abstract class Terminal implements Serializable /* FIXME maybe addd more 
 
     public void addReceivedCommunication(Communication communication) {
         _receivedCommunications.add(communication);
+    }
+
+
+    public double getDebts(){
+        double debt = 0;
+        for(Communication communication : _madeCommunications) {
+            if(!communication.isPaid()){
+                debt += communication.getCost();
+            }
+        }
+        return debt;
+    }
+
+    public double getPayments(){
+        double payments = 0;
+        for(Communication communication : _madeCommunications) {
+            if(communication.isPaid()){
+                payments += communication.getCost();
+            }
+        }
+        return payments;
+    }
+
+    public double calculateBalance() {
+        return getPayments() - getDebts(); 
     }
 }

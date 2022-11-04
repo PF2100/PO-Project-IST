@@ -22,7 +22,7 @@ public class FancyTerminal extends Terminal {
     @Override
     public String toString() {
         String message = "FANCY" +"|"+ getId() + "|" + getOwner().getKey() + "|" + getState().toString()
-                + "|" + Math.round(getPayments()) + "|" + Math.round(getDebt());
+                + "|" + Math.round(getPayments()) + "|" + Math.round(getDebts());
         if( !(getFriends().isEmpty())) {
             message += "|";
             message += String.join(",",getFriends());

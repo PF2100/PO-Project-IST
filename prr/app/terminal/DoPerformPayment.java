@@ -2,6 +2,7 @@ package prr.app.terminal;
 
 import prr.core.Network;
 import prr.core.Terminal;
+import prr.core.exception.UnknownCommunicationException;
 import pt.tecnico.uilib.menus.CommandException;
 // Add more imports if needed
 
@@ -17,6 +18,12 @@ class DoPerformPayment extends TerminalCommand {
   
   @Override
   protected final void execute() throws CommandException {
-    int communicationId= IntegerField("communicationId");
+    int communicationId = integerField("communicationId");
+    try{
+    _network.payCommunication(_receiver, communicationId);
+    }catch(UnknownCommunicationException uce) {
+      _display.popup(Message.invalidCommunication());
+    }
+
   }
 }

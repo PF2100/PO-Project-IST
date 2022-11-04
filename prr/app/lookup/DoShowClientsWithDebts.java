@@ -1,8 +1,11 @@
 package prr.app.lookup;
 
 import prr.core.Network;
+import prr.core.Client;
 import pt.tecnico.uilib.menus.Command;
 import pt.tecnico.uilib.menus.CommandException;
+import java.util.List;
+
 //FIXME more imports if needed
 
 /**
@@ -16,6 +19,9 @@ class DoShowClientsWithDebts extends Command<Network> {
 
   @Override
   protected final void execute() throws CommandException {
-    //FIXME implement command
+    List<Client> clientsWithDebts = _receiver.getClientsWithDebts();
+    for(Client client : clientsWithDebts){
+      _display.popup(client.toString());
+    }
   }
 }

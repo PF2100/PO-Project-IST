@@ -73,24 +73,7 @@ public class Client implements Serializable {
                 + _terminals.size() + "|" + Math.round(getPayments()) + "|" + Math.round(getDebts());
     }
 
-
-    //Iterates through the terminals to obtain all of their debt values
-    public double getDebts() {  
-        double debt = 0;
-        for ( Terminal terminal : _terminals.values()) {     //FIXMEEE 
-            debt += terminal.getDebt();
-        }
-        return debt;
-    }
     
-    //Iterates through the terminals to obtain all of their payment values, 
-    public double getPayments() { 
-        double payments = 0;
-        for ( Terminal terminal : _terminals.values()) { //FIXMEEE
-            payments += terminal.getPayments();
-        }
-        return payments;
-    }
 
     public Collection<Communication> getMadeCommunications() {
         Collection<Communication> madeCommunications = new ArrayList<>();
@@ -132,6 +115,27 @@ public class Client implements Serializable {
     void calculateVideoCost(Communication communication) {
         _state.calculateVideoCost(communication);
     }
+
+    public double getDebts(){
+        double debt = 0;
+        for(Terminal terminal : _terminals.values()) {
+            debt += terminal.getDebts();
+        }
+        return debt;
+    }
+
+    public double getPayments(){
+        double payments = 0;
+        for(Terminal terminal : _terminals.values()) {
+            payments += terminal.getPayments();
+        }
+        return payments;
+    }
+
+    public double getBalance() {
+        return getPayments() - getDebts(); 
+    }
+
 
     @Override
     public int hashCode() {
