@@ -71,7 +71,7 @@ public class IdleState extends TerminalState{
     }
 
     public void unBusy() {
-        _terminal.notifyClients("B2I");
+        _terminal.contactNotifiableClients("B2I");
         _terminal.setTerminalState(this);
     }
 

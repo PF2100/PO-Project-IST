@@ -15,6 +15,14 @@ public abstract class InteractiveCommunication extends Communication implements 
         _duration = duration;
     }
     
+    public double endCommunication(int duration){
+        setDuration(duration);
+        calculateCost();
+        stopOngoing();
+        return getCost();
+    }
+        
+
     @Override
     public abstract String toString();
 

@@ -19,7 +19,7 @@ class DoShowUnusedTerminals extends Command<Network> {
 
   @Override
   protected final void execute() throws CommandException {
-    List<Terminal> unusedTerminals = _receiver.showUnusedTerminals();
+    List<Terminal> unusedTerminals = _receiver.getUnusedTerminals();
     for (Terminal terminal : unusedTerminals) {
       _display.addLine(terminal.toString());
     }

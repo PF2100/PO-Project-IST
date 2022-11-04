@@ -10,7 +10,7 @@ public class OffState extends TerminalState {
 
     public boolean setOnIdle(){
         _terminal.setTerminalState(new IdleState(_terminal));
-        _terminal.notifyClients("O2I");
+        _terminal.contactNotifiableClients("O2I");
         return true;
     }
 
@@ -29,7 +29,7 @@ public class OffState extends TerminalState {
     
     public boolean setOnSilent() {
         _terminal.setTerminalState(new SilentState(_terminal));
-        _terminal.notifyClients("O2S");
+        _terminal.contactNotifiableClients("O2S");
         return true;
     }
     

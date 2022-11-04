@@ -45,7 +45,7 @@ public abstract class Terminal implements Serializable /* FIXME maybe addd more 
         _ongoingCommunication = null;
     }
 
-    public void notifyClients(String type){
+    public void contactNotifiableClients(String type){
         for(Client client : _toNotify){
             client.getNotification(this,type);
         }
@@ -107,17 +107,14 @@ public abstract class Terminal implements Serializable /* FIXME maybe addd more 
 
 
     
-    public long endOngoingCommunication(int duration) {
-        _ongoingCommunication.setDuration(duration);
-        _ongoingCommunication.calculateCost();
-        _ongoingCommunication.stopOngoing();
-        double price = _ongoingCommunication.getCost();
+    public double endOngoingCommunication(int duration) {
+        double price = _ongoingCommunication.endCommunication(duration);
         Terminal to = _ongoingCommunication.getTo();
         to.setOngoingCommunication(null);
-        setOngoingCommunication(null);
         to.returnState();
+        setOngoingCommunication(null);
         returnState();
-        return Math.round(price);
+        return price;
     }
 
 

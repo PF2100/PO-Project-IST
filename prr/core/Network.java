@@ -167,7 +167,7 @@ public class Network implements Serializable {
    * @return String list with all of the toString form of all the unused Terminals
    */
 
-  public List<Terminal> showUnusedTerminals()  {
+  public List<Terminal> getUnusedTerminals()  {
     List<Terminal> unusedTerminals = new ArrayList<>();
     for (Terminal terminal : _terminals.values()) {
      if (terminal.isUnused()) { 
@@ -178,9 +178,9 @@ public class Network implements Serializable {
 
 
   
-  public void makeSms(Terminal makerTerminal,String terminalId,String message) throws UnknownTerminalException, DestinationTerminalException{
+  public void makeSms(Terminal from,String terminalId,String message) throws UnknownTerminalException, DestinationTerminalException{
     Terminal terminal = getTerminal(terminalId);
-    Communication communication = makerTerminal.makeSms(terminal,message);
+    Communication communication = from.makeSms(terminal,message);
     addCommunication(communication);
   }
 
@@ -241,7 +241,7 @@ public class Network implements Serializable {
     addCommunication(communication);
   }
 
-  public long endOngoingCommunication(int duration,Terminal terminal) {
+  public double endOngoingCommunication(int duration,Terminal terminal) {
     return terminal.endOngoingCommunication(duration);
   }
 

@@ -12,7 +12,7 @@ public class SilentState extends TerminalState{
 
     public boolean setOnIdle() {
         _terminal.setTerminalState(new IdleState(_terminal));
-        _terminal.notifyClients("S2I");
+        _terminal.contactNotifiableClients("S2I");
         return true;
     }
 
