@@ -1,7 +1,6 @@
 package prr.core;
 
 public class PlatinumState extends ClientState {
-    protected Client _client;
     public PlatinumState(Client client) {
         super(client);
     }
@@ -28,6 +27,20 @@ public class PlatinumState extends ClientState {
         double price = units * 20d ;
         communication.setCost(price * communication.getDiscount());
     }
+
+
+    public void upgradeClient(CommunicationType type){}
+    
+    public void downgradeClient(CommunicationType type) {
+        if(_client.getBalance() < 0){
+            _client.setClientState(new NormalState(_client));
+        }
+        else if(_consecutiveCommunications == 2 && _client.getPreviousType().equals(CommunicationType.TEXT) && _client.getBalance() > 0){
+            _client.setClientState(new GoldState(_client));
+        }
+    }
+
+
 
     public String toString() {
         return "PLATINUM";

@@ -8,10 +8,12 @@ public class VideoCommunication extends InteractiveCommunication implements Seri
 
     public VideoCommunication(Terminal from, Terminal to) {
         super(from, to);
+        setCommunicationType(CommunicationType.VIDEO);
     }
 
     public void calculateCost() {
-        getFrom().getOwner().calculateVideoCost(this);
+        getClientOwner().calculateVideoCost(this);
+        getClientOwner().checkUpdates(getType());
     }
 
 
@@ -21,7 +23,7 @@ public class VideoCommunication extends InteractiveCommunication implements Seri
         if (isOngoing()) {status = "ONGOING";}
         else {status = "FINISHED";}
 
-        return "VIDEO|"+ getId() +"|"+getFrom().getId()+"|" +getTo().getId() + "|"
+        return getType().name() +"|"+ getId() +"|"+getFrom().getId()+"|" +getTo().getId() + "|"
                 + getUnits() +"|" + Math.round(getCost()) + "|" + status;
     }
 

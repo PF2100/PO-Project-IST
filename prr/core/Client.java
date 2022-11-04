@@ -23,6 +23,7 @@ public class Client implements Serializable {
     private Map<String,Terminal> _terminals;
     private NotificationBehaviour _notificationBehaviour;
     private List<Notification> _notifications = new ArrayList<>();
+    private CommunicationType _previousComm;
 
 
 
@@ -94,7 +95,6 @@ public class Client implements Serializable {
                 + _terminals.size() + "|" + Math.round(getPayments()) + "|" + Math.round(getDebts());
     }
 
-    public void checkUpdates() {}
 
     public List<Notification> getNotifications(){
         return new ArrayList<>(_notifications);
@@ -169,5 +169,19 @@ public class Client implements Serializable {
     @Override
     public int hashCode() {
         return _key.hashCode();
+    }
+
+    public void checkUpdates(CommunicationType type){
+        _state.checkUpdates(type);
+    }
+
+    public void setCommunicationType(CommunicationType type){
+        _previousComm = type;
+    }
+    public CommunicationType getPreviousType(){
+        return _previousComm;
+    }
+    public void setPreviousType(CommunicationType type){
+        _previousComm = type;
     }
 }

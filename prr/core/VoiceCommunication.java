@@ -7,11 +7,13 @@ public class VoiceCommunication extends InteractiveCommunication implements Seri
 
     public VoiceCommunication(Terminal from, Terminal to) {
         super(from, to);
+        setCommunicationType(CommunicationType.VOICE);
     }
 
 
     public void calculateCost() {
-        getFrom().getOwner().calculateVoiceCost(this);
+        getClientOwner().calculateVoiceCost(this);
+        getClientOwner().checkUpdates(getType());
     }
 
 
@@ -21,7 +23,7 @@ public class VoiceCommunication extends InteractiveCommunication implements Seri
         if (isOngoing()) {status = "ONGOING";}
         else {status = "FINISHED";}
 
-        return "VOICE|" + getId() + "|" + getFrom().getId() + "|" + getTo().getId() + "|"
+        return getType().name() +"|" + getId() + "|" + getFrom().getId() + "|" + getTo().getId() + "|"
                 + getUnits() + "|" + Math.round(getCost()) + "|" + status;
     }
 

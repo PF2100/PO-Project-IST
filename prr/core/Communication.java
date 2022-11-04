@@ -3,6 +3,12 @@ package prr.core;
 import java.io.Serializable;
 import prr.core.*;
 
+    enum CommunicationType{
+        TEXT,
+        VOICE,
+        VIDEO;
+    }
+
 public abstract class Communication implements Serializable {
     private static final long serialVersionUID = 202208091753L;
     private int _id ;
@@ -10,6 +16,7 @@ public abstract class Communication implements Serializable {
     protected double _cost;
     private boolean _isOngoing;
     private double _discount = 1;
+    private CommunicationType _type;
 
     private Terminal _from;
 
@@ -52,11 +59,20 @@ public abstract class Communication implements Serializable {
 
     public abstract String toString();
 
+    public void setCommunicationType(CommunicationType type){
+        _type = type;
+    }
+
+    public CommunicationType getType(){
+        return _type;
+    }
+
     protected void setCost(double cost) {
         _cost = cost;
     }
 
     protected abstract int getUnits();
+
 
     @Override
     public boolean equals(Object other) {
@@ -68,7 +84,7 @@ public abstract class Communication implements Serializable {
 
     void payCommunication() {
         _isPaid = true;
-        getClientOwner().checkUpdates();
+        getClientOwner().checkUpdates(getType());
     }
 
 }

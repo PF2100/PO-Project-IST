@@ -10,7 +10,7 @@ public class TextCommunication extends Communication implements Serializable {
     public TextCommunication(Terminal from, Terminal to, String message) {
         super(from, to);
         _message = message;
-        calculateCost();
+        setCommunicationType(CommunicationType.TEXT);
     }
 
     public String getMessage() {
@@ -18,7 +18,8 @@ public class TextCommunication extends Communication implements Serializable {
     }
 
     public void calculateCost() {
-        getFrom().getOwner().calculateTextCost(this);
+        getClientOwner().calculateTextCost(this);
+        getClientOwner().checkUpdates(getType());
     }
 
     @Override
@@ -28,7 +29,7 @@ public class TextCommunication extends Communication implements Serializable {
 
     @Override
     public String toString() {
-        return "TEXT|" + getId() +"|"+getFrom().getId()+"|" +getTo().getId() + "|"
+        return getType().name()+"|" + getId() +"|"+getFrom().getId()+"|" +getTo().getId() + "|"
                 + this.getUnits() +"|" + Math.round(getCost()) + "|" + "FINISHED";
     }
 

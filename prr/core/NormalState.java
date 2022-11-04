@@ -1,7 +1,6 @@
 package prr.core;
 
 public class NormalState extends ClientState {
-    protected Client _client;
     public NormalState(Client client) {
         super(client);
     }
@@ -38,8 +37,12 @@ public class NormalState extends ClientState {
         return "NORMAL";
     }
 
-    public void CheckUpdate(Communication communication) {
-        
+    public void upgradeClient(CommunicationType type){
+        if(_client.getBalance() > 500){
+            _client.setClientState(new GoldState(_client));
+        }
     }
+    
+    public void downgradeClient(CommunicationType type) {}
 
 }
