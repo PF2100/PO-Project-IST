@@ -56,7 +56,6 @@ public abstract class Communication implements Serializable {
         _cost = cost;
     }
 
-
     protected abstract int getUnits();
 
     @Override
@@ -66,8 +65,6 @@ public abstract class Communication implements Serializable {
         }
         return false;
     }
-    
-
 
     void payCommunication() {
         _isPaid = true;

@@ -9,7 +9,7 @@ public class GoldState extends ClientState {
     public  void calculateTextCost(Communication communication){
         int units = communication.getUnits();
         double price = 0d;
-        if ( units < 100) {
+        if (units < 100) {
             price = 10;
         }
         else {

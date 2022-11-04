@@ -19,8 +19,6 @@ class DoSaveFile extends Command<NetworkManager> {
   
   @Override
   protected final void execute()  {
-    //Form f = new Form();
-    //f.addStringField("filename", Message.newSaveAs());
     try {
       try{
         _receiver.save();

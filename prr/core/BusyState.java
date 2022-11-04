@@ -1,6 +1,5 @@
 package prr.core;
 
-import prr.core.Terminal;
 import prr.core.exception.DestinationTerminalException;
 
 

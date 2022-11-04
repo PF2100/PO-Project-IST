@@ -9,7 +9,6 @@ import prr.core.Communication;
 import pt.tecnico.uilib.menus.Command;
 import pt.tecnico.uilib.menus.CommandException;
 import java.util.*;
-//FIXME add more imports if needed
 
 /**
  * Show communications to a client.

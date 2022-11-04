@@ -10,7 +10,6 @@ import prr.core.Client;
 import prr.core.Network;
 import java.util.*;
 
-//FIXME add more imports if needed
 
 /**
  * Show specific client: also show previous notifications.

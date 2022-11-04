@@ -64,5 +64,6 @@ public class OffState extends TerminalState {
     public void unBusy() {}
 
     public boolean canEndCurrentCommunication() {return false;}
+
     public boolean canStartCommunication() {return false;}
 }

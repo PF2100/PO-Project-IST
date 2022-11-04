@@ -8,7 +8,6 @@ import pt.tecnico.uilib.menus.CommandException;
 import prr.core.exception.ImportFileException;
 import prr.core.exception.UnavailableFileException;
 import prr.app.main.Message;
-//Add more imports if needed
 
 /**
  * Command to open a file.

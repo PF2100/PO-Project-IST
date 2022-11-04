@@ -6,7 +6,6 @@ import pt.tecnico.uilib.menus.Command;
 import pt.tecnico.uilib.menus.CommandException;
 import java.util.List;
 
-//FIXME more imports if needed
 
 /**
  * Show clients with negative balance.

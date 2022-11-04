@@ -8,9 +8,6 @@ import prr.core.exception.*;
 
 import java.util.*;
 
-
-
-
 public abstract class Terminal implements Serializable /* FIXME maybe addd more interfaces */ {
 
     /**
@@ -81,7 +78,7 @@ public abstract class Terminal implements Serializable /* FIXME maybe addd more 
 
 
 
-    //Returns the communication if it was successfuly made, null if not
+    //Returns the communication if it was successfully made, null if not
     public Communication makeSms(Terminal to, String message) throws DestinationTerminalException{
         Communication communication = _state.makeSms(to,message);
         communication.calculateCost();

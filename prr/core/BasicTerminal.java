@@ -28,10 +28,7 @@ public class BasicTerminal extends Terminal {
         throw new DestinationTerminalException("ORIGIN");
     }
 
-
     public void acceptVideoCall(Communication communication) throws DestinationTerminalException{
         throw new DestinationTerminalException("RECEIVE");
     }
-
-
 }

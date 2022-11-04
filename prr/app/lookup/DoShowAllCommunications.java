@@ -8,7 +8,6 @@ import pt.tecnico.uilib.menus.CommandException;
 
 import java.util.List;
 import java.util.ArrayList;
-//FIXME more imports if needed
 
 /**
  * Command for showing all communications.

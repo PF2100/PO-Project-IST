@@ -7,7 +7,6 @@ import prr.core.exception.UnknownTerminalException;
 import prr.app.exception.UnknownTerminalKeyException;
 import pt.tecnico.uilib.forms.Form;
 import pt.tecnico.uilib.menus.CommandException;
-//FIXME add more imports if needed
 
 /**
  * Command for starting communication.

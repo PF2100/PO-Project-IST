@@ -27,8 +27,6 @@ public abstract class TerminalState implements Serializable{
 
     public abstract Communication makeVideoCall(Terminal to) throws DestinationTerminalException;
 
-    
-
     public abstract void acceptVideoCall(Communication communication) throws DestinationTerminalException;
 
 
@@ -46,12 +44,8 @@ public abstract class TerminalState implements Serializable{
         _terminal.setBusy();
     }
 
-
-
-
     public abstract boolean canEndCurrentCommunication();
 
-    
     public abstract boolean canStartCommunication();
     public abstract String toString();
 
@@ -59,6 +53,5 @@ public abstract class TerminalState implements Serializable{
         _previous.unBusy();
     }
     public abstract void unBusy();
-
 
 }

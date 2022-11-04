@@ -9,7 +9,7 @@ public class PlatinumState extends ClientState {
     public  void calculateTextCost(Communication communication){
         int units = communication.getUnits();
         double price = 0d;
-        if ( units < 50) {
+        if (units < 50) {
             price = 0 ;
         }
         else {
