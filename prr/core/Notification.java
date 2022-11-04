@@ -15,8 +15,6 @@ public class Notification implements Serializable{
     }
 
     public boolean equals(Notification other){
-        Boolean teste1 = this.getTerminalId().equals(other.getTerminalId());
-        Boolean teste2 = this.getTerminalId().equals(other.getTerminalId());
         return (this.getTerminalId()).equals(other.getTerminalId()) && (this.getType()).equals(other.getType());
     }
 
