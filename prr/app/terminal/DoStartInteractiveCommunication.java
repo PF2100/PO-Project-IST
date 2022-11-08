@@ -30,7 +30,7 @@ class DoStartInteractiveCommunication extends TerminalCommand {
     }catch(DestinationTerminalException dte){
       switch(dte.getKey()){
         case "ORIGIN" :
-          _display.popup(Message.unsupportedAtOrigin(terminalKey, communicationType));
+          _display.popup(Message.unsupportedAtOrigin(_receiver.getId(), communicationType));
           break;
         case "RECEIVE":
           _display.popup(Message.unsupportedAtDestination(terminalKey, communicationType));

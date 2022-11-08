@@ -59,7 +59,7 @@ public class BusyState extends TerminalState {
 
     public void acceptVideoCall(Communication communication) throws DestinationTerminalException {
         _terminal.addNotifiableClient(communication);
-        throw new DestinationTerminalException("OFF");
+        throw new DestinationTerminalException("BUSY");
     }
 
     public void unBusy() {}

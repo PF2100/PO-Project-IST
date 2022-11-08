@@ -16,7 +16,7 @@ public abstract class ClientState implements Serializable{
             _consecutiveCommunications +=1;
         }
         else{
-            _consecutiveCommunications = 0;
+            _consecutiveCommunications = 1;
             _client.setPreviousType(type);
         }
         upgradeClient(type);
