@@ -1,5 +1,7 @@
 package prr.core;
 
+import prr.core.Client;
+
 
 public class DefaultBehaviour implements NotificationBehaviour{
 
