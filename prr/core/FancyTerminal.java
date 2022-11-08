@@ -14,7 +14,6 @@ public class FancyTerminal extends Terminal {
         return _state.makeVideoCall(to);
     }
 
-
     public void acceptVideoCall(Communication communication) throws DestinationTerminalException{
         _state.acceptVideoCall(communication);
     }

@@ -15,7 +15,6 @@ class DoRemoveFriend extends TerminalCommand {
     super(Label.REMOVE_FRIEND, context, terminal);
     addStringField("terminalKey",Message.terminalKey());
   }
-  
   @Override
   protected final void execute() throws CommandException {
     String terminalKey = stringField("terminalKey");

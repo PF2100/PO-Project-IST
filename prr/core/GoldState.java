@@ -42,9 +42,6 @@ public class GoldState extends ClientState {
             _client.setClientState(new NormalState(_client));
         }
     }
-    
-
-
 
     public String toString() {
         return "GOLD";

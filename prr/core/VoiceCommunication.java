@@ -10,12 +10,10 @@ public class VoiceCommunication extends InteractiveCommunication implements Seri
         setCommunicationType(CommunicationType.VOICE);
     }
 
-
     public void calculateCost() {
         getClientOwner().calculateVoiceCost(this);
         getClientOwner().checkUpdates(getType());
     }
-
 
     @Override
     public String toString() {
@@ -26,5 +24,4 @@ public class VoiceCommunication extends InteractiveCommunication implements Seri
         return getType().name() +"|" + getId() + "|" + getFrom().getId() + "|" + getTo().getId() + "|"
                 + getUnits() + "|" + Math.round(getCost()) + "|" + status;
     }
-
 }

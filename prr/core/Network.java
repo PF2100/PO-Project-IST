@@ -2,25 +2,12 @@ package prr.core;
 
 import java.io.Serial;
 import java.io.Serializable;
-import java.security.InvalidKeyException;
 import java.io.IOException;
-
-import prr.core.Parser;
-import prr.core.Terminal;
-import prr.core.Client;
-import prr.core.Communication;
 import prr.core.exception.*;
-
-import java.util.SortedMap;
-import java.util.HashMap;
 import java.util.TreeMap;
-
-import javax.swing.AbstractAction;
-
 import java.util.Map;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 
@@ -69,7 +56,7 @@ public class Network implements Serializable {
 
   /** 
    * @param type Terminal type (FANCY or BASIC)
-   * @param terminalkey Terminal's key
+   * @param terminalId Terminal's key
    * @param clientKey Client's key associated with the terminal
    * @return Terminal
    * @throws KeyAlreadyExistsException if the terminal key already exists then throws the exception
@@ -174,8 +161,6 @@ public class Network implements Serializable {
     return Collections.unmodifiableList(unusedTerminals);
   }
 
-
-  
   public void makeSms(Terminal from,String terminalId,String message) throws UnknownTerminalException, DestinationTerminalException{
     Terminal terminal = getTerminal(terminalId);
     Communication communication = from.makeSms(terminal,message);
@@ -299,8 +284,6 @@ public double getPayments(){
     return payments;
 }
 }
-
-
 
 
 class IdComparator implements Comparator<String> ,Serializable {

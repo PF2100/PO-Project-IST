@@ -22,8 +22,6 @@ public class BasicTerminal extends Terminal {
     }
 
     @Override
-
-
     public Communication makeVideoCall(Terminal to) throws DestinationTerminalException {
         throw new DestinationTerminalException("ORIGIN");
     }

@@ -1,7 +1,6 @@
 package prr.core;
 
 import java.io.Serializable;
-import prr.core.*;
 
 public class VideoCommunication extends InteractiveCommunication implements Serializable {
     private static final long serialVersionUID = 202208091753L;
@@ -26,5 +25,4 @@ public class VideoCommunication extends InteractiveCommunication implements Seri
         return getType().name() +"|"+ getId() +"|"+getFrom().getId()+"|" +getTo().getId() + "|"
                 + getUnits() +"|" + Math.round(getCost()) + "|" + status;
     }
-
 }

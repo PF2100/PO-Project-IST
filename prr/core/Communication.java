@@ -1,7 +1,6 @@
 package prr.core;
 
 import java.io.Serializable;
-import prr.core.*;
 
     enum CommunicationType{
         TEXT,

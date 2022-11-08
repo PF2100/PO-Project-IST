@@ -16,7 +16,6 @@ public class IdleState extends TerminalState{
         return false;
     }
 
-
     public boolean setBusy() {
         _terminal.setTerminalState(new BusyState(_terminal,_terminal.getState()));
         return true;

@@ -3,17 +3,9 @@ package prr.core;
 import java.util.*;
 import java.io.Serializable;
 
-import prr.core.DefaultBehaviour;
-import prr.core.Notification;
-import prr.core.NotificationBehaviour;
-import prr.core.Terminal;
-
-
-
 public class Client implements Serializable {
 
     private static final long serialVersionUID = 202208091753L;
-
     private final String _key; // Client's unique key
     private String _name;
     private int _taxNumber;
@@ -23,7 +15,6 @@ public class Client implements Serializable {
     private NotificationBehaviour _notificationBehaviour;
     private List<Notification> _notifications = new ArrayList<>();
     private CommunicationType _previousComm;
-
 
 
     public Client(String key, String name, int taxNumber) {
@@ -61,7 +52,7 @@ public class Client implements Serializable {
         }
         _receiveNotifications = true;
         return true;
-    } /*Falta aplicar lógica de notificações */
+    }
 
     public boolean turnNotificationsOff() {
         if( !_receiveNotifications) {
@@ -69,11 +60,9 @@ public class Client implements Serializable {
         }
         _receiveNotifications = false;
         return true;
-    } /*Falta aplicar lógica de notificações */
+    }
 
     public void addTerminal(Terminal terminal) {_terminals.put(terminal.getId(),terminal);}
-
-
 
     //Returns a list of all the client's terminals 
     public List<Terminal> getTerminals () {   
@@ -85,7 +74,6 @@ public class Client implements Serializable {
         _state = state;
     }
 
-
     public String toString() {
         String notifications = "YES";
         if ( !_receiveNotifications) {notifications = "NO";} // if the client does not have the notification on the string is "NO"
@@ -94,14 +82,12 @@ public class Client implements Serializable {
                 + _terminals.size() + "|" + Math.round(getPayments()) + "|" + Math.round(getDebts());
     }
 
-
     public List<Notification> getNotifications(){
         return new ArrayList<>(_notifications);
     }
     public void clearNotifications(){
         _notifications.clear();
     }
-
 
     public Collection<Communication> getMadeCommunications() {
         Collection<Communication> madeCommunications = new ArrayList<>();
@@ -121,8 +107,6 @@ public class Client implements Serializable {
         return receivedCommunications;
     }
 
-
-
     @Override
     public boolean equals(Object other) {
         if(other instanceof Client ){
@@ -130,7 +114,6 @@ public class Client implements Serializable {
         }
         return false;
     }
-
 
     void calculateTextCost(Communication communication) {
         _state.calculateTextCost(communication);
@@ -163,7 +146,6 @@ public class Client implements Serializable {
     public double getBalance() {
         return getPayments() - getDebts(); 
     }
-
 
     @Override
     public int hashCode() {

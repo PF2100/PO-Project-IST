@@ -32,8 +32,6 @@ public class BusyState extends TerminalState {
         return true;
     }
 
-
-
     public Communication makeSms(Terminal to, String message) throws DestinationTerminalException {
        return null;
     }
@@ -46,7 +44,6 @@ public class BusyState extends TerminalState {
         return null; 
     }
 
-
     public void acceptVoiceCall(Communication communication) throws DestinationTerminalException {
         _terminal.addNotifiableClient(communication);
         throw new DestinationTerminalException("BUSY");
@@ -55,7 +52,6 @@ public class BusyState extends TerminalState {
     public Communication makeVideoCall(Terminal to) throws DestinationTerminalException {
        return null;
     }
-
 
     public void acceptVideoCall(Communication communication) throws DestinationTerminalException {
         _terminal.addNotifiableClient(communication);

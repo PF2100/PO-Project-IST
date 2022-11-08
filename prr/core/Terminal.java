@@ -15,21 +15,15 @@ public abstract class Terminal implements Serializable {
      */
     @Serial
     private static final long serialVersionUID = 202208091753L;
-
     private final String _id;
-
     protected TerminalState _state;
     protected TerminalState _previous;
-
-
     private Map<String, Terminal> _friends = new TreeMap<>(new IdComparator());
     private List<Client> _toNotify = new ArrayList<>();
     private Client _owner;
     private List<Communication> _madeCommunications = new ArrayList<>();
     private List<Communication> _receivedCommunications = new ArrayList<>();
-
     private InteractiveCommunication _ongoingCommunication;
-
 
 
     public Terminal(String terminalId, Client owner) throws InvalidKeyNumberException {
@@ -57,16 +51,13 @@ public abstract class Terminal implements Serializable {
         }
     }
 
-
     public String getId() {return _id;}
 
     public TerminalState getState() {return _state;}
 
-
     public Collection<Communication> getMadeCommunications(){
         return _madeCommunications;
     }
-
 
     public Collection<Communication> getReceivedCommunications() {
         return _receivedCommunications;
@@ -75,7 +66,6 @@ public abstract class Terminal implements Serializable {
     protected Collection<String> getFriends() {return _friends.keySet();}
 
     public Client getOwner() {return _owner;}
-
 
 
     //Returns the communication if it was successfully made, null if not
@@ -102,7 +92,6 @@ public abstract class Terminal implements Serializable {
 
     public abstract void acceptVideoCall(Communication communication) throws DestinationTerminalException;
 
-
     
     public double endOngoingCommunication(int duration) {
         double price = _ongoingCommunication.endCommunication(duration);
@@ -115,19 +104,13 @@ public abstract class Terminal implements Serializable {
     }
 
 
-
     public Communication getOngoingCommunication() {
         return _ongoingCommunication;
     }
 
-
-
-
     public void setOngoingCommunication(Communication ongoingCommunication) {
         _ongoingCommunication = (InteractiveCommunication)ongoingCommunication;
     }
-
-    
 
     public void returnState(){
         _state.returnState();
@@ -144,11 +127,6 @@ public abstract class Terminal implements Serializable {
     public abstract String toString();
 
 
-
-    
-    
-
-  
    
     /* 
     /**
@@ -170,9 +148,6 @@ public abstract class Terminal implements Serializable {
     public boolean canStartCommunication() {
         return _state.canStartCommunication();
     }
-
-    
-
 
     public boolean isUnused() {
         return getMadeCommunications().isEmpty() && getReceivedCommunications().isEmpty();
