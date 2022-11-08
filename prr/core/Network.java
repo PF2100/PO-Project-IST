@@ -56,7 +56,7 @@ public class Network implements Serializable {
   /** 
    * @param key  client's key
    * @param nome Client's name
-   * @throws KeyAlreadyExistsExceptionif If already exists a client with the inputed key, then throws the exception
+   * @throws KeyAlreadyExistsException If already exists a client with the inputed key, then throws the exception
    */
   public void registerClient(String key, String nome, int taxNumber) throws KeyAlreadyExistsException {
     
@@ -77,7 +77,7 @@ public class Network implements Serializable {
    * @throws InvalidKeyNumberException if the terminal key is invalid , throws the exception
    */
 
-  public Terminal registerTerminal(String type,String terminalId , String clientKey ) throws KeyAlreadyExistsException, UnknownClientException, InvalidKeyNumberException {
+  public Terminal registerTerminal(String type, String terminalId, String clientKey ) throws KeyAlreadyExistsException, UnknownClientException, InvalidKeyNumberException {
     Terminal terminal;
     Client client = getClient(clientKey); //Throws UnknownClientException;
     if (_terminals.containsKey(terminalId)) {throw new KeyAlreadyExistsException(terminalId);}
@@ -208,7 +208,6 @@ public class Network implements Serializable {
   }
 
 
-
   public void addFriend(String selectedTerminalKey,String friendKey) throws UnknownTerminalException {
     Terminal selectedTerminal = getTerminal(selectedTerminalKey);
     Terminal friend = getTerminal(friendKey);
@@ -221,15 +220,7 @@ public class Network implements Serializable {
     Terminal friend = getTerminal(friendKey);
     selectedTerminal.removeFriend(friend);
   }
-  /*
-  public List<String> getAll(Collection<?> coll){
-    List<String> strings = new ArrayList<>();
-    for(var obj : coll) {
-        strings.add(obj.toString());
-    }
-    return strings;
-  }
-  */
+
   public void startInteractiveCommunication(String type,Terminal from, String receiverId) throws UnknownTerminalException,DestinationTerminalException{
     Terminal to = getTerminal(receiverId);
     Communication communication = null;
@@ -252,9 +243,10 @@ public class Network implements Serializable {
 
   public void payCommunication(Terminal terminal, Integer communicationId) throws UnknownCommunicationException {
     Communication communication = getCommunication(communicationId);
-    if(!communication.isPaid() && communication.getFrom().equals(terminal) ) {
+    if(!communication.isPaid() && !communication.isOngoing() && communication.getFrom().equals(terminal) ) {
       communication.payCommunication();
     }
+    else {throw new UnknownCommunicationException(communication.getId());}
   }
 
   public Communication getOngoingCommunication(Terminal terminal){

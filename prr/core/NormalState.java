@@ -7,19 +7,19 @@ public class NormalState extends ClientState {
 
     
 
-    public  void calculateTextCost(Communication communication){
+    public void calculateTextCost(Communication communication){
         int units = communication.getUnits();
         double price = 0.0;
-        if ( units < 50) {
-            price = 10 ;
+        if (units < 50) {
+            price = 10d ;
         }
-        else if ( 50 <= units  && units < 100) {
-            price = 16;
+        else if (50 <= units && units < 100) {
+            price = 16d;
         }
         else {
             price = 2 * units ;
         }
-        communication.setCost(price * communication.getDiscount());
+        communication.setCost(price);
     }
 
     public  void calculateVideoCost(Communication communication){

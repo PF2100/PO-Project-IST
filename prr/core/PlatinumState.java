@@ -19,12 +19,12 @@ public class PlatinumState extends ClientState {
 
     public  void calculateVideoCost(Communication communication){
         int units = communication.getUnits();
-        double price = units * 30d ;
+        double price = units * 10d ;
         communication.setCost(price * communication.getDiscount());
     }
     public  void calculateVoiceCost(Communication communication){
         int units = communication.getUnits();
-        double price = units * 20d ;
+        double price = units * 10d ;
         communication.setCost(price * communication.getDiscount());
     }
 
