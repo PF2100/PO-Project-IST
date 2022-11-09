@@ -2,7 +2,7 @@ package prr.core;
 
 import java.io.Serializable;
 
-public abstract class InteractiveCommunication extends Communication implements Serializable {
+public abstract class InteractiveCommunication extends Communication {
     private static final long serialVersionUID = 202208091753L;
     protected int _duration;
 

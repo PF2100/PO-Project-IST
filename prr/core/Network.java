@@ -11,6 +11,10 @@ import java.util.List;
 import java.util.Collections;
 import java.util.Comparator;
 
+import prr.app.IdComparator;
+import prr.app.CommunicationComparator;
+import prr.app.DebtComparator;
+
 
 /**
  * Class Network implements Serializable.
@@ -276,30 +280,11 @@ public class Network implements Serializable {
     return debt;
 }
 
-public double getPayments(){
-    double payments = 0;
-    for(Client client : _clients.values()) {
-      payments += client.getPayments();
-  }
-    return payments;
-}
-}
-
-
-class IdComparator implements Comparator<String> ,Serializable {
-  public int compare(String key1, String key2) {return key1.compareToIgnoreCase(key2);}}
-
-
-class CommunicationComparator implements Comparator<Communication>,Serializable {
-  public int compare(Communication that, Communication other) {return that.getId() - other.getId();};
-}
-
-class DebtComparator implements Comparator<Client>,Serializable{
-  public int compare(Client that, Client other){
-    if( that.getDebts() == other.getDebts()) {
-      return that.getKey().compareToIgnoreCase(other.getKey());
+  public double getPayments(){
+      double payments = 0;
+      for(Client client : _clients.values()) {
+        payments += client.getPayments();
     }
-    else if( that.getDebts() - other.getDebts() > 0) {return -1;}
-    else{return 1;}
+      return payments;
   }
 }

@@ -3,7 +3,7 @@ package prr.core;
 import java.io.Serializable;
 import prr.core.*;
 
-public class TextCommunication extends Communication implements Serializable {
+public class TextCommunication extends Communication {
     private static final long serialVersionUID = 202208091753L;
     private String _message;
 

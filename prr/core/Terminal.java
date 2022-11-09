@@ -7,6 +7,7 @@ import java.util.regex.Pattern;
 import prr.core.exception.*;
 
 import java.util.*;
+import prr.app.IdComparator;
 
 public abstract class Terminal implements Serializable {
 
@@ -149,6 +150,8 @@ public abstract class Terminal implements Serializable {
         return _state.canStartCommunication();
     }
 
+
+
     public boolean isUnused() {
         return getMadeCommunications().isEmpty() && getReceivedCommunications().isEmpty();
     } 
@@ -159,6 +162,7 @@ public abstract class Terminal implements Serializable {
         }
     }
 
+    
     public void removeFriend(Terminal friend) {
         if (isFriend(friend)) {
             _friends.remove(friend.getId());
@@ -171,7 +175,7 @@ public abstract class Terminal implements Serializable {
     @Override
     public boolean equals(Object other) {
         if(other instanceof Terminal ){
-            return (this.getId().compareTo( ((Terminal)other).getId())) == 0;
+            return this.getId().equals(((Terminal)other).getId());
         }
         return false;
     }
