@@ -68,7 +68,7 @@ public class Network implements Serializable {
     Terminal terminal;
     Client client = getClient(clientKey); //Throws UnknownClientException;
     if (_terminals.containsKey(terminalId)) {throw new KeyAlreadyExistsException(terminalId);}
-    if ( type.equals("BASIC")) {
+    if (type.equals("BASIC")) {
       terminal = new BasicTerminal(terminalId,client); //Throws  InvalidKeyNumberException and NumberFormatException
     }
     else{
