@@ -69,7 +69,6 @@ public abstract class Terminal implements Serializable {
     public Client getOwner() {return _owner;}
 
 
-    //Returns the communication if it was successfully made, null if not
     public Communication makeSms(Terminal to, String message) throws DestinationTerminalException{
         Communication communication = _state.makeSms(to,message);
         communication.calculateCost();

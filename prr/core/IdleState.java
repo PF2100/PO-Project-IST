@@ -35,7 +35,7 @@ public class IdleState extends TerminalState{
         return true;
     }
 
-    public Communication makeSms(Terminal to, String message) throws DestinationTerminalException { //Mudar as funções
+    public Communication makeSms(Terminal to, String message) throws DestinationTerminalException { 
         Communication communication = new TextCommunication(_terminal,to,message);
         to.acceptSms(communication);
         _terminal.addMadeCommunication(communication);
