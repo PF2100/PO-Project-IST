@@ -1,2 +1,2 @@
-# IAC-Project
-Introduction to Computer Architecture (IAC) Course Project (Grade: 20/20) - IST - 2021/2022
+# PO-Project
+Object Oriented Programming (PO) Course Project (Grade: 18/20) - IST - 2022/2023
